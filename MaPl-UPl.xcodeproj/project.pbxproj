@@ -13,6 +13,9 @@
 		7D6CCB292C6CEED800E56025 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 7D6CCB282C6CEED800E56025 /* Base */; };
 		7D6CCB2B2C6CEEDB00E56025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D6CCB2A2C6CEEDB00E56025 /* Assets.xcassets */; };
 		7D6CCB2E2C6CEEDB00E56025 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 7D6CCB2D2C6CEEDB00E56025 /* Base */; };
+		7D6CCB362C6CEF2200E56025 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7D6CCB352C6CEF2200E56025 /* .gitignore */; };
+		7D6CCB3B2C6CF12400E56025 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB3A2C6CF12400E56025 /* APIURL.swift */; };
+		7D6CCB3D2C6CF13700E56025 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB3C2C6CF13700E56025 /* APIKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		7D6CCB2A2C6CEEDB00E56025 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D6CCB2D2C6CEEDB00E56025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D6CCB2F2C6CEEDB00E56025 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7D6CCB352C6CEF2200E56025 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7D6CCB3A2C6CF12400E56025 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
+		7D6CCB3C2C6CF13700E56025 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +46,7 @@
 		7D6CCB152C6CEED800E56025 = {
 			isa = PBXGroup;
 			children = (
+				7D6CCB352C6CEF2200E56025 /* .gitignore */,
 				7D6CCB202C6CEED800E56025 /* MaPl-UPl */,
 				7D6CCB1F2C6CEED800E56025 /* Products */,
 			);
@@ -56,6 +63,7 @@
 		7D6CCB202C6CEED800E56025 /* MaPl-UPl */ = {
 			isa = PBXGroup;
 			children = (
+				7D6CCB372C6CF10600E56025 /* Networking */,
 				7D6CCB212C6CEED800E56025 /* AppDelegate.swift */,
 				7D6CCB232C6CEED800E56025 /* SceneDelegate.swift */,
 				7D6CCB252C6CEED800E56025 /* ViewController.swift */,
@@ -65,6 +73,15 @@
 				7D6CCB2F2C6CEEDB00E56025 /* Info.plist */,
 			);
 			path = "MaPl-UPl";
+			sourceTree = "<group>";
+		};
+		7D6CCB372C6CF10600E56025 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				7D6CCB3A2C6CF12400E56025 /* APIURL.swift */,
+				7D6CCB3C2C6CF13700E56025 /* APIKey.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +142,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D6CCB362C6CEF2200E56025 /* .gitignore in Resources */,
 				7D6CCB2B2C6CEEDB00E56025 /* Assets.xcassets in Resources */,
 				7D6CCB2E2C6CEEDB00E56025 /* Base in Resources */,
 				7D6CCB292C6CEED800E56025 /* Base in Resources */,
@@ -138,9 +156,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D6CCB3B2C6CF12400E56025 /* APIURL.swift in Sources */,
 				7D6CCB262C6CEED800E56025 /* ViewController.swift in Sources */,
 				7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */,
 				7D6CCB242C6CEED800E56025 /* SceneDelegate.swift in Sources */,
+				7D6CCB3D2C6CF13700E56025 /* APIKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
