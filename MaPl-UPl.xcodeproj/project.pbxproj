@@ -31,6 +31,9 @@
 		7DFE27F52C71A7E400DB5AEE /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27F42C71A7E400DB5AEE /* BaseViewModel.swift */; };
 		7DFE27FA2C71AA8600DB5AEE /* MainNormalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27F92C71AA8600DB5AEE /* MainNormalButton.swift */; };
 		7DFE27FD2C71ABB700DB5AEE /* NormalOutlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27FC2C71ABB700DB5AEE /* NormalOutlineTextField.swift */; };
+		7DFE27FF2C71B6BF00DB5AEE /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27FE2C71B6BF00DB5AEE /* NetworkManager.swift */; };
+		7DFE28032C71B99F00DB5AEE /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28022C71B99F00DB5AEE /* LoginModel.swift */; };
+		7DFE28062C71BA6F00DB5AEE /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28052C71BA6F00DB5AEE /* UserDefaultsWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +59,9 @@
 		7DFE27F42C71A7E400DB5AEE /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		7DFE27F92C71AA8600DB5AEE /* MainNormalButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNormalButton.swift; sourceTree = "<group>"; };
 		7DFE27FC2C71ABB700DB5AEE /* NormalOutlineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalOutlineTextField.swift; sourceTree = "<group>"; };
+		7DFE27FE2C71B6BF00DB5AEE /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		7DFE28022C71B99F00DB5AEE /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		7DFE28052C71BA6F00DB5AEE /* UserDefaultsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +99,7 @@
 		7D6CCB202C6CEED800E56025 /* MaPl-UPl */ = {
 			isa = PBXGroup;
 			children = (
+				7DFE28002C71B97400DB5AEE /* Models */,
 				7D6CCB9A2C6E4EBA00E56025 /* Resources */,
 				7D6CCB992C6E4EB300E56025 /* Common */,
 				7D6CCB982C6E4EA800E56025 /* Extension */,
@@ -114,6 +121,7 @@
 			children = (
 				7D6CCB3A2C6CF12400E56025 /* APIURL.swift */,
 				7D6CCB3C2C6CF13700E56025 /* APIKey.swift */,
+				7DFE27FE2C71B6BF00DB5AEE /* NetworkManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -147,6 +155,7 @@
 		7D6CCB992C6E4EB300E56025 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7DFE28042C71BA5D00DB5AEE /* PropertyWrapper */,
 				7D6CCB9D2C6E512700E56025 /* Files */,
 			);
 			path = Common;
@@ -227,6 +236,30 @@
 				7DFE27FC2C71ABB700DB5AEE /* NormalOutlineTextField.swift */,
 			);
 			path = TextField;
+			sourceTree = "<group>";
+		};
+		7DFE28002C71B97400DB5AEE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE28012C71B97B00DB5AEE /* Login */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7DFE28012C71B97B00DB5AEE /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE28022C71B99F00DB5AEE /* LoginModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		7DFE28042C71BA5D00DB5AEE /* PropertyWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE28052C71BA6F00DB5AEE /* UserDefaultsWrapper.swift */,
+			);
+			path = PropertyWrapper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,10 +350,13 @@
 				7D6CCB3B2C6CF12400E56025 /* APIURL.swift in Sources */,
 				7DFE27F12C719EDF00DB5AEE /* LoginViewModel.swift in Sources */,
 				7D6CCB262C6CEED800E56025 /* ViewController.swift in Sources */,
+				7DFE27FF2C71B6BF00DB5AEE /* NetworkManager.swift in Sources */,
 				7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */,
 				7DFE27F32C71A7C000DB5AEE /* BaseViewController.swift in Sources */,
 				7D6CCB9F2C6E513D00E56025 /* NameSpace.swift in Sources */,
+				7DFE28032C71B99F00DB5AEE /* LoginModel.swift in Sources */,
 				7DFE27F52C71A7E400DB5AEE /* BaseViewModel.swift in Sources */,
+				7DFE28062C71BA6F00DB5AEE /* UserDefaultsWrapper.swift in Sources */,
 				7D6CCB242C6CEED800E56025 /* SceneDelegate.swift in Sources */,
 				7DFE27E12C71966B00DB5AEE /* BaseView.swift in Sources */,
 				7DFE27FD2C71ABB700DB5AEE /* NormalOutlineTextField.swift in Sources */,

@@ -12,7 +12,9 @@ final class LoginViewModel : BaseViewModelProtocol {
     let disposeBag = DisposeBag()
     
     struct Input {
-        
+        let loginButtonTap : PublishSubject<Void>
+        let emailInputText : Observable<String>
+        let passwordInputText : PublishSubject<String>
     }
     
     struct Output {
@@ -20,6 +22,20 @@ final class LoginViewModel : BaseViewModelProtocol {
     }
     
     func transform(input : Input) -> Output {
+        input.loginButtonTap
+            .withLatestFrom(Observable.combineLatest(input.emailInputText, input.passwordInputText))
+            .map{ (emali, password) in
+                print("🌸emali", emali)
+                print("🌸password", password)
+
+                return NetworkManager.shared.login(email: emali, password: password)
+            }
+            .bind { _ in
+                print("🌸loginButtonTap")
+            }
+            .disposed(by: disposeBag)
+        
+            
         
         print("❤️LoginViewModel --> transform")
         return Output()

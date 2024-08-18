@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import RxSwift
 
 class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewController {
     let viewManager = BV.init()
     let vm = VM.init()
+    let disposeBag = DisposeBag()
     
     override func loadView() {
         view = viewManager
