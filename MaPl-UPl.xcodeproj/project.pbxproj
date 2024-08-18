@@ -34,6 +34,8 @@
 		7DFE27FF2C71B6BF00DB5AEE /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27FE2C71B6BF00DB5AEE /* NetworkManager.swift */; };
 		7DFE28032C71B99F00DB5AEE /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28022C71B99F00DB5AEE /* LoginModel.swift */; };
 		7DFE28062C71BA6F00DB5AEE /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28052C71BA6F00DB5AEE /* UserDefaultsWrapper.swift */; };
+		7DFE28082C71FC8A00DB5AEE /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28072C71FC8A00DB5AEE /* TargetType.swift */; };
+		7DFE280A2C71FDA200DB5AEE /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28092C71FDA200DB5AEE /* Router.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +64,8 @@
 		7DFE27FE2C71B6BF00DB5AEE /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7DFE28022C71B99F00DB5AEE /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		7DFE28052C71BA6F00DB5AEE /* UserDefaultsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsWrapper.swift; sourceTree = "<group>"; };
+		7DFE28072C71FC8A00DB5AEE /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		7DFE28092C71FDA200DB5AEE /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,8 @@
 				7D6CCB3A2C6CF12400E56025 /* APIURL.swift */,
 				7D6CCB3C2C6CF13700E56025 /* APIKey.swift */,
 				7DFE27FE2C71B6BF00DB5AEE /* NetworkManager.swift */,
+				7DFE28072C71FC8A00DB5AEE /* TargetType.swift */,
+				7DFE28092C71FDA200DB5AEE /* Router.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -354,9 +360,11 @@
 				7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */,
 				7DFE27F32C71A7C000DB5AEE /* BaseViewController.swift in Sources */,
 				7D6CCB9F2C6E513D00E56025 /* NameSpace.swift in Sources */,
+				7DFE28082C71FC8A00DB5AEE /* TargetType.swift in Sources */,
 				7DFE28032C71B99F00DB5AEE /* LoginModel.swift in Sources */,
 				7DFE27F52C71A7E400DB5AEE /* BaseViewModel.swift in Sources */,
 				7DFE28062C71BA6F00DB5AEE /* UserDefaultsWrapper.swift in Sources */,
+				7DFE280A2C71FDA200DB5AEE /* Router.swift in Sources */,
 				7D6CCB242C6CEED800E56025 /* SceneDelegate.swift in Sources */,
 				7DFE27E12C71966B00DB5AEE /* BaseView.swift in Sources */,
 				7DFE27FD2C71ABB700DB5AEE /* NormalOutlineTextField.swift in Sources */,

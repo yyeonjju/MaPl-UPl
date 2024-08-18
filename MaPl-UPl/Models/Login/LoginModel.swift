@@ -25,3 +25,10 @@ struct LoginResponse : Codable {
         case refresh = "refreshToken"
     }
 }
+
+
+// LoginRequest의 바디
+struct LoginQuery : Encodable{
+    let email : String
+    let password : String
+}

@@ -9,6 +9,8 @@ import Foundation
 import RxSwift
 
 final class LoginViewModel : BaseViewModelProtocol {
+    @UserDefaultsWrapper(key : .userInfo) var userInfo : LoginResponse?
+    
     let disposeBag = DisposeBag()
     
     struct Input {
@@ -24,20 +26,26 @@ final class LoginViewModel : BaseViewModelProtocol {
     func transform(input : Input) -> Output {
         input.loginButtonTap
             .withLatestFrom(Observable.combineLatest(input.emailInputText, input.passwordInputText))
-            .map{ (emali, password) in
-                print("🌸emali", emali)
-                print("🌸password", password)
-
-                return NetworkManager.shared.login(email: emali, password: password)
-            }
-            .bind { _ in
-                print("🌸loginButtonTap")
-            }
+            .flatMap{ (emali, password) in
+                NetworkManager.shared.login(email: emali, password: password)
+            } //⭐️ api fetch에서 반환하는 single은 error나 complete을 방출하지 않음 -> driver로 변환
+            .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
+            .drive(with: self, onNext: { owner, result in
+                switch result{
+                case .success(let loginResponse) :
+                    print("🌸success🌸",loginResponse)
+                    //유저디폴트에 유저 정보 저장(토큰 포함)
+                    owner.userInfo = loginResponse
+                    print("🌸success - userInfo🌸",owner.userInfo)
+                case .failure(let error as FetchError) :
+                    print("🌸failure🌸", error.errorMessage)
+                default:
+                    print("default")
+                    
+                }
+            })
             .disposed(by: disposeBag)
-        
-            
-        
-        print("❤️LoginViewModel --> transform")
+
         return Output()
     }
 }
