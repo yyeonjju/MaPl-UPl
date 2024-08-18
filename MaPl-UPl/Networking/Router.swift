@@ -46,10 +46,8 @@ extension Router: TargetType {
             let encoder = JSONEncoder()
             do{
                 let data = try encoder.encode(query)
-                print("🌸login body🌸", data)
                 return data
             }catch{
-                print("🌸login body error🌸", error)
                 return nil
             }
         }

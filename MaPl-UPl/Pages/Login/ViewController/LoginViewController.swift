@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Toast
 
 final class LoginViewController : BaseViewController<LoginView, LoginViewModel> {
     // MARK: - UI
@@ -40,6 +41,29 @@ final class LoginViewController : BaseViewController<LoginView, LoginViewModel> 
         
         viewManager.passwordTextField.rx.text.orEmpty
             .bind(to: passwordInputText)
+            .disposed(by: disposeBag)
+        
+        
+        //output
+        output.errorMessage
+            .bind(with: self) { owner, message in
+                owner.view.makeToast(message, position: .top)
+            }
+            .disposed(by: disposeBag)
+        
+        output.loginSuccess
+            .bind(with: self) { owner, _ in
+                ///루트뷰 변경
+                let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+                sceneDelegate?.changeRootViewController(to: PlaylistListViewController())
+            }
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .bind(with: self) { owner, isLoading in
+                owner.viewManager.loginButton.isEnabled = !isLoading
+                owner.viewManager.loginButton.setTitle(isLoading ? "loading..." : "로그인", for: .normal)
+            }
             .disposed(by: disposeBag)
         
     }

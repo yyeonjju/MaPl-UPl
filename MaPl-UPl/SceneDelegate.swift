@@ -53,3 +53,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate {
+    /// PlaylistListViewController로 루트뷰를 변경합니다.
+    func changeRootViewController(to vc : UIViewController) {
+        
+        guard let window = self.window else { return }
+        
+        //네비게이션 컨트롤러 생성
+        let viewController = UINavigationController(rootViewController: vc)
+        
+        window.rootViewController = viewController
+        
+    }
+}
+
