@@ -8,14 +8,23 @@
 import Foundation
 import Alamofire
 
+struct UserInfoManager {
+    @UserDefaultsWrapper(key: .userInfo) var userInfo : LoginResponse?
+}
+
 enum Router {
-    
     case login(query : LoginQuery)
-    case postPlaylist(query : PostPlaylistQuery, token : String)
+    case postPlaylist(query : PostPlaylistQuery)
+    case updloadImage
+    
+    var accessToken : String {
+        print("====        accessToken      ===", UserInfoManager().userInfo?.access)
+        return UserInfoManager().userInfo?.access ?? ""
+    }
 }
 
 extension Router: TargetType {
-    
+
     var baseURL: String {
         return APIURL.baseURL + APIURL.version
     }
@@ -26,12 +35,14 @@ extension Router: TargetType {
             return APIURL.login
         case .postPlaylist:
             return APIURL.postPlaylist
+        case .updloadImage:
+            return APIURL.updloadImage
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .login, .postPlaylist:
+        case .login, .postPlaylist, .updloadImage:
             return .post
         }
     }
@@ -54,7 +65,7 @@ extension Router: TargetType {
             }catch{
                 return nil
             }
-        case .postPlaylist(let query, let token):
+        case .postPlaylist(let query):
             let encoder = JSONEncoder()
             do{
                 let data = try encoder.encode(query)
@@ -62,6 +73,8 @@ extension Router: TargetType {
             }catch{
                 return nil
             }
+        case .updloadImage:
+            return nil
         }
     }
     
@@ -74,11 +87,17 @@ extension Router: TargetType {
                 HeaderKey.contentType: HeaderValue.applicationJson,
                 HeaderKey.sesacKey : HeaderValue.sesacKey
             ]
-        case .postPlaylist(let query, let token):
+        case .postPlaylist(let query):
             return [
                 HeaderKey.contentType: HeaderValue.applicationJson,
                 HeaderKey.sesacKey : HeaderValue.sesacKey,
-                HeaderKey.authorization : token
+                HeaderKey.authorization : accessToken
+            ]
+        case .updloadImage :
+            return [
+                HeaderKey.contentType: HeaderValue.multipartFormData,
+                HeaderKey.sesacKey : HeaderValue.sesacKey,
+                HeaderKey.authorization : accessToken
             ]
             
         }

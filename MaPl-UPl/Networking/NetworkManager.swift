@@ -8,10 +8,12 @@
 import Foundation
 import Alamofire
 import RxSwift
+import UIKit
 
 enum FetchError : Error {
     case fetchEmitError // 만에 하나 리턴한 single에러 에러를 방출했을떄 발생하는 에러
     
+    case url
     case urlRequestError
     case failedRequest
     case noData
@@ -26,6 +28,8 @@ enum FetchError : Error {
         switch self {
         case .fetchEmitError :
             return "알 수 없는 에러입니다."
+        case .url :
+            return "잘못된 url입니다"
         case .urlRequestError:
             return "urlRequest 에러"
         case .failedRequest:
@@ -111,6 +115,78 @@ class NetworkManager {
 
         
     }
+    
+    
+    
+    func uploadFile<M : Decodable>(fetchRouter : Router, imageData : Data, model : M.Type) -> Single<Result<M,Error>> {
+        
+        let single = Single<Result<M,Error>>.create { single in
+            do {
+                let request = try fetchRouter.asURLRequest()
+                guard let url = request.url else {
+                    return single(.success(.failure(FetchError.urlRequestError))) as! Disposable
+                }
+                let header : HTTPHeaders? = request.headers
+//                print("💚 url", url)
+//                print("💚 header", header)
+//                print("💚request💚", request)
+                
+                AF.upload(
+                    multipartFormData: { multipartFormData in
+                        // mimeType : 폼데이터  중에 어떤 파일로 분기해줄 것인지 정해준다.
+                        multipartFormData.append(imageData,withName: "files", fileName: "image.png",mimeType: "image/png")
+                    },
+                    to: url,
+                    headers: header
+                )
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: model.self) { response in
+//                    print("💚response", response.response)
+//                    print("💚statusCode", response.response?.statusCode)
+                    guard let statusCode = response.response?.statusCode else {
+                        return single(.success(.failure(FetchError.failedRequest)))
+                    }
+                    
+                    guard let data = response.data else {
+                        return single(.success(.failure(FetchError.noData)))
+                    }
+                    
+                    guard response.response != nil else {
+                        return single(.success(.failure(FetchError.invalidResponse)))
+                    }
+                    
+                    
+                    if statusCode != 200 {
+                        var errorMessage: String?
+                        if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: String] {
+                            errorMessage = json["message"]
+                        }
+
+                        print("errorMessage -> ", errorMessage)
+                        return single(.success(.failure(FetchError.failResponse(code: statusCode, message: errorMessage ?? ""))))
+                    }
+                    
+                    
+                    
+                    switch response.result {
+                    case .success(let value):
+                        return single(.success(.success(value)))
+                        
+                    case .failure(let failure):
+                        return single(.success(.failure(FetchError.invalidData)))
+                    }
+
+                }
+                
+            } catch {
+                return single(.success(.failure(FetchError.urlRequestError))) as! Disposable
+                
+            }
+            return Disposables.create()
+        }
+        
+        return single
+    }
 
 }
 
@@ -125,17 +201,15 @@ extension NetworkManager {
     }
     
     func postPlaylist(body : PostPlaylistQuery) -> Single<Result<PostPlaylistResponse,Error>>  {
-        
-        guard let userInfo else{
-            return Single.create { single in
-                single(.success(.failure(FetchError.noUser)))
-                return Disposables.create()
-            }
-        }
-        
-        let fetchRouter = Router.postPlaylist(query: body, token: userInfo.access)
+        let fetchRouter = Router.postPlaylist(query: body)
         
         return fetch(fetchRouter: fetchRouter, model : PostPlaylistResponse.self)
+    }
+    
+    func uploadImage(imageData : Data) -> Single<Result<FileModel,Error>> {
+        let fetchRouter = Router.updloadImage
+        
+        return uploadFile(fetchRouter: fetchRouter, imageData: imageData, model : FileModel.self)
     }
     
 }

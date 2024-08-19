@@ -31,6 +31,7 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
     
     struct Input {
         let postPlaylistButtonTap : PublishSubject<Void>
+        let selectedBgImageData : PublishSubject<Data>
     }
     
     struct Output {
@@ -38,27 +39,55 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
     }
     
     func transform(input : Input) -> Output {
-        let title = "플리 제목 (1)"
-        let content = ""
-        let content1 = encodeSongInfo(index: 0)
-        let content2 = encodeSongInfo(index: 1)
-        let content3 = encodeSongInfo(index: 2)
-        let content4 = encodeSongInfo(index: 3)
-        let content5 = encodeSongInfo(index: 4)
-        let productId = "playlist"
-        let files : [String] = []
+        let uploadSuccessFiles = PublishSubject<[String]>()
         
-        let PostPlaylistBodyData = PostPlaylistQuery(title: title, content: content, content1: content1, content2: content2, content3: content3, content4: content4, content5: content5, product_id: productId, files: files)
         
-        print("🧡PostPlaylistBodyData🧡", PostPlaylistBodyData)
-        
+        //1️⃣ 파일 업로드
         input.postPlaylistButtonTap
-            .flatMap{
-                NetworkManager.shared.postPlaylist(body: PostPlaylistBodyData)
+            .withLatestFrom(input.selectedBgImageData)
+            .flatMap{ imageData in
+                NetworkManager.shared.uploadImage(imageData: imageData)
+            }
+            .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
+            .drive(with: self, onNext: { owner, result in
+                
+                switch result{
+                case .success(let value) :
+                    print("🌸success🌸",value)
+                    uploadSuccessFiles.onNext(value.files)
+                case .failure(let error as FetchError) :
+                    print("🌸failure🌸", error.errorMessage)
+                default:
+                    print("default")
+                    
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
+        //2️⃣파일 업로드 성공했으면 게시물 업로드
+        uploadSuccessFiles
+            .withUnretained(self)
+            .map{ owner, files in
+                let title = "플리 제목 \(Int.random(in: 0...100))"
+                let content = ""
+                let content1 = owner.encodeSongInfo(index: 0)
+                let content2 = owner.encodeSongInfo(index: 1)
+                let content3 = owner.encodeSongInfo(index: 2)
+                let content4 = owner.encodeSongInfo(index: 3)
+                let content5 = owner.encodeSongInfo(index: 4)
+                let productId = "playlist"
+                
+                let PostPlaylistBodyData = PostPlaylistQuery(title: title, content: content, content1: content1, content2: content2, content3: content3, content4: content4, content5: content5, product_id: productId, files: files)
+                
+                return PostPlaylistBodyData
+            }
+            .flatMap{ BodyData in // 게시물 업로드
+                NetworkManager.shared.postPlaylist(body: BodyData)
             } //⭐️ api fetch에서 반환하는 single은 error나 complete을 방출하지 않음 & 메인스레드에서 동작하도록 -> driver로 변환
             .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
             .drive(with: self, onNext: { owner, result in
-//                isLoadingSubject.onNext(false)
+                //                isLoadingSubject.onNext(false)
                 
                 switch result{
                 case .success(let postResponse) :
@@ -70,41 +99,8 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
                     
                 }
                 
-                
-                //사실 여기선 response를 활용할 필요가 없음! 성공/실패만 알면됨
-                /*
-                 switch result{
-                 case .success(let postResponse) :
-                     print("🌸success🌸",postResponse)
-                     
-                     if let content = postResponse.content1 {
-                         let songInfoData = content.data(using: .utf8)!
-                         let decodedSongData = try? JSONDecoder().decode(SongInfo.self, from: songInfoData)
-                         print("✅decodedSongData✅", decodedSongData)
-                         
-                         if let decodedSongData, let previewURL = decodedSongData.previewURL {
-                             print("✅previewURL✅", previewURL)
-                             print("✅type✅", type(of:previewURL))
-
-                             let playItem = AVPlayerItem(url: previewURL)
-                             owner.player.replaceCurrentItem(with: playItem)
-                             owner.player.play()
-                         }
-
-                         
-                     }
-   
-                 case .failure(let error as FetchError) :
-                     print("🌸failure🌸", error.errorMessage)
-                 default:
-                     print("default")
-                     
-                 }
-                 */
-
             })
             .disposed(by: disposeBag)
-        
         
         return Output()
     }
@@ -121,8 +117,8 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
         }
         //string형태로 변환
         let stringFormatSongInfo = String(decoding: encodedSongData, as: UTF8.self)
-
+        
         return stringFormatSongInfo
-
+        
     }
 }

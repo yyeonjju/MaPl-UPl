@@ -20,9 +20,18 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
     
     private func setupBind() {
         let postPlaylistButtonTap = PublishSubject<Void>()
+        let selectedBgImageData = PublishSubject<Data>()
         
-        let input = PostPlaylistViewModel.Input(postPlaylistButtonTap : postPlaylistButtonTap)
+        let input = PostPlaylistViewModel.Input(postPlaylistButtonTap : postPlaylistButtonTap, selectedBgImageData : selectedBgImageData)
         let output = vm.transform(input: input)
+        
+        
+        //TODO: 이미지 바뀔 때마다 바인딩
+        viewManager.postPlaylistButton.rx.tap
+            .bind(onNext: { _ in
+                selectedBgImageData.onNext(UIImage(systemName: "star")!.pngData()!)
+            })
+            .disposed(by: disposeBag)
         
         viewManager.postPlaylistButton.rx.tap
             .bind(to: postPlaylistButtonTap)

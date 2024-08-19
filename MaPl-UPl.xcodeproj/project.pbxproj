@@ -46,6 +46,7 @@
 		7DFE282C2C72FFC000DB5AEE /* PostPlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE282B2C72FFC000DB5AEE /* PostPlaylistViewModel.swift */; };
 		7DFE282F2C730F5800DB5AEE /* PostPlaylistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE282E2C730F5800DB5AEE /* PostPlaylistModel.swift */; };
 		7DFE28312C7313FD00DB5AEE /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28302C7313FD00DB5AEE /* Song.swift */; };
+		7DFE28342C73776100DB5AEE /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28332C73776100DB5AEE /* FileModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,7 @@
 		7DFE282B2C72FFC000DB5AEE /* PostPlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaylistViewModel.swift; sourceTree = "<group>"; };
 		7DFE282E2C730F5800DB5AEE /* PostPlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaylistModel.swift; sourceTree = "<group>"; };
 		7DFE28302C7313FD00DB5AEE /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		7DFE28332C73776100DB5AEE /* FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,6 +272,7 @@
 		7DFE28002C71B97400DB5AEE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7DFE28322C73774900DB5AEE /* File */,
 				7DFE282D2C730F3A00DB5AEE /* Playlist */,
 				7DFE28012C71B97B00DB5AEE /* Login */,
 			);
@@ -369,6 +372,14 @@
 			path = Playlist;
 			sourceTree = "<group>";
 		};
+		7DFE28322C73774900DB5AEE /* File */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE28332C73776100DB5AEE /* FileModel.swift */,
+			);
+			path = File;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -462,6 +473,7 @@
 				7D6CCB262C6CEED800E56025 /* ViewController.swift in Sources */,
 				7DFE28142C72397400DB5AEE /* PostPlaylistViewController.swift in Sources */,
 				7DFE27FF2C71B6BF00DB5AEE /* NetworkManager.swift in Sources */,
+				7DFE28342C73776100DB5AEE /* FileModel.swift in Sources */,
 				7DFE28312C7313FD00DB5AEE /* Song.swift in Sources */,
 				7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */,
 				7DFE27F32C71A7C000DB5AEE /* BaseViewController.swift in Sources */,
