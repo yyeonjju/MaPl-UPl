@@ -35,18 +35,23 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
     }
     
     struct Output {
-        
+        let errorMessage : PublishSubject<String>
+        let isLoading : PublishSubject<Bool>
+        let uploadComplete : PublishSubject<Bool>
     }
     
     func transform(input : Input) -> Output {
+        let errorMessageSubject = PublishSubject<String>()
+        let isLoadingSubject = PublishSubject<Bool>()
         let uploadSuccessFiles = PublishSubject<[String]>()
-        
+        let uploadCompleteSubject = PublishSubject<Bool>()
         
         //1️⃣ 파일 업로드
         input.postPlaylistButtonTap
             .withLatestFrom(input.selectedBgImageData)
             .flatMap{ imageData in
-                NetworkManager.shared.uploadImage(imageData: imageData)
+                isLoadingSubject.onNext(true)
+                return NetworkManager.shared.uploadImage(imageData: imageData)
             }
             .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
             .drive(with: self, onNext: { owner, result in
@@ -56,7 +61,8 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
                     print("🌸success🌸",value)
                     uploadSuccessFiles.onNext(value.files)
                 case .failure(let error as FetchError) :
-                    print("🌸failure🌸", error.errorMessage)
+                    isLoadingSubject.onNext(false)
+                    errorMessageSubject.onNext(error.errorMessage)
                 default:
                     print("default")
                     
@@ -87,13 +93,14 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
             } //⭐️ api fetch에서 반환하는 single은 error나 complete을 방출하지 않음 & 메인스레드에서 동작하도록 -> driver로 변환
             .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
             .drive(with: self, onNext: { owner, result in
-                //                isLoadingSubject.onNext(false)
+                isLoadingSubject.onNext(false)
                 
                 switch result{
                 case .success(let postResponse) :
                     print("🌸success🌸",postResponse)
+                    uploadCompleteSubject.onNext(true)
                 case .failure(let error as FetchError) :
-                    print("🌸failure🌸", error.errorMessage)
+                    errorMessageSubject.onNext(error.errorMessage)
                 default:
                     print("default")
                     
@@ -102,7 +109,7 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
             })
             .disposed(by: disposeBag)
         
-        return Output()
+        return Output(errorMessage : errorMessageSubject,  isLoading : isLoadingSubject, uploadComplete: uploadCompleteSubject)
     }
     
     private func encodeSongInfo(index : Int) -> String?  {

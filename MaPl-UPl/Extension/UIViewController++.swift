@@ -14,7 +14,6 @@ extension UIViewController{
         case present
         case presentNavigation
         case presentFullNavigation
-        case pop
     }
     
     func pageTransition(to viewController : UIViewController, type : TransitionType) {
@@ -30,8 +29,6 @@ extension UIViewController{
             let nav = UINavigationController(rootViewController: viewController)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
-        case .pop :
-            navigationController?.popViewController(animated: true)
         }
         
     }

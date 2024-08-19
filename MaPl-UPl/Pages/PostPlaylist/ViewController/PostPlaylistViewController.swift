@@ -38,7 +38,25 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
             .disposed(by: disposeBag)
         
         
+        //output
+        output.errorMessage
+            .bind(with: self) { owner, message in
+                owner.view.makeToast(message, position: .top)
+            }
+            .disposed(by: disposeBag)
         
+        output.isLoading
+            .bind(with: self) { owner, isLoading in
+                owner.viewManager.postPlaylistButton.isEnabled = !isLoading
+                owner.viewManager.postPlaylistButton.configuration?.showsActivityIndicator = isLoading // spin ui 보여주기
+            }
+            .disposed(by: disposeBag)
+        
+        output.uploadComplete
+            .bind(with: self) { owner, complete in
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
         
     }
 }
