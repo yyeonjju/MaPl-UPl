@@ -62,7 +62,7 @@ final class LoginViewController : BaseViewController<LoginView, LoginViewModel> 
         output.isLoading
             .bind(with: self) { owner, isLoading in
                 owner.viewManager.loginButton.isEnabled = !isLoading
-                owner.viewManager.loginButton.setTitle(isLoading ? "loading..." : "로그인", for: .normal)
+                owner.viewManager.loginButton.configuration?.showsActivityIndicator = isLoading // spin ui 보여주기
             }
             .disposed(by: disposeBag)
         

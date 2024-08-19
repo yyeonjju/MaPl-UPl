@@ -13,10 +13,14 @@ final class MainNormalButton : UIButton{
     init(title : String, bgColor : UIColor = Assets.Colors.gray3) {
         super.init(frame: .zero)
         
-        self.layer.cornerRadius = 16
-        self.backgroundColor = bgColor
-        self.setTitleColor(Assets.Colors.white, for: .normal)
-        self.setTitle(title, for: .normal)
+        var config = UIButton.Configuration.gray()
+        config.title = title
+        config.baseForegroundColor = Assets.Colors.white
+        config.baseBackgroundColor = bgColor
+        config.titleAlignment = .center
+        config.imagePadding = 10
+        
+        self.configuration = config
         
         self.snp.makeConstraints { make in
             make.height.equalTo(48)
