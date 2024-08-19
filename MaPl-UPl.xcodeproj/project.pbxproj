@@ -40,6 +40,12 @@
 		7DFE280F2C7238BB00DB5AEE /* UIViewController++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE280E2C7238BB00DB5AEE /* UIViewController++.swift */; };
 		7DFE28142C72397400DB5AEE /* PostPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28132C72397400DB5AEE /* PostPlaylistViewController.swift */; };
 		7DFE28182C723AD000DB5AEE /* PlaylistListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28172C723AD000DB5AEE /* PlaylistListViewController.swift */; };
+		7DFE28242C72F8B400DB5AEE /* PlaylistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28232C72F8B400DB5AEE /* PlaylistListView.swift */; };
+		7DFE28262C72F8CF00DB5AEE /* PlaylistListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28252C72F8CF00DB5AEE /* PlaylistListViewModel.swift */; };
+		7DFE28292C72FF7700DB5AEE /* PostPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28282C72FF7700DB5AEE /* PostPlaylistView.swift */; };
+		7DFE282C2C72FFC000DB5AEE /* PostPlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE282B2C72FFC000DB5AEE /* PostPlaylistViewModel.swift */; };
+		7DFE282F2C730F5800DB5AEE /* PostPlaylistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE282E2C730F5800DB5AEE /* PostPlaylistModel.swift */; };
+		7DFE28312C7313FD00DB5AEE /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE28302C7313FD00DB5AEE /* Song.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +79,12 @@
 		7DFE280E2C7238BB00DB5AEE /* UIViewController++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController++.swift"; sourceTree = "<group>"; };
 		7DFE28132C72397400DB5AEE /* PostPlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaylistViewController.swift; sourceTree = "<group>"; };
 		7DFE28172C723AD000DB5AEE /* PlaylistListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListViewController.swift; sourceTree = "<group>"; };
+		7DFE28232C72F8B400DB5AEE /* PlaylistListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListView.swift; sourceTree = "<group>"; };
+		7DFE28252C72F8CF00DB5AEE /* PlaylistListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListViewModel.swift; sourceTree = "<group>"; };
+		7DFE28282C72FF7700DB5AEE /* PostPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaylistView.swift; sourceTree = "<group>"; };
+		7DFE282B2C72FFC000DB5AEE /* PostPlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaylistViewModel.swift; sourceTree = "<group>"; };
+		7DFE282E2C730F5800DB5AEE /* PostPlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaylistModel.swift; sourceTree = "<group>"; };
+		7DFE28302C7313FD00DB5AEE /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +270,7 @@
 		7DFE28002C71B97400DB5AEE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7DFE282D2C730F3A00DB5AEE /* Playlist */,
 				7DFE28012C71B97B00DB5AEE /* Login */,
 			);
 			path = Models;
@@ -282,6 +295,8 @@
 		7DFE28102C72393900DB5AEE /* PostPlaylist */ = {
 			isa = PBXGroup;
 			children = (
+				7DFE282A2C72FFB900DB5AEE /* ViewModel */,
+				7DFE28272C72FF6C00DB5AEE /* View */,
 				7DFE28122C72395C00DB5AEE /* ViewController */,
 			);
 			path = PostPlaylist;
@@ -298,6 +313,8 @@
 		7DFE28152C723AAC00DB5AEE /* PlaylistList */ = {
 			isa = PBXGroup;
 			children = (
+				7DFE28222C72F89E00DB5AEE /* ViewModel */,
+				7DFE28212C72F89800DB5AEE /* View */,
 				7DFE28162C723ABC00DB5AEE /* ViewController */,
 			);
 			path = PlaylistList;
@@ -309,6 +326,47 @@
 				7DFE28172C723AD000DB5AEE /* PlaylistListViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7DFE28212C72F89800DB5AEE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE28232C72F8B400DB5AEE /* PlaylistListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7DFE28222C72F89E00DB5AEE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE28252C72F8CF00DB5AEE /* PlaylistListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7DFE28272C72FF6C00DB5AEE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE28282C72FF7700DB5AEE /* PostPlaylistView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7DFE282A2C72FFB900DB5AEE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE282B2C72FFC000DB5AEE /* PostPlaylistViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7DFE282D2C730F3A00DB5AEE /* Playlist */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE282E2C730F5800DB5AEE /* PostPlaylistModel.swift */,
+				7DFE28302C7313FD00DB5AEE /* Song.swift */,
+			);
+			path = Playlist;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,13 +458,16 @@
 				7DFE27D82C71953700DB5AEE /* LoginViewController.swift in Sources */,
 				7D6CCB3B2C6CF12400E56025 /* APIURL.swift in Sources */,
 				7DFE27F12C719EDF00DB5AEE /* LoginViewModel.swift in Sources */,
+				7DFE282C2C72FFC000DB5AEE /* PostPlaylistViewModel.swift in Sources */,
 				7D6CCB262C6CEED800E56025 /* ViewController.swift in Sources */,
 				7DFE28142C72397400DB5AEE /* PostPlaylistViewController.swift in Sources */,
 				7DFE27FF2C71B6BF00DB5AEE /* NetworkManager.swift in Sources */,
+				7DFE28312C7313FD00DB5AEE /* Song.swift in Sources */,
 				7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */,
 				7DFE27F32C71A7C000DB5AEE /* BaseViewController.swift in Sources */,
 				7D6CCB9F2C6E513D00E56025 /* NameSpace.swift in Sources */,
 				7DFE28082C71FC8A00DB5AEE /* TargetType.swift in Sources */,
+				7DFE28242C72F8B400DB5AEE /* PlaylistListView.swift in Sources */,
 				7DFE28032C71B99F00DB5AEE /* LoginModel.swift in Sources */,
 				7DFE27F52C71A7E400DB5AEE /* BaseViewModel.swift in Sources */,
 				7DFE28182C723AD000DB5AEE /* PlaylistListViewController.swift in Sources */,
@@ -414,7 +475,10 @@
 				7DFE280A2C71FDA200DB5AEE /* Router.swift in Sources */,
 				7D6CCB242C6CEED800E56025 /* SceneDelegate.swift in Sources */,
 				7DFE280F2C7238BB00DB5AEE /* UIViewController++.swift in Sources */,
+				7DFE282F2C730F5800DB5AEE /* PostPlaylistModel.swift in Sources */,
 				7DFE27E12C71966B00DB5AEE /* BaseView.swift in Sources */,
+				7DFE28262C72F8CF00DB5AEE /* PlaylistListViewModel.swift in Sources */,
+				7DFE28292C72FF7700DB5AEE /* PostPlaylistView.swift in Sources */,
 				7DFE27FD2C71ABB700DB5AEE /* NormalOutlineTextField.swift in Sources */,
 				7DFE27DE2C7195F400DB5AEE /* LoginView.swift in Sources */,
 				7DFE27FA2C71AA8600DB5AEE /* MainNormalButton.swift in Sources */,

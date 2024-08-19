@@ -19,6 +19,8 @@ enum FetchError : Error {
     case failResponse(code : Int, message : String)
     case invalidData
     
+    case noUser
+    
     
     var errorMessage : String{
         switch self {
@@ -36,11 +38,14 @@ enum FetchError : Error {
             return "\(errorCode)error : \(message)"
         case .invalidData:
             return "데이터 파싱 에러"
+        case .noUser :
+            return "유저가 명확하지 않습니다."
         }
     }
 }
 
 class NetworkManager {
+    @UserDefaultsWrapper(key : .userInfo) var userInfo : LoginResponse?
     
     static let shared = NetworkManager()
     private init() { }
@@ -117,6 +122,20 @@ extension NetworkManager {
         let fetchRouter = Router.login(query: body)
         
         return fetch(fetchRouter: fetchRouter, model : LoginResponse.self)
+    }
+    
+    func postPlaylist(body : PostPlaylistQuery) -> Single<Result<PostPlaylistResponse,Error>>  {
+        
+        guard let userInfo else{
+            return Single.create { single in
+                single(.success(.failure(FetchError.noUser)))
+                return Disposables.create()
+            }
+        }
+        
+        let fetchRouter = Router.postPlaylist(query: body, token: userInfo.access)
+        
+        return fetch(fetchRouter: fetchRouter, model : PostPlaylistResponse.self)
     }
     
 }

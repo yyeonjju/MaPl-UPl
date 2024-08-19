@@ -11,8 +11,7 @@ import RxCocoa
 import Toast
 
 final class LoginViewController : BaseViewController<LoginView, LoginViewModel> {
-    // MARK: - UI
-    // MARK: - Properties
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,14 +67,4 @@ final class LoginViewController : BaseViewController<LoginView, LoginViewModel> 
         
     }
 
-    
-    // MARK: - SetupDelegate
-    // MARK: - AddTarget
-    private func setupAddTarget() {
-    }
-    // MARK: - EventSelector
-    // MARK: - SetupUI
-    // MARK: - APIFetch
-    // MARK: - PageTransition
-    
 }

@@ -9,7 +9,9 @@ import Foundation
 import Alamofire
 
 enum Router {
+    
     case login(query : LoginQuery)
+    case postPlaylist(query : PostPlaylistQuery, token : String)
 }
 
 extension Router: TargetType {
@@ -22,12 +24,14 @@ extension Router: TargetType {
         switch self {
         case .login:
             return APIURL.login
+        case .postPlaylist:
+            return APIURL.postPlaylist
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .login:
+        case .login, .postPlaylist:
             return .post
         }
     }
@@ -50,6 +54,14 @@ extension Router: TargetType {
             }catch{
                 return nil
             }
+        case .postPlaylist(let query, let token):
+            let encoder = JSONEncoder()
+            do{
+                let data = try encoder.encode(query)
+                return data
+            }catch{
+                return nil
+            }
         }
     }
     
@@ -62,6 +74,13 @@ extension Router: TargetType {
                 HeaderKey.contentType: HeaderValue.applicationJson,
                 HeaderKey.sesacKey : HeaderValue.sesacKey
             ]
+        case .postPlaylist(let query, let token):
+            return [
+                HeaderKey.contentType: HeaderValue.applicationJson,
+                HeaderKey.sesacKey : HeaderValue.sesacKey,
+                HeaderKey.authorization : token
+            ]
+            
         }
     }
     

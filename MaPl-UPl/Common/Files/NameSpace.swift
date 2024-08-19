@@ -19,6 +19,10 @@ enum Assets {
         static let gray5 = UIColor(named: "gray5")!
         static let white = UIColor(named: "white")!
     }
+    
+    enum SystemImage {
+        static let plus = UIImage(systemName: "plus")
+    }
 }
 
 enum Font {

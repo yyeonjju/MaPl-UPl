@@ -9,32 +9,27 @@ import UIKit
 import RxSwift
 
 final class PostPlaylistViewController : BaseViewController<PostPlaylistView, PostPlaylistViewModel> {
-    
+    // MARK: - UI
+    // MARK: - Properties
+    // MARK: - Lifecycle
     override func viewDidLoad() {
-        view.backgroundColor = .pointPink
+        super.viewDidLoad()
+
+        setupBind()
     }
     
-    
-}
-
-
-final class PostPlaylistView : BaseView {
-    
-}
-
-final class PostPlaylistViewModel : BaseViewModelProtocol {
-    let disposeBag = DisposeBag()
-    
-    struct Input {
+    private func setupBind() {
+        let postPlaylistButtonTap = PublishSubject<Void>()
+        
+        let input = PostPlaylistViewModel.Input(postPlaylistButtonTap : postPlaylistButtonTap)
+        let output = vm.transform(input: input)
+        
+        viewManager.postPlaylistButton.rx.tap
+            .bind(to: postPlaylistButtonTap)
+            .disposed(by: disposeBag)
+        
+        
+        
         
     }
-    
-    struct Output {
-        
-    }
-    
-    func transform(input : Input) -> Output {
-        return Output()
-    }
-    
 }
