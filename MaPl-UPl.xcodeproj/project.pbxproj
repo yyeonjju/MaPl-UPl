@@ -20,6 +20,11 @@
 		7D6CCB3D2C6CF13700E56025 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB3C2C6CF13700E56025 /* APIKey.swift */; };
 		7D6CCB9C2C6E4F3200E56025 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D6CCB9B2C6E4F3200E56025 /* Colors.xcassets */; };
 		7D6CCB9F2C6E513D00E56025 /* NameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB9E2C6E513D00E56025 /* NameSpace.swift */; };
+		7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */; };
+		7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D42C76028B00C47DF4 /* UIImageView++.swift */; };
+		7DB325DA2C76074300C47DF4 /* OvalShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D92C76074300C47DF4 /* OvalShapeButton.swift */; };
+		7DC40DB22C76241C00BB3A50 /* SelectedMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC40DB12C76241C00BB3A50 /* SelectedMusicTableViewCell.swift */; };
+		7DC40DB52C762B8500BB3A50 /* BasicMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC40DB42C762B8400BB3A50 /* BasicMusicTableViewCell.swift */; };
 		7DFE27D82C71953700DB5AEE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27D72C71953700DB5AEE /* LoginViewController.swift */; };
 		7DFE27DE2C7195F400DB5AEE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27DD2C7195F400DB5AEE /* LoginView.swift */; };
 		7DFE27E12C71966B00DB5AEE /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27E02C71966B00DB5AEE /* BaseView.swift */; };
@@ -67,6 +72,11 @@
 		7D6CCB3C2C6CF13700E56025 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		7D6CCB9B2C6E4F3200E56025 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		7D6CCB9E2C6E513D00E56025 /* NameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSpace.swift; sourceTree = "<group>"; };
+		7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineTextField.swift; sourceTree = "<group>"; };
+		7DB325D42C76028B00C47DF4 /* UIImageView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView++.swift"; sourceTree = "<group>"; };
+		7DB325D92C76074300C47DF4 /* OvalShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvalShapeButton.swift; sourceTree = "<group>"; };
+		7DC40DB12C76241C00BB3A50 /* SelectedMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMusicTableViewCell.swift; sourceTree = "<group>"; };
+		7DC40DB42C762B8400BB3A50 /* BasicMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicMusicTableViewCell.swift; sourceTree = "<group>"; };
 		7DFE27D72C71953700DB5AEE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7DFE27DD2C7195F400DB5AEE /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7DFE27E02C71966B00DB5AEE /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -137,6 +147,7 @@
 		7D6CCB202C6CEED800E56025 /* MaPl-UPl */ = {
 			isa = PBXGroup;
 			children = (
+				7DC40DB32C76275C00BB3A50 /* Cells */,
 				7DFE28002C71B97400DB5AEE /* Models */,
 				7D6CCB9A2C6E4EBA00E56025 /* Resources */,
 				7D6CCB992C6E4EB300E56025 /* Common */,
@@ -191,6 +202,7 @@
 			children = (
 				7DFE27E22C71969F00DB5AEE /* UIView++.swift */,
 				7DFE280E2C7238BB00DB5AEE /* UIViewController++.swift */,
+				7DB325D42C76028B00C47DF4 /* UIImageView++.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -220,6 +232,15 @@
 				7D6CCB9E2C6E513D00E56025 /* NameSpace.swift */,
 			);
 			path = Files;
+			sourceTree = "<group>";
+		};
+		7DC40DB32C76275C00BB3A50 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7DC40DB12C76241C00BB3A50 /* SelectedMusicTableViewCell.swift */,
+				7DC40DB42C762B8400BB3A50 /* BasicMusicTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		7DFE27D62C7194F000DB5AEE /* Login */ = {
@@ -270,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				7DFE27F92C71AA8600DB5AEE /* MainNormalButton.swift */,
+				7DB325D92C76074300C47DF4 /* OvalShapeButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -278,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				7DFE27FC2C71ABB700DB5AEE /* NormalOutlineTextField.swift */,
+				7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */,
 			);
 			path = TextField;
 			sourceTree = "<group>";
@@ -481,12 +504,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DFE27D82C71953700DB5AEE /* LoginViewController.swift in Sources */,
+				7DB325DA2C76074300C47DF4 /* OvalShapeButton.swift in Sources */,
 				7D6CCB3B2C6CF12400E56025 /* APIURL.swift in Sources */,
 				7DFE27F12C719EDF00DB5AEE /* LoginViewModel.swift in Sources */,
 				7DFE282C2C72FFC000DB5AEE /* PostPlaylistViewModel.swift in Sources */,
+				7DC40DB52C762B8500BB3A50 /* BasicMusicTableViewCell.swift in Sources */,
 				7D6CCB262C6CEED800E56025 /* ViewController.swift in Sources */,
 				7DFE28142C72397400DB5AEE /* PostPlaylistViewController.swift in Sources */,
 				7DFE27FF2C71B6BF00DB5AEE /* NetworkManager.swift in Sources */,
+				7DC40DB22C76241C00BB3A50 /* SelectedMusicTableViewCell.swift in Sources */,
 				7DFE28342C73776100DB5AEE /* FileModel.swift in Sources */,
 				7DFE28312C7313FD00DB5AEE /* Song.swift in Sources */,
 				7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */,
@@ -506,11 +532,13 @@
 				7DFE282F2C730F5800DB5AEE /* PostPlaylistModel.swift in Sources */,
 				7DFE27E12C71966B00DB5AEE /* BaseView.swift in Sources */,
 				7DFE28262C72F8CF00DB5AEE /* PlaylistListViewModel.swift in Sources */,
+				7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */,
 				7DFE28292C72FF7700DB5AEE /* PostPlaylistView.swift in Sources */,
 				7DFE27FD2C71ABB700DB5AEE /* NormalOutlineTextField.swift in Sources */,
 				7DFE27DE2C7195F400DB5AEE /* LoginView.swift in Sources */,
 				7DFE27FA2C71AA8600DB5AEE /* MainNormalButton.swift in Sources */,
 				7DFE27E32C71969F00DB5AEE /* UIView++.swift in Sources */,
+				7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */,
 				7D6CCB3D2C6CF13700E56025 /* APIKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

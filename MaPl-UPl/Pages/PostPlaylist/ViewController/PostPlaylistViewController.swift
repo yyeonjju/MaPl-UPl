@@ -9,13 +9,19 @@ import UIKit
 import RxSwift
 
 final class PostPlaylistViewController : BaseViewController<PostPlaylistView, PostPlaylistViewModel> {
-    // MARK: - UI
-    // MARK: - Properties
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setupDelegate()
         setupBind()
+    }
+    
+    private func setupDelegate() {
+        viewManager.selectedMusicTableView.dataSource = self
+        viewManager.selectedMusicTableView.delegate = self
+        viewManager.selectedMusicTableView.register(SelectedMusicTableViewCell.self, forCellReuseIdentifier: SelectedMusicTableViewCell.description())
+        
     }
     
     private func setupBind() {
@@ -58,5 +64,18 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
             }
             .disposed(by: disposeBag)
         
+    }
+}
+
+extension PostPlaylistViewController : UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SelectedMusicTableViewCell.description(), for: indexPath) as! SelectedMusicTableViewCell
+        let data = selectedSongList[indexPath.row]
+        
+        
+        return cell
     }
 }
