@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D326A2B2C74B22800E5602F /* FetchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D326A2A2C74B22700E5602F /* FetchError.swift */; };
+		7D326A2E2C74B95400E5602F /* TokenRefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D326A2D2C74B95400E5602F /* TokenRefreshModel.swift */; };
 		7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB212C6CEED800E56025 /* AppDelegate.swift */; };
 		7D6CCB242C6CEED800E56025 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB232C6CEED800E56025 /* SceneDelegate.swift */; };
 		7D6CCB262C6CEED800E56025 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB252C6CEED800E56025 /* ViewController.swift */; };
@@ -50,6 +52,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D326A2A2C74B22700E5602F /* FetchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchError.swift; sourceTree = "<group>"; };
+		7D326A2D2C74B95400E5602F /* TokenRefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshModel.swift; sourceTree = "<group>"; };
 		7D6CCB1E2C6CEED800E56025 /* MaPl-UPl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaPl-UPl.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D6CCB212C6CEED800E56025 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D6CCB232C6CEED800E56025 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +109,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7D326A292C74B1DC00E5602F /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				7D326A2A2C74B22700E5602F /* FetchError.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		7D6CCB152C6CEED800E56025 = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +198,7 @@
 		7D6CCB992C6E4EB300E56025 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7D326A292C74B1DC00E5602F /* Enums */,
 				7DFE28042C71BA5D00DB5AEE /* PropertyWrapper */,
 				7D6CCB9D2C6E512700E56025 /* Files */,
 			);
@@ -274,17 +287,18 @@
 			children = (
 				7DFE28322C73774900DB5AEE /* File */,
 				7DFE282D2C730F3A00DB5AEE /* Playlist */,
-				7DFE28012C71B97B00DB5AEE /* Login */,
+				7DFE28012C71B97B00DB5AEE /* Auth */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		7DFE28012C71B97B00DB5AEE /* Login */ = {
+		7DFE28012C71B97B00DB5AEE /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				7DFE28022C71B99F00DB5AEE /* LoginModel.swift */,
+				7D326A2D2C74B95400E5602F /* TokenRefreshModel.swift */,
 			);
-			path = Login;
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		7DFE28042C71BA5D00DB5AEE /* PropertyWrapper */ = {
@@ -483,7 +497,9 @@
 				7DFE28032C71B99F00DB5AEE /* LoginModel.swift in Sources */,
 				7DFE27F52C71A7E400DB5AEE /* BaseViewModel.swift in Sources */,
 				7DFE28182C723AD000DB5AEE /* PlaylistListViewController.swift in Sources */,
+				7D326A2B2C74B22800E5602F /* FetchError.swift in Sources */,
 				7DFE28062C71BA6F00DB5AEE /* UserDefaultsWrapper.swift in Sources */,
+				7D326A2E2C74B95400E5602F /* TokenRefreshModel.swift in Sources */,
 				7DFE280A2C71FDA200DB5AEE /* Router.swift in Sources */,
 				7D6CCB242C6CEED800E56025 /* SceneDelegate.swift in Sources */,
 				7DFE280F2C7238BB00DB5AEE /* UIViewController++.swift in Sources */,

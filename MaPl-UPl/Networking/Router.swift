@@ -14,12 +14,16 @@ struct UserInfoManager {
 
 enum Router {
     case login(query : LoginQuery)
+    case tokenRefresh
+    
     case postPlaylist(query : PostPlaylistQuery)
     case updloadImage
     
     var accessToken : String {
-        print("====        accessToken      ===", UserInfoManager().userInfo?.access)
-        return UserInfoManager().userInfo?.access ?? ""
+        UserInfoManager().userInfo?.access ?? ""
+    }
+    var refreshToken : String{
+        UserInfoManager().userInfo?.refresh ?? ""
     }
 }
 
@@ -37,6 +41,8 @@ extension Router: TargetType {
             return APIURL.postPlaylist
         case .updloadImage:
             return APIURL.updloadImage
+        case .tokenRefresh :
+            return APIURL.tokenRefresh
         }
     }
     
@@ -44,6 +50,8 @@ extension Router: TargetType {
         switch self {
         case .login, .postPlaylist, .updloadImage:
             return .post
+        case .tokenRefresh :
+            return .get
         }
     }
     
@@ -57,6 +65,8 @@ extension Router: TargetType {
     
     var body: Data? {
         switch self {
+        case .tokenRefresh :
+            return nil
         case .login(let query):
             let encoder = JSONEncoder()
             do{
@@ -80,24 +90,27 @@ extension Router: TargetType {
     
     
     
-    var header: [String: String] {
+    var header: [String: String] { // 엑세스토큰은 alamofire interceptor adapt()에서 추가
         switch self {
         case .login:
             return [
                 HeaderKey.contentType: HeaderValue.applicationJson,
                 HeaderKey.sesacKey : HeaderValue.sesacKey
             ]
-        case .postPlaylist(let query):
+        case .postPlaylist:
             return [
                 HeaderKey.contentType: HeaderValue.applicationJson,
-                HeaderKey.sesacKey : HeaderValue.sesacKey,
-                HeaderKey.authorization : accessToken
+                HeaderKey.sesacKey : HeaderValue.sesacKey
             ]
         case .updloadImage :
             return [
                 HeaderKey.contentType: HeaderValue.multipartFormData,
+                HeaderKey.sesacKey : HeaderValue.sesacKey
+            ]
+        case .tokenRefresh :
+            return [
                 HeaderKey.sesacKey : HeaderValue.sesacKey,
-                HeaderKey.authorization : accessToken
+                HeaderKey.refresh : refreshToken
             ]
             
         }

@@ -10,44 +10,6 @@ import Alamofire
 import RxSwift
 import UIKit
 
-enum FetchError : Error {
-    case fetchEmitError // 만에 하나 리턴한 single에러 에러를 방출했을떄 발생하는 에러
-    
-    case url
-    case urlRequestError
-    case failedRequest
-    case noData
-    case invalidResponse
-    case failResponse(code : Int, message : String)
-    case invalidData
-    
-    case noUser
-    
-    
-    var errorMessage : String{
-        switch self {
-        case .fetchEmitError :
-            return "알 수 없는 에러입니다."
-        case .url :
-            return "잘못된 url입니다"
-        case .urlRequestError:
-            return "urlRequest 에러"
-        case .failedRequest:
-            return "요청에 실패했습니다."
-        case .noData:
-            return "데이터가 없습니다."
-        case .invalidResponse:
-            return "유효하지 않은 응답입니다."
-        case .failResponse(let errorCode, let message):
-            return "\(errorCode)error : \(message)"
-        case .invalidData:
-            return "데이터 파싱 에러"
-        case .noUser :
-            return "유저가 명확하지 않습니다."
-        }
-    }
-}
-
 class NetworkManager {
     @UserDefaultsWrapper(key : .userInfo) var userInfo : LoginResponse?
     
@@ -60,12 +22,15 @@ class NetworkManager {
         let single = Single<Result<M,Error>>.create { single in
             do {
                 let request = try fetchRouter.asURLRequest()
-                print("💚 url", request.url)
+//                print("💚 url", request.url)
+//                print("💚 header", request.headers)
+//                print("💚request💚", request)
                 
-                AF.request(request)
-                .validate(statusCode: 200..<300)
+                
+                AF.request(request, interceptor: APIRequestInterceptor())
+//                .validate(statusCode: 200..<300)
                 .responseDecodable(of: model.self) { response in
-                    print("💚statusCode", response.response?.statusCode)
+//                    print("💚statusCode", response.response?.statusCode)
                     
                     //response.error 로 에러를 판별하면 거기에서 캐치되어 밑으로 진행되지 않아서
                     //statusCode가 nil값인걸로 request 에러 걸러주기
@@ -127,9 +92,9 @@ class NetworkManager {
                     return single(.success(.failure(FetchError.urlRequestError))) as! Disposable
                 }
                 let header : HTTPHeaders? = request.headers
-//                print("💚 url", url)
-//                print("💚 header", header)
-//                print("💚request💚", request)
+                print("💚 url", url)
+                print("💚 header", header)
+                print("💚request💚", request)
                 
                 AF.upload(
                     multipartFormData: { multipartFormData in
@@ -137,12 +102,13 @@ class NetworkManager {
                         multipartFormData.append(imageData,withName: "files", fileName: "image.png",mimeType: "image/png")
                     },
                     to: url,
-                    headers: header
+                    headers: header,
+                    interceptor: APIRequestInterceptor()
                 )
                 .validate(statusCode: 200..<300)
                 .responseDecodable(of: model.self) { response in
-//                    print("💚response", response.response)
-//                    print("💚statusCode", response.response?.statusCode)
+                    print("💚response", response.response)
+                    print("💚statusCode", response.response?.statusCode)
                     guard let statusCode = response.response?.statusCode else {
                         return single(.success(.failure(FetchError.failedRequest)))
                     }
@@ -196,20 +162,81 @@ extension NetworkManager {
     func login(email: String, password: String) -> Single<Result<LoginResponse,Error>>  {
         let body = LoginQuery(email: email, password: password)
         let fetchRouter = Router.login(query: body)
-        
         return fetch(fetchRouter: fetchRouter, model : LoginResponse.self)
     }
     
     func postPlaylist(body : PostPlaylistQuery) -> Single<Result<PostPlaylistResponse,Error>>  {
         let fetchRouter = Router.postPlaylist(query: body)
-        
         return fetch(fetchRouter: fetchRouter, model : PostPlaylistResponse.self)
     }
     
     func uploadImage(imageData : Data) -> Single<Result<FileModel,Error>> {
         let fetchRouter = Router.updloadImage
-        
         return uploadFile(fetchRouter: fetchRouter, imageData: imageData, model : FileModel.self)
     }
     
+    func tokenRefresh() -> Single<Result<TokenRefreshResponse,Error>> {
+        let fetchRouter = Router.tokenRefresh
+        return fetch(fetchRouter: fetchRouter, model : TokenRefreshResponse.self)
+    }
+}
+
+
+
+final class APIRequestInterceptor: RequestInterceptor {
+    @UserDefaultsWrapper(key : .userInfo) var userInfo : LoginResponse?
+    let disposeBag = DisposeBag()
+    
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        var urlRequest = urlRequest
+        //TODO: 로그인 url 아닐 때만 setValu하기
+        
+        urlRequest.setValue((userInfo?.access ?? ""), forHTTPHeaderField: HeaderKey.authorization)
+        
+        print("adapt", urlRequest.headers)
+        completion(.success(urlRequest))
+    }
+    
+    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
+        print("💜💜💜retry")
+
+        guard let response = request.task?.response as? HTTPURLResponse, request.retryCount <  4 else{
+            completion(.doNotRetryWithError(error))
+            return
+        }
+        
+        if response.statusCode == 419 { // 419일 때
+            print("💜💜💜retry -> 419이다!!")
+            
+            NetworkManager.shared.tokenRefresh()
+                .subscribe(with: self, onSuccess: { owner, result in
+                    switch result{
+                    case .success(let value) :
+                        owner.userInfo?.access = value.accessToken
+                        completion(.retry)
+                    case .failure(let error as FetchError) :
+                        //엑세스 토큰 갱신 요청에서의 실패 result (418 리프레시 만료 시 에러날 수 있다)
+                        completion(.doNotRetryWithError(error))
+                    default:
+                        print("default")
+                        
+                    }
+                })
+                .disposed(by: disposeBag)
+
+        } else if response.statusCode == 418 { //418 일 떄
+            print("💜💜💜retry -> 418이다!")
+            
+            ///로그인 화면으로  루트뷰 변경
+            DispatchQueue.main.async {
+                let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+                sceneDelegate?.changeRootViewController(to: LoginViewController())
+                completion(.doNotRetryWithError(error))
+            }
+        } else {
+            print("💜💜💜 418❌ 419❌")
+            completion(.doNotRetryWithError(error))
+        }
+
+    }
 }

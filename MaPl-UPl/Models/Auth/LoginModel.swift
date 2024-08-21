@@ -14,7 +14,7 @@ struct LoginResponse : Codable {
     let email: String
     let nick: String
     let profile: String?
-    let access: String
+    var access: String
     let refresh: String
     
     enum CodingKeys: String, CodingKey {
