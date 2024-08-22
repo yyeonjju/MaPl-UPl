@@ -10,6 +10,19 @@ import SnapKit
 
 final class PostPlaylistView : BaseView {
     // MARK: - UI
+    
+    private lazy var scrollView : UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = true
+        return scrollView
+    }()
+    
+    
+    var contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     let titleTextField = UnderlinedTextField(placeholder: "제목")
     
     let photoImageView = {
@@ -37,8 +50,9 @@ final class PostPlaylistView : BaseView {
     let postPlaylistButton = MainNormalButton(title: "내 플리 등록하기")
     
     let selectedMusicTableView = {
-        let tv = UITableView()
-        tv.rowHeight = 70
+        let tv =  AutoResizingTableView()
+        tv.rowHeight = 100
+        tv.isScrollEnabled = false
         return tv
     }()
     
@@ -54,9 +68,12 @@ final class PostPlaylistView : BaseView {
     // MARK: - ConfigureUI
     
     override func configureSubView() {
-        [postPlaylistButton, titleTextField, photoImageView, cameraIconView, searchMusicButton, selectedMusicTableView]
+        
+        self.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        [ titleTextField, photoImageView, cameraIconView, searchMusicButton, selectedMusicTableView, postPlaylistButton]
             .forEach{
-                addSubview($0)
+                contentView.addSubview($0)
             }
         [cameraIconButton]
             .forEach {
@@ -66,16 +83,24 @@ final class PostPlaylistView : BaseView {
     
     override func configureLayout() {
 
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+            make.centerX.equalTo(scrollView.snp.centerX)
+            make.bottom.equalTo(postPlaylistButton.snp.bottom)
+        }
+        
         titleTextField.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide)
-            make.leading.trailing.equalTo(safeAreaLayoutGuide).inset(10)
+            make.top.equalTo(contentView)
+            make.leading.trailing.equalTo(contentView).inset(10)
             make.height.equalTo(40)
         }
         
         photoImageView.snp.makeConstraints { make in
             make.top.equalTo(titleTextField.snp.bottom).offset(20)
-            make.leading.equalTo(safeAreaLayoutGuide).inset(10)
-//            make.centerX.equalTo(safeAreaLayoutGuide)
+            make.leading.equalTo(contentView).inset(10)
             make.size.equalTo(200)
         }
         
@@ -92,21 +117,19 @@ final class PostPlaylistView : BaseView {
         
         searchMusicButton.snp.makeConstraints { make in
             make.top.equalTo(photoImageView.snp.bottom).offset(20)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(10)
+            make.leading.equalTo(contentView).offset(10)
             make.height.equalTo(40)
             
         }
         
-        selectedMusicTableView.backgroundColor = .gray3
         selectedMusicTableView.snp.makeConstraints { make in
             make.top.equalTo(searchMusicButton.snp.bottom).offset(10)
-            make.leading.trailing.equalTo(safeAreaLayoutGuide)
-            make.bottom.equalTo(postPlaylistButton.snp.top)
+            make.leading.trailing.equalTo(contentView)
         }
         
         postPlaylistButton.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide).inset(10)
-            make.leading.trailing.equalTo(safeAreaLayoutGuide).inset(20)
+            make.top.equalTo(selectedMusicTableView.snp.bottom).offset(10)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
         }
         
     }
