@@ -88,7 +88,7 @@ final class SearchMusicView : BaseView {
         }
         selectText.snp.makeConstraints { make in
             make.leading.equalTo(selectedMusicArea).inset(12)
-            make.top.leading.equalTo(selectedMusicArea).inset(8)
+            make.top.equalTo(selectedMusicArea).inset(6)
         }
         lineImage.snp.makeConstraints { make in
             make.centerX.equalTo(selectedMusicArea)

@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
 //        let vc = UINavigationController(rootViewController: LoginViewController())
-        let vc = UINavigationController(rootViewController: PostPlaylistViewController())
+        let vc = UINavigationController(rootViewController: PlaylistListViewController())
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }

@@ -18,8 +18,7 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
     }
     
     private func setupDelegate() {
-        viewManager.selectedMusicTableView.dataSource = self
-        viewManager.selectedMusicTableView.delegate = self
+
         viewManager.selectedMusicTableView.register(SelectedMusicTableViewCell.self, forCellReuseIdentifier: SelectedMusicTableViewCell.description())
         
         viewManager.selectedMusicTableView.dragDelegate = self
@@ -75,24 +74,25 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         
         output.pushToSearchMusicVC
             .bind(with: self) { owner, _ in
-                owner.pageTransition(to: SearchMusicViewController(), type: .push)
+                let vc = SearchMusicViewController()
+                vc.addSongs = {songs in
+                    owner.vm.selectedSongList.append(contentsOf: songs)
+                }
+                
+                owner.pageTransition(to: vc, type: .push)
+            }
+            .disposed(by: disposeBag)
+        
+        output.selectedSongList
+            .bind(to: viewManager.selectedMusicTableView.rx.items(cellIdentifier: SelectedMusicTableViewCell.description(), cellType: SelectedMusicTableViewCell.self)) { (row, element, cell : SelectedMusicTableViewCell) in
+                cell.confiureData(data: element)
+                
             }
             .disposed(by: disposeBag)
         
     }
-}
-
-extension PostPlaylistViewController : UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SelectedMusicTableViewCell.description(), for: indexPath) as! SelectedMusicTableViewCell
-        let data = selectedSongList[indexPath.row]
-        
-        cell.confiureData(data: data)
-        return cell
-    }
+    
+    
 }
 
 extension PostPlaylistViewController : UITableViewDragDelegate, UITableViewDropDelegate {
@@ -135,21 +135,24 @@ extension PostPlaylistViewController : UITableViewDragDelegate, UITableViewDropD
         }
         
         
-        guard let sourceItem = coordinator.items.first else{return}
-        guard let sourceIndexPath = sourceItem.sourceIndexPath else { return }
+        guard let item = coordinator.items.first else{return}
+        guard let sourceIndexPath = item.sourceIndexPath else { return }
         guard coordinator.proposal.operation == .move  else {return }
         tableView.performBatchUpdates {
-            let sourceItem = selectedSongList[sourceIndexPath.row]
+            let sourceItem = vm.selectedSongList[sourceIndexPath.row]
+            var newSonglist = vm.selectedSongList
+            newSonglist.remove(at: sourceIndexPath.row)
+            newSonglist.insert(sourceItem, at: destinationIndexPath.row)
+            vm.selectedSongList = newSonglist
             
-            selectedSongList.remove(at: sourceIndexPath.row)
             tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
-            
-            selectedSongList.insert(sourceItem, at: destinationIndexPath.row)
             tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+
+            
         } completion: { finish in
             print("finish : ", finish)
-            coordinator.drop(sourceItem.dragItem, toRowAt: destinationIndexPath)
-            tableView.reloadData()
+            coordinator.drop(item.dragItem, toRowAt: destinationIndexPath)
+//            tableView.reloadData()
         }
     }
 }

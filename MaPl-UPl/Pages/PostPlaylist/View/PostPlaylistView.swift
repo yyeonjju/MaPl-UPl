@@ -68,10 +68,11 @@ final class PostPlaylistView : BaseView {
     // MARK: - ConfigureUI
     
     override func configureSubView() {
-        
+
         self.addSubview(scrollView)
+        self.addSubview(postPlaylistButton)
         scrollView.addSubview(contentView)
-        [ titleTextField, photoImageView, cameraIconView, searchMusicButton, selectedMusicTableView, postPlaylistButton]
+        [ titleTextField, photoImageView, cameraIconView, searchMusicButton, selectedMusicTableView]
             .forEach{
                 contentView.addSubview($0)
             }
@@ -84,12 +85,13 @@ final class PostPlaylistView : BaseView {
     override func configureLayout() {
 
         scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(safeAreaLayoutGuide)
+            make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.bottom.equalTo(postPlaylistButton.snp.top)
         }
         contentView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView)
             make.centerX.equalTo(scrollView.snp.centerX)
-            make.bottom.equalTo(postPlaylistButton.snp.bottom)
+            make.bottom.equalTo(selectedMusicTableView.snp.bottom)
         }
         
         titleTextField.snp.makeConstraints { make in
@@ -128,8 +130,8 @@ final class PostPlaylistView : BaseView {
         }
         
         postPlaylistButton.snp.makeConstraints { make in
-            make.top.equalTo(selectedMusicTableView.snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
+            make.bottom.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
         }
         
     }

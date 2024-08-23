@@ -11,6 +11,8 @@ import RxCocoa
 
 final class SearchMusicViewController : BaseViewController<SearchMusicView, SearchMusicViewModel> {
     
+    var addSongs : (([SongInfo]) -> Void)?
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +23,11 @@ final class SearchMusicViewController : BaseViewController<SearchMusicView, Sear
         viewManager.collectionView.register(SelectedMusicCollectionViewCell.self, forCellWithReuseIdentifier: SelectedMusicCollectionViewCell.description())
         
         setupBind()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        addSongs?(vm.selectedMusicList)
     }
     
     // MARK: - SetupBind
