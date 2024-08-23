@@ -10,7 +10,7 @@ import RxSwift
 import AVFoundation
 
 
-let selectedSongList = [
+var selectedSongList = [
     SongInfo(id: "1731352615", title: "Holssi", artistName: "IU", previewURL: URL(string: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/15/5c/59/155c5998-2dba-0490-ca3e-0199550e7ace/mzaf_16966546463465591542.plus.aac.p.m4a"), genreNames: ["K-Pop", "Music", "Pop", "Hip-Hop/Rap", "Korean Hip-Hop"], artworkURL: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/3e/43/d2/3e43d2dc-acd4-5db6-9ae7-99299a044584/cover_KM0019422_1.jpg/300x300bb.jpg", duration: 190.787),
     SongInfo(id: "1488300930", title: "Blueming", artistName: "IU", previewURL: URL(string:"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/99/56/19/995619c5-5310-d3b0-de45-0ff352bc58d9/mzaf_11001517585085545132.plus.aac.p.m4a"), genreNames: ["K-Pop", "Music", "Pop", "Rock"], artworkURL: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/b8/b8/18/b8b81899-a984-be85-5656-ec1f2fc10227/5_Love_poem.jpg/300x300bb.jpg", duration: 217.053),
     SongInfo(id: "1590459636", title: "strawberry moon", artistName: "IU", previewURL: URL(string:"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/fc/a9/ce/fca9ceb0-60df-9dd1-baca-f942c94f6209/mzaf_8422933462990544080.plus.aac.p.m4a"), genreNames: ["K-Pop", "Music", "Pop", "Rock"], artworkURL: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/61/ac/6c/61ac6cf8-f016-5fbb-79b0-8cfa51da855b/cover.jpg/300x300bb.jpg", duration: 205.333),

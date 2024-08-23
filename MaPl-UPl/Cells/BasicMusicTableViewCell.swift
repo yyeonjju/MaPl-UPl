@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class BasicMusicTableViewCell : UITableViewCell {
     // MARK: - UI
@@ -45,7 +46,10 @@ class BasicMusicTableViewCell : UITableViewCell {
     
     // MARK: - ConfigureData
     func confiureData(data : SongInfo) {
-        
+        let artworkUrl = URL(string: data.artworkURL)
+        artworkImageView.kf.setImage(with: artworkUrl)
+        titleLabel.text = data.title
+        artistLabel.text = data.artistName
     }
 
     

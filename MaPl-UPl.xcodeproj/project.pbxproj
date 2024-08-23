@@ -21,6 +21,7 @@
 		7D6CCB9C2C6E4F3200E56025 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D6CCB9B2C6E4F3200E56025 /* Colors.xcassets */; };
 		7D6CCB9F2C6E513D00E56025 /* NameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB9E2C6E513D00E56025 /* NameSpace.swift */; };
 		7D702B082C7761BE008E2D35 /* AutoResizingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B072C7761BE008E2D35 /* AutoResizingTableView.swift */; };
+		7D702B0B2C7769EB008E2D35 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7D702B0A2C7769EB008E2D35 /* Kingfisher */; };
 		7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */; };
 		7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D42C76028B00C47DF4 /* UIImageView++.swift */; };
 		7DB325DA2C76074300C47DF4 /* OvalShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D92C76074300C47DF4 /* OvalShapeButton.swift */; };
@@ -110,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D702B0B2C7769EB008E2D35 /* Kingfisher in Frameworks */,
 				7DFE27EB2C7199C800DB5AEE /* RxSwift in Frameworks */,
 				7DFE27EE2C7199D300DB5AEE /* Alamofire in Frameworks */,
 				7DFE27E92C7199C800DB5AEE /* RxCocoa in Frameworks */,
@@ -450,6 +452,7 @@
 				7DFE27EA2C7199C800DB5AEE /* RxSwift */,
 				7DFE27ED2C7199D300DB5AEE /* Alamofire */,
 				7DFE280C2C72359C00DB5AEE /* Toast */,
+				7D702B0A2C7769EB008E2D35 /* Kingfisher */,
 			);
 			productName = "MaPl-UPl";
 			productReference = 7D6CCB1E2C6CEED800E56025 /* MaPl-UPl.app */;
@@ -484,6 +487,7 @@
 				7DFE27E72C7199C800DB5AEE /* XCRemoteSwiftPackageReference "RxSwift" */,
 				7DFE27EC2C7199D300DB5AEE /* XCRemoteSwiftPackageReference "Alamofire" */,
 				7DFE280B2C72359B00DB5AEE /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				7D702B092C7769EB008E2D35 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 7D6CCB1F2C6CEED800E56025 /* Products */;
 			projectDirPath = "";
@@ -786,6 +790,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7D702B092C7769EB008E2D35 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 		7DFE27E42C7199AD00DB5AEE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -821,6 +833,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7D702B0A2C7769EB008E2D35 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7D702B092C7769EB008E2D35 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		7DFE27E52C7199AD00DB5AEE /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7DFE27E42C7199AD00DB5AEE /* XCRemoteSwiftPackageReference "SnapKit" */;

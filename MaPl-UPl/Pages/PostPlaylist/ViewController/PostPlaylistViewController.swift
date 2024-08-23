@@ -22,6 +22,10 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         viewManager.selectedMusicTableView.delegate = self
         viewManager.selectedMusicTableView.register(SelectedMusicTableViewCell.self, forCellReuseIdentifier: SelectedMusicTableViewCell.description())
         
+        viewManager.selectedMusicTableView.dragDelegate = self
+        viewManager.selectedMusicTableView.dropDelegate = self
+        viewManager.selectedMusicTableView.dragInteractionEnabled = true
+        
     }
     
     private func setupBind() {
@@ -75,7 +79,66 @@ extension PostPlaylistViewController : UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: SelectedMusicTableViewCell.description(), for: indexPath) as! SelectedMusicTableViewCell
         let data = selectedSongList[indexPath.row]
         
-        
+        cell.confiureData(data: data)
         return cell
+    }
+}
+
+extension PostPlaylistViewController : UITableViewDragDelegate, UITableViewDropDelegate {
+
+    ///itemsForBeginning : 드레그 시작
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        
+        // NSItemProvider: 현재 앱이 다른 앱에 데이터를 전달하는 목적으로 사용
+        // 화면 하나에 여러 가지 앱이 띄워져 있을 경우, 다른 앱으로 drop하여 아이템을 전달할 때, 이 NSItemProvider()에 담아서 전송한다
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+    
+    ///dropSessionDidUpdate : 드래그의 상태에 따라 DropProposal 반환
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        var dropProposal = UITableViewDropProposal(operation: .cancel)
+        
+        // 아이템 개수가 1개가 아니면 cancel 반환 ( 한개의 드래그 아이템만들 관리)
+        guard session.items.count == 1 else { return dropProposal }
+        
+        // 현재 앱의 테이블뷰에서 활성화된 드래그가 있다면
+        //.move drag operation is available
+        if tableView.hasActiveDrag {
+            dropProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        return dropProposal
+    }
+    
+    
+    ///performDropWith : 드롭을 완료했을 떄 ( 사용자가 손을 뗐을 때)
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        let destinationIndexPath: IndexPath
+        
+        if let indexPath = coordinator.destinationIndexPath {
+            destinationIndexPath = indexPath
+        } else {
+            // Get last index path of table view.
+            let section = tableView.numberOfSections - 1
+            let row = tableView.numberOfRows(inSection: section)
+            destinationIndexPath = IndexPath(row: row, section: section)
+        }
+        
+        
+        guard let sourceItem = coordinator.items.first else{return}
+        guard let sourceIndexPath = sourceItem.sourceIndexPath else { return }
+        guard coordinator.proposal.operation == .move  else {return }
+        tableView.performBatchUpdates {
+            let sourceItem = selectedSongList[sourceIndexPath.row]
+            
+            selectedSongList.remove(at: sourceIndexPath.row)
+            tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
+            
+            selectedSongList.insert(sourceItem, at: destinationIndexPath.row)
+            tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+        } completion: { finish in
+            print("finish : ", finish)
+            coordinator.drop(sourceItem.dragItem, toRowAt: destinationIndexPath)
+            tableView.reloadData()
+        }
     }
 }
