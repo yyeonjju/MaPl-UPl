@@ -31,8 +31,9 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
     private func setupBind() {
         let postPlaylistButtonTap = PublishSubject<Void>()
         let selectedBgImageData = PublishSubject<Data>()
+        let searchMusicButtonTap = PublishSubject<Void>()
         
-        let input = PostPlaylistViewModel.Input(postPlaylistButtonTap : postPlaylistButtonTap, selectedBgImageData : selectedBgImageData)
+        let input = PostPlaylistViewModel.Input(postPlaylistButtonTap : postPlaylistButtonTap, selectedBgImageData : selectedBgImageData, searchMusicButtonTap:searchMusicButtonTap)
         let output = vm.transform(input: input)
         
         
@@ -45,6 +46,10 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         
         viewManager.postPlaylistButton.rx.tap
             .bind(to: postPlaylistButtonTap)
+            .disposed(by: disposeBag)
+        
+        viewManager.searchMusicButton.rx.tap
+            .bind(to: searchMusicButtonTap)
             .disposed(by: disposeBag)
         
         
@@ -65,6 +70,12 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         output.uploadComplete
             .bind(with: self) { owner, complete in
                 owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.pushToSearchMusicVC
+            .bind(with: self) { owner, _ in
+                owner.pageTransition(to: SearchMusicViewController(), type: .push)
             }
             .disposed(by: disposeBag)
         

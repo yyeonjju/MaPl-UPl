@@ -51,7 +51,7 @@ final class PostPlaylistView : BaseView {
     
     let selectedMusicTableView = {
         let tv =  AutoResizingTableView()
-        tv.rowHeight = 100
+        tv.rowHeight = 80
         tv.isScrollEnabled = false
         return tv
     }()

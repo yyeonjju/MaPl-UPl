@@ -22,6 +22,10 @@
 		7D6CCB9F2C6E513D00E56025 /* NameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB9E2C6E513D00E56025 /* NameSpace.swift */; };
 		7D702B082C7761BE008E2D35 /* AutoResizingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B072C7761BE008E2D35 /* AutoResizingTableView.swift */; };
 		7D702B0B2C7769EB008E2D35 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7D702B0A2C7769EB008E2D35 /* Kingfisher */; };
+		7D702B0F2C784A34008E2D35 /* SearchMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B0E2C784A34008E2D35 /* SearchMusicViewController.swift */; };
+		7D702B122C784A60008E2D35 /* SearchMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B112C784A60008E2D35 /* SearchMusicView.swift */; };
+		7D702B152C784A89008E2D35 /* SearchMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B142C784A89008E2D35 /* SearchMusicViewModel.swift */; };
+		7D702B182C7854F4008E2D35 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B172C7854F4008E2D35 /* EmptyView.swift */; };
 		7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */; };
 		7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D42C76028B00C47DF4 /* UIImageView++.swift */; };
 		7DB325DA2C76074300C47DF4 /* OvalShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D92C76074300C47DF4 /* OvalShapeButton.swift */; };
@@ -75,6 +79,10 @@
 		7D6CCB9B2C6E4F3200E56025 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		7D6CCB9E2C6E513D00E56025 /* NameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSpace.swift; sourceTree = "<group>"; };
 		7D702B072C7761BE008E2D35 /* AutoResizingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoResizingTableView.swift; sourceTree = "<group>"; };
+		7D702B0E2C784A34008E2D35 /* SearchMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicViewController.swift; sourceTree = "<group>"; };
+		7D702B112C784A60008E2D35 /* SearchMusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicView.swift; sourceTree = "<group>"; };
+		7D702B142C784A89008E2D35 /* SearchMusicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicViewModel.swift; sourceTree = "<group>"; };
+		7D702B172C7854F4008E2D35 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineTextField.swift; sourceTree = "<group>"; };
 		7DB325D42C76028B00C47DF4 /* UIImageView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView++.swift"; sourceTree = "<group>"; };
 		7DB325D92C76074300C47DF4 /* OvalShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvalShapeButton.swift; sourceTree = "<group>"; };
@@ -184,6 +192,7 @@
 		7D6CCB962C6E4E8400E56025 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				7D702B0C2C7849F2008E2D35 /* SearchMusic */,
 				7DFE28152C723AAC00DB5AEE /* PlaylistList */,
 				7DFE28102C72393900DB5AEE /* PostPlaylist */,
 				7DFE27D62C7194F000DB5AEE /* Login */,
@@ -194,6 +203,7 @@
 		7D6CCB972C6E4E9500E56025 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7D702B162C7854EB008E2D35 /* View */,
 				7D702B062C7761B6008E2D35 /* TableView */,
 				7DFE27FB2C71AB3800DB5AEE /* TextField */,
 				7DFE27F62C71AA6700DB5AEE /* Button */,
@@ -245,6 +255,48 @@
 				7D702B072C7761BE008E2D35 /* AutoResizingTableView.swift */,
 			);
 			path = TableView;
+			sourceTree = "<group>";
+		};
+		7D702B0C2C7849F2008E2D35 /* SearchMusic */ = {
+			isa = PBXGroup;
+			children = (
+				7D702B132C784A75008E2D35 /* ViewModel */,
+				7D702B102C784A55008E2D35 /* View */,
+				7D702B0D2C784A19008E2D35 /* ViewController */,
+			);
+			path = SearchMusic;
+			sourceTree = "<group>";
+		};
+		7D702B0D2C784A19008E2D35 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7D702B0E2C784A34008E2D35 /* SearchMusicViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7D702B102C784A55008E2D35 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7D702B112C784A60008E2D35 /* SearchMusicView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7D702B132C784A75008E2D35 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7D702B142C784A89008E2D35 /* SearchMusicViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7D702B162C7854EB008E2D35 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7D702B172C7854F4008E2D35 /* EmptyView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		7DC40DB32C76275C00BB3A50 /* Cells */ = {
@@ -550,11 +602,15 @@
 				7DFE28262C72F8CF00DB5AEE /* PlaylistListViewModel.swift in Sources */,
 				7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */,
 				7DFE28292C72FF7700DB5AEE /* PostPlaylistView.swift in Sources */,
+				7D702B152C784A89008E2D35 /* SearchMusicViewModel.swift in Sources */,
 				7DFE27FD2C71ABB700DB5AEE /* NormalOutlineTextField.swift in Sources */,
+				7D702B0F2C784A34008E2D35 /* SearchMusicViewController.swift in Sources */,
+				7D702B122C784A60008E2D35 /* SearchMusicView.swift in Sources */,
 				7DFE27DE2C7195F400DB5AEE /* LoginView.swift in Sources */,
 				7DFE27FA2C71AA8600DB5AEE /* MainNormalButton.swift in Sources */,
 				7DFE27E32C71969F00DB5AEE /* UIView++.swift in Sources */,
 				7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */,
+				7D702B182C7854F4008E2D35 /* EmptyView.swift in Sources */,
 				7D6CCB3D2C6CF13700E56025 /* APIKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

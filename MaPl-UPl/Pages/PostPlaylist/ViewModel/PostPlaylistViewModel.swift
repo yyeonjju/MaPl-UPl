@@ -32,12 +32,14 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
     struct Input {
         let postPlaylistButtonTap : PublishSubject<Void>
         let selectedBgImageData : PublishSubject<Data>
+        let searchMusicButtonTap : PublishSubject<Void>
     }
     
     struct Output {
         let errorMessage : PublishSubject<String>
         let isLoading : PublishSubject<Bool>
         let uploadComplete : PublishSubject<Bool>
+        let pushToSearchMusicVC : PublishSubject<Void>
     }
     
     func transform(input : Input) -> Output {
@@ -109,7 +111,7 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
             })
             .disposed(by: disposeBag)
         
-        return Output(errorMessage : errorMessageSubject,  isLoading : isLoadingSubject, uploadComplete: uploadCompleteSubject)
+        return Output(errorMessage : errorMessageSubject,  isLoading : isLoadingSubject, uploadComplete: uploadCompleteSubject, pushToSearchMusicVC: input.searchMusicButtonTap)
     }
     
     private func encodeSongInfo(index : Int) -> String?  {
