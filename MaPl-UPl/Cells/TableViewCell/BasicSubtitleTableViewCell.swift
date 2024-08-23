@@ -1,14 +1,14 @@
 //
-//  BasicMusicTableViewCell.swift
+//  BasicSubtitleTableViewCell.swift
 //  MaPl-UPl
 //
-//  Created by 하연주 on 8/21/24.
+//  Created by 하연주 on 8/23/24.
 //
 
 import UIKit
 import Kingfisher
 
-class BasicMusicTableViewCell : UITableViewCell {
+class BasicSubtitleTableViewCell : UITableViewCell {
     // MARK: - UI
     private let artworkImageView = {
         let view = UIImageView()
@@ -17,7 +17,7 @@ class BasicMusicTableViewCell : UITableViewCell {
         return view
     }()
     
-    private let titleLabel = {
+    let titleLabel = {
         let label = UILabel()
         label.text = "title title title"
         label.font = Font.bold16
@@ -25,7 +25,7 @@ class BasicMusicTableViewCell : UITableViewCell {
         return label
     }()
     
-    private let artistLabel = {
+    let artistLabel = {
         let label = UILabel()
         label.text = "artistLabel"
         label.font = Font.regular13
@@ -55,14 +55,14 @@ class BasicMusicTableViewCell : UITableViewCell {
     
     // MARK: - ConfigureUI
     
-    private func configureSubView() {
+    func configureSubView() {
         [artworkImageView, titleLabel, artistLabel]
             .forEach{
                 contentView.addSubview($0)
             }
     }
     
-    private func configureLayout() {
+    func configureLayout() {
         artworkImageView.snp.makeConstraints { make in
             make.leading.verticalEdges.equalTo(contentView).inset(8)
             make.width.equalTo(artworkImageView.snp.height).multipliedBy(1)
@@ -71,7 +71,7 @@ class BasicMusicTableViewCell : UITableViewCell {
         titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(artworkImageView.snp.trailing).offset(4)
             make.top.equalTo(artworkImageView.snp.top)
-            make.trailing.equalTo(contentView).offset(-8)
+//            make.trailing.equalTo(contentView).offset(-8)
         }
         
         artistLabel.snp.makeConstraints { make in
@@ -79,5 +79,4 @@ class BasicMusicTableViewCell : UITableViewCell {
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
         }
     }
-
 }

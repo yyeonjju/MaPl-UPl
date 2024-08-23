@@ -12,20 +12,25 @@ import MusicKit
 final class SearchMusicViewModel : BaseViewModelProtocol {
     let disposeBag = DisposeBag()
     let isLoadingSubject = PublishSubject<Bool>()
+    var selectedMusicList : [SongInfo]  = []
     
     struct Input {
         let viewDidLoadTrigger : Observable<Void>
         let searchButtonTap : Observable<Void>
         let inputText : Observable<String>
+        let selectedMusic : PublishSubject<SongInfo>
+        let removeMusic : PublishSubject<Int>
     }
     
     struct Output {
         let songInfoList : PublishSubject<[SongInfo]>
         let isLoading : PublishSubject<Bool>
+        let selectedMusicList : PublishSubject<[SongInfo]>
     }
     
     func transform(input : Input) -> Output {
         let songInfoListSubject = PublishSubject<[SongInfo]>()
+        let selectedMusicListSubject = PublishSubject<[SongInfo]>()
         
         input.viewDidLoadTrigger
             .bind(with: self) { owner, _ in
@@ -56,7 +61,25 @@ final class SearchMusicViewModel : BaseViewModelProtocol {
             }
             .disposed(by: disposeBag)
         
-        return Output(songInfoList: songInfoListSubject, isLoading:isLoadingSubject)
+        
+        //노래 선택
+        input.selectedMusic
+            .bind(with:self) { owner, song in
+                owner.selectedMusicList.append(song)
+                selectedMusicListSubject.onNext(owner.selectedMusicList)
+            }
+            .disposed(by: disposeBag)
+        
+        //노래 제거
+        input.removeMusic
+            .bind(with:self) { owner, row in
+                owner.selectedMusicList.remove(at: row)
+                selectedMusicListSubject.onNext(owner.selectedMusicList)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        return Output(songInfoList: songInfoListSubject, isLoading:isLoadingSubject, selectedMusicList : selectedMusicListSubject)
     }
 }
 

@@ -22,6 +22,7 @@ enum Assets {
     
     enum SystemImage {
         static let plus = UIImage(systemName: "plus")
+        static let line = UIImage(systemName: "minus")
     }
 }
 

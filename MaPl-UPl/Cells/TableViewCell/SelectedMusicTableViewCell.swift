@@ -8,6 +8,6 @@
 import UIKit
 import SnapKit
 
-final class SelectedMusicTableViewCell : BasicMusicTableViewCell {
+final class SelectedMusicTableViewCell : BasicSubtitleTableViewCell {
 
 }

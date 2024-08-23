@@ -1,5 +1,5 @@
 //
-//  OvalShapeButton.swift
+//  CapsuleShapeButton.swift
 //  MaPl-UPl
 //
 //  Created by 하연주 on 8/21/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class OvalShapeButton : UIButton {
+final class CapsuleShapeButton : UIButton {
     
     var title : String? {
         didSet{
@@ -35,7 +35,7 @@ final class OvalShapeButton : UIButton {
     // MARK: - Initializer
     
     init(title : String,
-         image : UIImage?,
+         image : UIImage? = nil,
          imageTintColor : UIColor? = Assets.Colors.pointPink,
          allowSelection : Bool? = nil,
          normalTitleColor : UIColor = Assets.Colors.pointPink,
@@ -50,7 +50,7 @@ final class OvalShapeButton : UIButton {
         self.layer.borderWidth = 3
         self.layer.borderColor = normalBorderColor.cgColor
         self.layer.masksToBounds = true
-        self.configuration = makeConfig(title: title,imageTintColor : imageTintColor,  normalTitleColor: normalTitleColor, image : image)
+        self.configuration = makeConfig(title: title,imageTintColor : imageTintColor,  normalTitleColor: normalTitleColor,normalBgColr:normalBgColr ,image : image)
     }
     
     required init?(coder: NSCoder) {
@@ -59,8 +59,8 @@ final class OvalShapeButton : UIButton {
     
     // MARK: - Method
     
-    private func makeConfig(title:String,imageTintColor:UIColor?, normalTitleColor:UIColor, image : UIImage?) -> UIButton.Configuration{
-        var config = UIButton.Configuration.borderedTinted()
+    private func makeConfig(title:String,imageTintColor:UIColor?, normalTitleColor:UIColor,normalBgColr:UIColor, image : UIImage?) -> UIButton.Configuration{
+        var config = UIButton.Configuration.bordered()
         config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10)
         
         //title
@@ -75,7 +75,7 @@ final class OvalShapeButton : UIButton {
         
         
         config.baseForegroundColor = normalTitleColor
-        config.baseBackgroundColor = .white
+        config.baseBackgroundColor = normalBgColr
         config.titleAlignment = .center
         config.buttonSize = .small
         return config

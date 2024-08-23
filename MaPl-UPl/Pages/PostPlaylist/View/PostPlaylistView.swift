@@ -45,7 +45,7 @@ final class PostPlaylistView : BaseView {
         return btn
     }()
     
-    let searchMusicButton = OvalShapeButton(title: "추가할 노래 찾기", image: Assets.SystemImage.plus, imageTintColor: Assets.Colors.pointPink)
+    let searchMusicButton = CapsuleShapeButton(title: "추가할 노래 찾기", image: Assets.SystemImage.plus, imageTintColor: Assets.Colors.pointPink)
     
     let postPlaylistButton = MainNormalButton(title: "내 플리 등록하기")
     

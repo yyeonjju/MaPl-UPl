@@ -16,5 +16,10 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
     override func loadView() {
         view = viewManager
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        hideKeyboardWhenTappedAround()
+    }
 }
 
