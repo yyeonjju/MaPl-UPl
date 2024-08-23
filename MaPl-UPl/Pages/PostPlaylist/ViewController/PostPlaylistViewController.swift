@@ -7,6 +7,8 @@
 
 import UIKit
 import RxSwift
+import PhotosUI
+import Toast
 
 final class PostPlaylistViewController : BaseViewController<PostPlaylistView, PostPlaylistViewModel> {
     // MARK: - Lifecycle
@@ -29,26 +31,34 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
     
     private func setupBind() {
         let postPlaylistButtonTap = PublishSubject<Void>()
-        let selectedBgImageData = PublishSubject<Data>()
         let searchMusicButtonTap = PublishSubject<Void>()
+        let addPhotoButtonTap = PublishSubject<Void>()
+        let titleInputText = PublishSubject<String>()
+        let selectedBgImageData = PublishSubject<Data>()
         
-        let input = PostPlaylistViewModel.Input(postPlaylistButtonTap : postPlaylistButtonTap, selectedBgImageData : selectedBgImageData, searchMusicButtonTap:searchMusicButtonTap)
+        let input = PostPlaylistViewModel.Input(titleInputText:titleInputText, postPlaylistButtonTap : postPlaylistButtonTap, selectedBgImageData : selectedBgImageData, searchMusicButtonTap:searchMusicButtonTap, addPhotoButtonTap:addPhotoButtonTap)
         let output = vm.transform(input: input)
         
         
-        //TODO: 이미지 바뀔 때마다 바인딩
-        viewManager.postPlaylistButton.rx.tap
-            .bind(onNext: { _ in
-                selectedBgImageData.onNext(UIImage(systemName: "star")!.pngData()!)
-            })
+        viewManager.titleTextField.rx.text.orEmpty
+            .bind(to: titleInputText)
             .disposed(by: disposeBag)
         
         viewManager.postPlaylistButton.rx.tap
-            .bind(to: postPlaylistButtonTap)
+            .bind(with:self, onNext: { owner, _ in
+                let data = owner.viewManager.photoImageView.image?.jpegData(compressionQuality: 0.5)
+                selectedBgImageData.onNext(data ?? Data())
+                postPlaylistButtonTap.onNext(())
+            })
+//            .bind(to:postPlaylistButtonTap)
             .disposed(by: disposeBag)
         
         viewManager.searchMusicButton.rx.tap
             .bind(to: searchMusicButtonTap)
+            .disposed(by: disposeBag)
+        
+        viewManager.cameraIconButton.rx.tap
+            .bind(to: addPhotoButtonTap)
             .disposed(by: disposeBag)
         
         
@@ -90,6 +100,18 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
             }
             .disposed(by: disposeBag)
         
+        output.presentPhotoLibrary
+            .bind(with: self) { owner, _ in
+                var config = PHPickerConfiguration()
+                config.selectionLimit = 1
+                config.filter = .any(of: [.images])
+            
+                let picker = PHPickerViewController(configuration: config)
+                picker.delegate = self
+                
+                owner.pageTransition(to: picker, type: .present)
+            }
+            .disposed(by: disposeBag)
     }
     
     
@@ -145,8 +167,13 @@ extension PostPlaylistViewController : UITableViewDragDelegate, UITableViewDropD
             newSonglist.insert(sourceItem, at: destinationIndexPath.row)
             vm.selectedSongList = newSonglist
             
-            tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
-            tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+            //주석치니까 버벅거리진 않는데 아래 finish에서 false가 나옴(찝찝..)
+
+//            tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
+//            tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+            
+            //datasource에 있는 moveRowAt 메서드를 여기 써주면 에러 없긴한데..
+            // tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
 
             
         } completion: { finish in
@@ -154,5 +181,30 @@ extension PostPlaylistViewController : UITableViewDragDelegate, UITableViewDropD
             coordinator.drop(item.dragItem, toRowAt: destinationIndexPath)
 //            tableView.reloadData()
         }
+    }
+}
+
+
+extension PostPlaylistViewController : PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
+        picker.dismiss(animated: true)
+        
+        let itemProvider = results.first?.itemProvider // 2
+        
+        if let itemProvider = itemProvider,
+           itemProvider.canLoadObject(ofClass: UIImage.self) { // 3
+            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in // 4
+                guard let self, let image else { return }
+                
+                DispatchQueue.main.async {
+                    self.viewManager.photoImageView.image = image as? UIImage
+                }
+            }
+        } else {
+            view.makeToast("로드할 수 없는 이미지 입니다", position: .top)
+            // provider not being able load UIImage
+        }
+        
     }
 }

@@ -20,9 +20,11 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
     private let selectedSongListSubject : BehaviorSubject<[SongInfo]> = BehaviorSubject(value: [])
     
     struct Input {
+        let titleInputText : PublishSubject<String>
         let postPlaylistButtonTap : PublishSubject<Void>
         let selectedBgImageData : PublishSubject<Data>
         let searchMusicButtonTap : PublishSubject<Void>
+        let addPhotoButtonTap : PublishSubject<Void>
     }
     
     struct Output {
@@ -31,6 +33,7 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
         let uploadComplete : PublishSubject<Bool>
         let pushToSearchMusicVC : PublishSubject<Void>
         let selectedSongList : BehaviorSubject<[SongInfo]>
+        let presentPhotoLibrary : PublishSubject<Void>
     }
     
     func transform(input : Input) -> Output {
@@ -66,23 +69,26 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
         
         //2️⃣파일 업로드 성공했으면 게시물 업로드
         uploadSuccessFiles
+            .withLatestFrom(Observable.combineLatest(input.titleInputText, uploadSuccessFiles))
             .withUnretained(self)
-            .map{ owner, files in
-                let title = "플리 제목 \(Int.random(in: 0...100))"
+            .map{ (owner, params:(String,[String])) in
+                let title = params.0
+                let files = params.1
+                
                 let content = ""
-                let content1 = owner.encodeSongInfo(index: 0)
-                let content2 = owner.encodeSongInfo(index: 1)
-                let content3 = owner.encodeSongInfo(index: 2)
-                let content4 = owner.encodeSongInfo(index: 3)
-                let content5 = owner.encodeSongInfo(index: 4)
-                let productId = "playlist"
+                let content1 = owner.convertSongInfoToString(index: 0)
+                let content2 = owner.convertSongInfoToString(index: 1)
+                let content3 = owner.convertSongInfoToString(index: 2)
+                let content4 = owner.convertSongInfoToString(index: 3)
+                let content5 = owner.convertSongInfoToString(index: 4)
+                let productId = "Mapl-Upl-playlist"
                 
                 let PostPlaylistBodyData = PostPlaylistQuery(title: title, content: content, content1: content1, content2: content2, content3: content3, content4: content4, content5: content5, product_id: productId, files: files)
                 
                 return PostPlaylistBodyData
             }
             .flatMap{ BodyData in // 게시물 업로드
-                NetworkManager.shared.postPlaylist(body: BodyData)
+                return NetworkManager.shared.postPlaylist(body: BodyData)
             } //⭐️ api fetch에서 반환하는 single은 error나 complete을 방출하지 않음 & 메인스레드에서 동작하도록 -> driver로 변환
             .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
             .drive(with: self, onNext: { owner, result in
@@ -102,11 +108,11 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
             })
             .disposed(by: disposeBag)
         
-        return Output(errorMessage : errorMessageSubject,  isLoading : isLoadingSubject, uploadComplete: uploadCompleteSubject, pushToSearchMusicVC: input.searchMusicButtonTap, selectedSongList:selectedSongListSubject)
+        return Output(errorMessage : errorMessageSubject,  isLoading : isLoadingSubject, uploadComplete: uploadCompleteSubject, pushToSearchMusicVC: input.searchMusicButtonTap, selectedSongList:selectedSongListSubject, presentPhotoLibrary: input.addPhotoButtonTap)
     }
     
-    private func encodeSongInfo(index : Int) -> String?  {
-        guard index<selectedSongList.count else{return nil}
+    private func convertSongInfoToString(index : Int) -> String?  {
+        guard index < selectedSongList.count else{return nil}
         
         let songInfo = selectedSongList[index]
         

@@ -99,7 +99,7 @@ class NetworkManager {
                 AF.upload(
                     multipartFormData: { multipartFormData in
                         // mimeType : 폼데이터  중에 어떤 파일로 분기해줄 것인지 정해준다.
-                        multipartFormData.append(imageData,withName: "files", fileName: "image.png",mimeType: "image/png")
+                        multipartFormData.append(imageData,withName: "files", fileName: "image.jpeg",mimeType: "image/jpeg")
                     },
                     to: url,
                     headers: header,
