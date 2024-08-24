@@ -46,6 +46,13 @@ final class PostPlaylistView : BaseView {
     }()
     
     let searchMusicButton = CapsuleShapeButton(title: "추가할 노래 찾기", image: Assets.SystemImage.plus, imageTintColor: Assets.Colors.pointPink)
+    let selectMusicNotificationLabel = {
+        let label = UILabel()
+        label.text = "* 1~5개의 노래를 선택해 주세요."
+        label.font = Font.bold11
+        label.textColor = Assets.Colors.pointPink
+        return label
+    }()
     
     let postPlaylistButton = MainNormalButton(title: "내 플리 등록하기")
     
@@ -72,7 +79,7 @@ final class PostPlaylistView : BaseView {
         self.addSubview(scrollView)
         self.addSubview(postPlaylistButton)
         scrollView.addSubview(contentView)
-        [ titleTextField, photoImageView, cameraIconView, searchMusicButton, selectedMusicTableView]
+        [ titleTextField, photoImageView, cameraIconView, searchMusicButton, selectMusicNotificationLabel, selectedMusicTableView]
             .forEach{
                 contentView.addSubview($0)
             }
@@ -123,7 +130,10 @@ final class PostPlaylistView : BaseView {
             make.height.equalTo(40)
             
         }
-        
+        selectMusicNotificationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(searchMusicButton.snp.trailing).offset(2)
+            make.bottom.equalTo(searchMusicButton).inset(4)
+        }
         selectedMusicTableView.snp.makeConstraints { make in
             make.top.equalTo(searchMusicButton.snp.bottom).offset(10)
             make.leading.trailing.equalTo(contentView)
