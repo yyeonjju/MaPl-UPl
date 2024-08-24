@@ -10,7 +10,7 @@ import Kingfisher
 
 class BasicSubtitleTableViewCell : UITableViewCell {
     // MARK: - UI
-    private let artworkImageView = {
+    let artworkImageView = {
         let view = UIImageView()
         view.configureDefaultImageView()
 

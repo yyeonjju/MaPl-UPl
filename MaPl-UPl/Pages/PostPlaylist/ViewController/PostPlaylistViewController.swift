@@ -35,8 +35,9 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         let addPhotoButtonTap = PublishSubject<Void>()
         let titleInputText = PublishSubject<String>()
         let selectedBgImageData = PublishSubject<Data>()
+        let removeItemIndex = PublishSubject<Int>()
         
-        let input = PostPlaylistViewModel.Input(titleInputText:titleInputText, postPlaylistButtonTap : postPlaylistButtonTap, selectedBgImageData : selectedBgImageData, searchMusicButtonTap:searchMusicButtonTap, addPhotoButtonTap:addPhotoButtonTap)
+        let input = PostPlaylistViewModel.Input(titleInputText:titleInputText, postPlaylistButtonTap : postPlaylistButtonTap, selectedBgImageData : selectedBgImageData, searchMusicButtonTap:searchMusicButtonTap, addPhotoButtonTap:addPhotoButtonTap, removeItemIndex:removeItemIndex)
         let output = vm.transform(input: input)
         
         
@@ -95,7 +96,11 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         
         output.selectedSongList
             .bind(to: viewManager.selectedMusicTableView.rx.items(cellIdentifier: SelectedMusicTableViewCell.description(), cellType: SelectedMusicTableViewCell.self)) { (row, element, cell : SelectedMusicTableViewCell) in
+                cell.selectionStyle = .none
                 cell.confiureData(data: element)
+                cell.removeItem = {
+                    removeItemIndex.onNext(row)
+                }
                 
             }
             .disposed(by: disposeBag)
@@ -114,9 +119,10 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
             .disposed(by: disposeBag)
     }
     
-    
 }
 
+
+//drag & drop
 extension PostPlaylistViewController : UITableViewDragDelegate, UITableViewDropDelegate {
 
     ///itemsForBeginning : 드레그 시작

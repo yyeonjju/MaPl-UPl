@@ -23,6 +23,9 @@ enum Assets {
     enum SystemImage {
         static let plus = UIImage(systemName: "plus")
         static let line = UIImage(systemName: "minus")
+        static let threeLines = UIImage(systemName: "line.3.horizontal")
+        static let options = UIImage(systemName: "ellipsis")
+        static let xmarkCircle = UIImage(systemName: "xmark.circle")
     }
 }
 

@@ -51,7 +51,7 @@ final class SearchMusicViewController : BaseViewController<SearchMusicView, Sear
         
         output.songInfoList
             .bind(to: viewManager.tableView.rx.items(cellIdentifier: SearchMusicTableViewCell.description(), cellType: SearchMusicTableViewCell.self)) { (row, element, cell : SearchMusicTableViewCell) in
-                
+                cell.selectionStyle = .none
                 cell.confiureData(data: element)
                 cell.selectButton.rx.tap
                     .map{element}

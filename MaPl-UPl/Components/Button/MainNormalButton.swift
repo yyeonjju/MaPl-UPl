@@ -10,7 +10,7 @@ import SnapKit
 
 final class MainNormalButton : UIButton{
 
-    init(title : String, bgColor : UIColor = Assets.Colors.gray3) {
+    init(title : String, bgColor : UIColor = Assets.Colors.gray4) {
         super.init(frame: .zero)
         
 //        self.layer.shadowColor = Assets.Colors.pointPink.cgColor

@@ -25,6 +25,7 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
         let selectedBgImageData : PublishSubject<Data>
         let searchMusicButtonTap : PublishSubject<Void>
         let addPhotoButtonTap : PublishSubject<Void>
+        let removeItemIndex : PublishSubject<Int>
     }
     
     struct Output {
@@ -41,6 +42,14 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
         let isLoadingSubject = PublishSubject<Bool>()
         let uploadSuccessFiles = PublishSubject<[String]>()
         let uploadCompleteSubject = PublishSubject<Bool>()
+        
+        //노래 리스트 중 삭제할 index
+        input.removeItemIndex
+            .bind(with: self) { owner, index in
+                owner.selectedSongList.remove(at: index)
+            }
+            .disposed(by: disposeBag)
+        
         
         //1️⃣ 파일 업로드
         input.postPlaylistButtonTap
