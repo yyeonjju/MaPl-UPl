@@ -18,6 +18,9 @@ enum Router {
     
     case postPlaylist(query : PostPlaylistQuery)
     case updloadImage
+    case getPosts(productId : String)
+    
+    
     
     var accessToken : String {
         UserInfoManager().userInfo?.access ?? ""
@@ -43,6 +46,9 @@ extension Router: TargetType {
             return APIURL.updloadImage
         case .tokenRefresh :
             return APIURL.tokenRefresh
+        case .getPosts :
+            return APIURL.getPosts
+        
         }
     }
     
@@ -50,7 +56,7 @@ extension Router: TargetType {
         switch self {
         case .login, .postPlaylist, .updloadImage:
             return .post
-        case .tokenRefresh :
+        case .tokenRefresh, .getPosts :
             return .get
         }
     }
@@ -59,8 +65,18 @@ extension Router: TargetType {
         return nil
     }
     
-    var queryItems: [URLQueryItem]? {
-        return nil
+    var queryItems: [URLQueryItem] {
+        switch self {
+        case .getPosts(let productId) :
+            return[
+                URLQueryItem(name: "next", value: ""),
+                URLQueryItem(name: "limit", value: "10"),
+                URLQueryItem(name: "product_id", value: productId),
+            ]
+        default :
+            return []
+        }
+
     }
     
     var body: Data? {
@@ -83,7 +99,7 @@ extension Router: TargetType {
             }catch{
                 return nil
             }
-        case .updloadImage:
+        case .updloadImage, .getPosts:
             return nil
         }
     }
@@ -112,7 +128,10 @@ extension Router: TargetType {
                 HeaderKey.sesacKey : HeaderValue.sesacKey,
                 HeaderKey.refresh : refreshToken
             ]
-            
+        case .getPosts :
+            return [
+                HeaderKey.sesacKey : HeaderValue.sesacKey
+            ]
         }
     }
     

@@ -20,7 +20,7 @@ struct PostPlaylistQuery : Encodable {
 
 }
 
-struct PostPlaylistResponse : Decodable {
+struct PlaylistResponse : Decodable {
     let post_id : String
     let product_id : String
     
@@ -41,12 +41,19 @@ struct PostPlaylistResponse : Decodable {
     let likes2 : [String]
     let hashTags : [String]
     let buyers : [String]
-    let comments : [String]
+    let comments : [Comment]
 }
 
 struct Creator : Decodable{
     let user_id : String
     let nick : String?
     let profileImage : String?
+}
+
+struct Comment : Decodable {
+    let comment_id : String
+    let content : String
+    let createdAt : String
+    let creator : Creator
 }
 

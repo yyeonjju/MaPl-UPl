@@ -7,6 +7,9 @@
 
 import UIKit
 
+enum ProductId {
+    static let playlist = "Mapl-Upl-playlist"
+}
 
 enum Assets {
     enum Colors {

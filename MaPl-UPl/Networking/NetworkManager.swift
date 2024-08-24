@@ -22,9 +22,9 @@ class NetworkManager {
         let single = Single<Result<M,Error>>.create { single in
             do {
                 let request = try fetchRouter.asURLRequest()
-//                print("💚 url", request.url)
-//                print("💚 header", request.headers)
-//                print("💚request💚", request)
+                print("💚 url", request.url)
+                print("💚 header", request.headers)
+                print("💚request💚", request)
                 
                 
                 AF.request(request, interceptor: APIRequestInterceptor())
@@ -165,9 +165,9 @@ extension NetworkManager {
         return fetch(fetchRouter: fetchRouter, model : LoginResponse.self)
     }
     
-    func postPlaylist(body : PostPlaylistQuery) -> Single<Result<PostPlaylistResponse,Error>>  {
+    func postPlaylist(body : PostPlaylistQuery) -> Single<Result<PlaylistResponse,Error>>  {
         let fetchRouter = Router.postPlaylist(query: body)
-        return fetch(fetchRouter: fetchRouter, model : PostPlaylistResponse.self)
+        return fetch(fetchRouter: fetchRouter, model : PlaylistResponse.self)
     }
     
     func uploadImage(imageData : Data) -> Single<Result<FileModel,Error>> {
@@ -178,6 +178,11 @@ extension NetworkManager {
     func tokenRefresh() -> Single<Result<TokenRefreshResponse,Error>> {
         let fetchRouter = Router.tokenRefresh
         return fetch(fetchRouter: fetchRouter, model : TokenRefreshResponse.self)
+    }
+    
+    func getPlaylistPosts(productId : String) -> Single<Result<PlaylistPostsResponse,Error>> {
+        let fetchRouter = Router.getPosts(productId: productId)
+        return fetch(fetchRouter: fetchRouter, model : PlaylistPostsResponse.self)
     }
 }
 

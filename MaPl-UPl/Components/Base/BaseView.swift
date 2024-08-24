@@ -6,14 +6,18 @@
 //
 
 import UIKit
+import SnapKit
 
 class BaseView : UIView {
+    let spinner = UIActivityIndicatorView()
     
     // MARK: - Initializer
     override init(frame : CGRect) {
         super.init(frame: frame)
         
         configureBackgroundColor()
+        configureSpinnerUI()
+        
         configureSubView()
         configureLayout()
     }
@@ -24,6 +28,13 @@ class BaseView : UIView {
     
     
     // MARK: - ConfigureUI
+    private func configureSpinnerUI() {
+        self.addSubview(spinner)
+        spinner.snp.makeConstraints { make in
+            make.center.equalTo(self)
+        }
+    }
+    
     func configureSubView() {
     }
     
