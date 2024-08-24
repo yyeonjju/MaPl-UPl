@@ -34,7 +34,7 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         let searchMusicButtonTap = PublishSubject<Void>()
         let addPhotoButtonTap = PublishSubject<Void>()
         let titleInputText = PublishSubject<String>()
-        let selectedBgImageData = PublishSubject<Data>()
+        let selectedBgImageData = PublishSubject<Data?>()
         let removeItemIndex = PublishSubject<Int>()
         
         let input = PostPlaylistViewModel.Input(titleInputText:titleInputText, postPlaylistButtonTap : postPlaylistButtonTap, selectedBgImageData : selectedBgImageData, searchMusicButtonTap:searchMusicButtonTap, addPhotoButtonTap:addPhotoButtonTap, removeItemIndex:removeItemIndex)
@@ -48,7 +48,7 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         viewManager.postPlaylistButton.rx.tap
             .bind(with:self, onNext: { owner, _ in
                 let data = owner.viewManager.photoImageView.image?.jpegData(compressionQuality: 0.5)
-                selectedBgImageData.onNext(data ?? Data())
+                selectedBgImageData.onNext(data)
                 postPlaylistButtonTap.onNext(())
             })
 //            .bind(to:postPlaylistButtonTap)
@@ -115,6 +115,12 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
                 picker.delegate = self
                 
                 owner.pageTransition(to: picker, type: .present)
+            }
+            .disposed(by: disposeBag)
+        
+        output.invalidMessage
+            .bind(with: self) { owner, message in
+                owner.view.makeToast(message, position: .top)
             }
             .disposed(by: disposeBag)
     }

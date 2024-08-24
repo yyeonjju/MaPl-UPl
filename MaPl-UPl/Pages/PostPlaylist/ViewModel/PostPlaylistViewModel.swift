@@ -22,7 +22,7 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
     struct Input {
         let titleInputText : PublishSubject<String>
         let postPlaylistButtonTap : PublishSubject<Void>
-        let selectedBgImageData : PublishSubject<Data>
+        let selectedBgImageData : PublishSubject<Data?>
         let searchMusicButtonTap : PublishSubject<Void>
         let addPhotoButtonTap : PublishSubject<Void>
         let removeItemIndex : PublishSubject<Int>
@@ -35,6 +35,7 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
         let pushToSearchMusicVC : PublishSubject<Void>
         let selectedSongList : BehaviorSubject<[SongInfo]>
         let presentPhotoLibrary : PublishSubject<Void>
+        let invalidMessage : PublishSubject<String?>
     }
     
     func transform(input : Input) -> Output {
@@ -42,6 +43,8 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
         let isLoadingSubject = PublishSubject<Bool>()
         let uploadSuccessFiles = PublishSubject<[String]>()
         let uploadCompleteSubject = PublishSubject<Bool>()
+        let invalidMessageSubject = PublishSubject<String?>()
+        let readyToPostSubject = PublishSubject<Void>()
         
         //노래 리스트 중 삭제할 index
         input.removeItemIndex
@@ -51,12 +54,32 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
             .disposed(by: disposeBag)
         
         
-        //1️⃣ 파일 업로드
         input.postPlaylistButtonTap
+            .withLatestFrom(Observable.combineLatest(input.titleInputText, input.selectedBgImageData))
+            .withUnretained(self)
+            .map{ (owner, params:(String,Data?)) in
+                let title = params.0
+                let imageData = params.1
+                return owner.postValidation(title: title, imageData: imageData)
+            }
+            .bind(with: self) { (owner, validationPassed:PlaylistPostValidation) in
+                if validationPassed == .validationPassed  {
+                    //readyToPost에 void 값 전달
+                    readyToPostSubject.onNext(())
+                }else {
+                    //invalidMessageSubject 에 텍스트 전달
+                    invalidMessageSubject.onNext(validationPassed.invalidMessage)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
+        //1️⃣ 파일 업로드
+        readyToPostSubject
             .withLatestFrom(input.selectedBgImageData)
             .flatMap{ imageData in
                 isLoadingSubject.onNext(true)
-                return NetworkManager.shared.uploadImage(imageData: imageData)
+                return NetworkManager.shared.uploadImage(imageData: imageData!)
             }
             .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
             .drive(with: self, onNext: { owner, result in
@@ -117,7 +140,7 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
             })
             .disposed(by: disposeBag)
         
-        return Output(errorMessage : errorMessageSubject,  isLoading : isLoadingSubject, uploadComplete: uploadCompleteSubject, pushToSearchMusicVC: input.searchMusicButtonTap, selectedSongList:selectedSongListSubject, presentPhotoLibrary: input.addPhotoButtonTap)
+        return Output(errorMessage : errorMessageSubject,  isLoading : isLoadingSubject, uploadComplete: uploadCompleteSubject, pushToSearchMusicVC: input.searchMusicButtonTap, selectedSongList:selectedSongListSubject, presentPhotoLibrary: input.addPhotoButtonTap, invalidMessage: invalidMessageSubject)
     }
     
     private func convertSongInfoToString(index : Int) -> String?  {
@@ -135,6 +158,22 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
         
         return stringFormatSongInfo
         
+    }
+    
+    private func postValidation(title: String,imageData : Data?) -> PlaylistPostValidation {
+        
+        guard title.count >= PlaylistPostValidation.minTitleTextCount else {
+            return PlaylistPostValidation.invalidTitleTextCount
+        }
+        guard imageData != nil else{
+            return PlaylistPostValidation.invalidBgImage
+        }
+        guard selectedSongList.count >= PlaylistPostValidation.minMusicCount &&
+                selectedSongList.count <= PlaylistPostValidation.maxMusicCount else{
+            return PlaylistPostValidation.invalidMusicCount
+        }
+                
+        return PlaylistPostValidation.validationPassed
     }
 }
 
