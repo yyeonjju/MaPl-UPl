@@ -36,6 +36,7 @@
 		7DC40DB22C76241C00BB3A50 /* SelectedMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC40DB12C76241C00BB3A50 /* SelectedMusicTableViewCell.swift */; };
 		7DC40DB52C762B8500BB3A50 /* SearchMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC40DB42C762B8400BB3A50 /* SearchMusicTableViewCell.swift */; };
 		7DFE0AA62C7A019800CD5893 /* getPostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE0AA52C7A019800CD5893 /* getPostsModel.swift */; };
+		7DFE0AA82C7A3B0400CD5893 /* PlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE0AA72C7A3B0400CD5893 /* PlaylistCollectionViewCell.swift */; };
 		7DFE27D82C71953700DB5AEE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27D72C71953700DB5AEE /* LoginViewController.swift */; };
 		7DFE27DE2C7195F400DB5AEE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27DD2C7195F400DB5AEE /* LoginView.swift */; };
 		7DFE27E12C71966B00DB5AEE /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27E02C71966B00DB5AEE /* BaseView.swift */; };
@@ -98,6 +99,7 @@
 		7DC40DB12C76241C00BB3A50 /* SelectedMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMusicTableViewCell.swift; sourceTree = "<group>"; };
 		7DC40DB42C762B8400BB3A50 /* SearchMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicTableViewCell.swift; sourceTree = "<group>"; };
 		7DFE0AA52C7A019800CD5893 /* getPostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getPostsModel.swift; sourceTree = "<group>"; };
+		7DFE0AA72C7A3B0400CD5893 /* PlaylistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewCell.swift; sourceTree = "<group>"; };
 		7DFE27D72C71953700DB5AEE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7DFE27DD2C7195F400DB5AEE /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7DFE27E02C71966B00DB5AEE /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				7D702B212C787AB7008E2D35 /* SelectedMusicCollectionViewCell.swift */,
+				7DFE0AA72C7A3B0400CD5893 /* PlaylistCollectionViewCell.swift */,
 			);
 			path = CollectionViewCell;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				7D702B152C784A89008E2D35 /* SearchMusicViewModel.swift in Sources */,
 				7DFE27FD2C71ABB700DB5AEE /* NormalOutlineTextField.swift in Sources */,
 				7D702B0F2C784A34008E2D35 /* SearchMusicViewController.swift in Sources */,
+				7DFE0AA82C7A3B0400CD5893 /* PlaylistCollectionViewCell.swift in Sources */,
 				7D702B122C784A60008E2D35 /* SearchMusicView.swift in Sources */,
 				7DFE27DE2C7195F400DB5AEE /* LoginView.swift in Sources */,
 				7DFE27FA2C71AA8600DB5AEE /* MainNormalButton.swift in Sources */,

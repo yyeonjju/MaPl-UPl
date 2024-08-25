@@ -10,12 +10,26 @@ import RxSwift
 
 final class PlaylistListViewController : BaseViewController<PlaylistListView, PlaylistListViewModel> {
 
+    var previousIndex = 0
+    var zoomInIndex = BehaviorSubject(value: 0)
+    var zoomOutIndex = PublishSubject<Int>()
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupDelegate()
         setupBind()
     }
+    
+    // MARK: - SetupDelegate
+    private func setupDelegate() {
+        
+        viewManager.collectionView.delegate = self
+        viewManager.collectionView.dataSource = self
+        viewManager.collectionView.register(PlaylistCollectionViewCell.self, forCellWithReuseIdentifier: PlaylistCollectionViewCell.description())
+    }
+
     
     // MARK: - SetupBind
     private func setupBind() {
@@ -54,10 +68,92 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
             .disposed(by: disposeBag)
         
         output.playlistsData
-            .bind { data in
-                print("💚💚💚data💚💚", data)
+            .bind(with: self) { owner, data in
+                owner.viewManager.collectionView.reloadData()
             }
             .disposed(by: disposeBag)
+        
+//            .bind(to: viewManager.collectionView.rx.items(cellIdentifier: PlaylistCollectionViewCell.description(), cellType: PlaylistCollectionViewCell.self)){[weak self] (row, element, cell : PlaylistCollectionViewCell) in
+//
+//            }
+//            .disposed(by: disposeBag)
+        
+        
     }
     
 }
+
+
+
+
+
+
+
+extension PlaylistListViewController : UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return vm.playlistsData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaylistCollectionViewCell.description(), for: indexPath) as! PlaylistCollectionViewCell
+        indexPath.row == previousIndex ? increaseAnimation(zoomCell: cell) : decreaseAnimation(zoomCell: cell)
+        return cell
+    }
+}
+
+
+
+extension PlaylistListViewController: UICollectionViewDelegateFlowLayout {
+    
+    ///Paging Animation
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        guard let layout = viewManager.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        
+        let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
+        let offsetX = targetContentOffset.pointee.x
+        let index = (offsetX + scrollView.contentInset.left) / cellWidth
+        let roundedIndex = round(index)
+        targetContentOffset.pointee = CGPoint(x: roundedIndex * cellWidth - scrollView.contentInset.left, y: 0)
+    }
+    
+    ///Zoom Animation
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let collectionView = viewManager.collectionView
+        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        
+        let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
+        let offsetX = collectionView.contentOffset.x
+        let index = (offsetX + scrollView.contentInset.left) / cellWidth
+        let roundedIndex = round(index)
+        let indexPath = IndexPath(item: Int(roundedIndex), section: 0)
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            increaseAnimation(zoomCell: cell)
+        }
+        
+        
+        if Int(roundedIndex) != previousIndex {
+            let preIndexPath = IndexPath(item: previousIndex, section: 0)
+            if let preCell = collectionView.cellForItem(at: preIndexPath) {
+                decreaseAnimation(zoomCell: preCell)
+            }
+            previousIndex = indexPath.item
+        }
+    }
+    
+    func increaseAnimation(zoomCell: UICollectionViewCell) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+            zoomCell.transform = .identity
+        }, completion: nil)
+    }
+    
+    func decreaseAnimation(zoomCell: UICollectionViewCell) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+            zoomCell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        }, completion: nil)
+    }
+
+    
+    
+    
+}
+
