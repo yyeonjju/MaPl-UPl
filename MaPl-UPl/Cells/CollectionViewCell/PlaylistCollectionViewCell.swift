@@ -42,6 +42,13 @@ final class PlaylistCollectionViewCell : UICollectionViewCell {
         return iv
     }()
     
+    let songsPreviewTextLabel = {
+        let label = UILabel()
+        label.textColor = Assets.Colors.white
+        label.font = Font.bold13
+        return label
+    }()
+    
     private let likeImageView = {
        let iv = UIImageView()
         iv.image = Assets.SystemImage.likeEmpty
@@ -93,13 +100,25 @@ final class PlaylistCollectionViewCell : UICollectionViewCell {
         bgImageView.loadImage(filePath: fileURL)
         playlistImageView.loadImage(filePath: fileURL)
         titleLabel.text = data.title
+        
+        var songsPreviewText = ""
+        let songs = [data.content1, data.content2, data.content3, data.content4, data.content5]
+        for songStringForm in songs {
+            guard let songStringForm else{return }
+            let songInfoData = songStringForm.data(using: .utf8)!
+            let decodedSongData = try? JSONDecoder().decode(SongInfo.self, from: songInfoData)
+            let songShortInfo = "🎵\(decodedSongData?.title ?? "")-\(decodedSongData?.artistName ?? "" ) "
+            songsPreviewText.append(songShortInfo)
+        }
+        songsPreviewTextLabel.text = songsPreviewText
+        
     }
 
     
     // MARK: - ConfigureUI
     
     private func configureSubView() {
-        [bgImageView, titleLabel, playlistImageView, likeButton, likeImageView, likeText, purchaseImageView, purchaseButton, purchaseText]
+        [bgImageView, titleLabel, playlistImageView, songsPreviewTextLabel, likeButton, likeImageView, likeText, purchaseImageView, purchaseButton, purchaseText]
             .forEach{
                 contentView.addSubview($0)
             }
@@ -125,6 +144,11 @@ final class PlaylistCollectionViewCell : UICollectionViewCell {
             make.width.equalTo(bgImageView).multipliedBy(0.8)
             make.height.equalTo(bgImageView).multipliedBy(0.55)
             make.centerX.equalTo(bgImageView)
+        }
+        
+        songsPreviewTextLabel.snp.makeConstraints { make in
+            make.top.equalTo(playlistImageView.snp.bottom).offset(20)
+            make.horizontalEdges.equalTo(playlistImageView)
         }
         
         likeImageView.snp.makeConstraints { make in
