@@ -37,6 +37,8 @@
 		7DC40DB52C762B8500BB3A50 /* SearchMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC40DB42C762B8400BB3A50 /* SearchMusicTableViewCell.swift */; };
 		7DFE0AA62C7A019800CD5893 /* getPostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE0AA52C7A019800CD5893 /* getPostsModel.swift */; };
 		7DFE0AA82C7A3B0400CD5893 /* PlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE0AA72C7A3B0400CD5893 /* PlaylistCollectionViewCell.swift */; };
+		7DFE0AAA2C7B545900CD5893 /* ImageLoadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE0AA92C7B545900CD5893 /* ImageLoadManager.swift */; };
+		7DFE0AAD2C7B581C00CD5893 /* EmptyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE0AAC2C7B581C00CD5893 /* EmptyModel.swift */; };
 		7DFE27D82C71953700DB5AEE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27D72C71953700DB5AEE /* LoginViewController.swift */; };
 		7DFE27DE2C7195F400DB5AEE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27DD2C7195F400DB5AEE /* LoginView.swift */; };
 		7DFE27E12C71966B00DB5AEE /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE27E02C71966B00DB5AEE /* BaseView.swift */; };
@@ -100,6 +102,8 @@
 		7DC40DB42C762B8400BB3A50 /* SearchMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicTableViewCell.swift; sourceTree = "<group>"; };
 		7DFE0AA52C7A019800CD5893 /* getPostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getPostsModel.swift; sourceTree = "<group>"; };
 		7DFE0AA72C7A3B0400CD5893 /* PlaylistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewCell.swift; sourceTree = "<group>"; };
+		7DFE0AA92C7B545900CD5893 /* ImageLoadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadManager.swift; sourceTree = "<group>"; };
+		7DFE0AAC2C7B581C00CD5893 /* EmptyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyModel.swift; sourceTree = "<group>"; };
 		7DFE27D72C71953700DB5AEE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7DFE27DD2C7195F400DB5AEE /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7DFE27E02C71966B00DB5AEE /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 				7DFE27FE2C71B6BF00DB5AEE /* NetworkManager.swift */,
 				7DFE28072C71FC8A00DB5AEE /* TargetType.swift */,
 				7DFE28092C71FDA200DB5AEE /* Router.swift */,
+				7DFE0AA92C7B545900CD5893 /* ImageLoadManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -341,6 +346,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		7DFE0AAB2C7B580C00CD5893 /* Empty */ = {
+			isa = PBXGroup;
+			children = (
+				7DFE0AAC2C7B581C00CD5893 /* EmptyModel.swift */,
+			);
+			path = Empty;
+			sourceTree = "<group>";
+		};
 		7DFE27D62C7194F000DB5AEE /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +419,7 @@
 		7DFE28002C71B97400DB5AEE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7DFE0AAB2C7B580C00CD5893 /* Empty */,
 				7DFE28322C73774900DB5AEE /* File */,
 				7DFE282D2C730F3A00DB5AEE /* Playlist */,
 				7DFE28012C71B97B00DB5AEE /* Auth */,
@@ -625,6 +639,7 @@
 				7DFE28082C71FC8A00DB5AEE /* TargetType.swift in Sources */,
 				7DFE28242C72F8B400DB5AEE /* PlaylistListView.swift in Sources */,
 				7DFE28032C71B99F00DB5AEE /* LoginModel.swift in Sources */,
+				7DFE0AAD2C7B581C00CD5893 /* EmptyModel.swift in Sources */,
 				7DFE27F52C71A7E400DB5AEE /* BaseViewModel.swift in Sources */,
 				7DFE28182C723AD000DB5AEE /* PlaylistListViewController.swift in Sources */,
 				7D326A2B2C74B22800E5602F /* FetchError.swift in Sources */,
@@ -652,6 +667,7 @@
 				7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */,
 				7D702B182C7854F4008E2D35 /* EmptyView.swift in Sources */,
 				7D6CCB3D2C6CF13700E56025 /* APIKey.swift in Sources */,
+				7DFE0AAA2C7B545900CD5893 /* ImageLoadManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

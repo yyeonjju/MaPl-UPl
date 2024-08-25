@@ -29,6 +29,10 @@ enum Assets {
         static let threeLines = UIImage(systemName: "line.3.horizontal")
         static let options = UIImage(systemName: "ellipsis")
         static let xmarkCircle = UIImage(systemName: "xmark.circle")
+        static let likeFill = UIImage(systemName: "heart.fill")
+        static let likeEmpty = UIImage(systemName: "heart")
+        static let banknoteFill = UIImage(systemName: "banknote.fill")
+        static let banknoteEmpty = UIImage(systemName: "banknote")
     }
 }
 

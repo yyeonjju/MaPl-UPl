@@ -97,6 +97,8 @@ extension PlaylistListViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaylistCollectionViewCell.description(), for: indexPath) as! PlaylistCollectionViewCell
         indexPath.row == previousIndex ? increaseAnimation(zoomCell: cell) : decreaseAnimation(zoomCell: cell)
+        let data = vm.playlistsData[indexPath.row]
+        cell.configureData(data: data)
         return cell
     }
 }

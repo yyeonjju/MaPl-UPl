@@ -19,6 +19,7 @@ enum Router {
     case postPlaylist(query : PostPlaylistQuery)
     case updloadImage
     case getPosts(productId : String)
+    case getImageData(filePath : String)
     
     
     
@@ -48,6 +49,8 @@ extension Router: TargetType {
             return APIURL.tokenRefresh
         case .getPosts :
             return APIURL.getPosts
+        case .getImageData(let filePath) :
+            return "/\(filePath)"
         
         }
     }
@@ -56,7 +59,7 @@ extension Router: TargetType {
         switch self {
         case .login, .postPlaylist, .updloadImage:
             return .post
-        case .tokenRefresh, .getPosts :
+        case .tokenRefresh, .getPosts, .getImageData :
             return .get
         }
     }
@@ -99,7 +102,7 @@ extension Router: TargetType {
             }catch{
                 return nil
             }
-        case .updloadImage, .getPosts:
+        case .updloadImage, .getPosts, .getImageData:
             return nil
         }
     }
@@ -128,7 +131,7 @@ extension Router: TargetType {
                 HeaderKey.sesacKey : HeaderValue.sesacKey,
                 HeaderKey.refresh : refreshToken
             ]
-        case .getPosts :
+        case .getPosts, .getImageData :
             return [
                 HeaderKey.sesacKey : HeaderValue.sesacKey
             ]

@@ -20,13 +20,14 @@ final class PlaylistListView : BaseView {
         view.backgroundColor = .clear
         view.showsHorizontalScrollIndicator = false
         view.isPagingEnabled = false
+//        view.backgroundColor = .gray1
         return view
     }()
     
     private func collectionViewFlowLayout() -> UICollectionViewFlowLayout {
       let layout = UICollectionViewFlowLayout()
         
-        layout.itemSize = CGSize(width: 300, height: 440)
+        layout.itemSize = CGSize(width: 300, height: 480)
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = -10
       return layout

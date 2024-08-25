@@ -187,7 +187,7 @@ extension NetworkManager {
 }
 
 
-
+//토큰 리프레시 로직
 final class APIRequestInterceptor: RequestInterceptor {
     @UserDefaultsWrapper(key : .userInfo) var userInfo : LoginResponse?
     let disposeBag = DisposeBag()
