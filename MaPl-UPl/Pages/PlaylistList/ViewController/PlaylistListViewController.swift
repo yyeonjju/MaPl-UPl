@@ -12,6 +12,8 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     @UserDefaultsWrapper(key: .userInfo) var userInfo : LoginResponse?
 
     var previousIndex = 0
+    var diffableDataSource: UICollectionViewDiffableDataSource<Int, PlaylistResponse>!
+    
     let likeButtonTapSubject = PublishSubject<(Int, Bool)>()
     let loadDataTrigger = PublishSubject<Void>()
     
@@ -22,6 +24,10 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         
         setupDelegate()
         setupBind()
+        
+        configureDataSource()
+        updateSnapshot()
+        
         
         loadDataTrigger.onNext(())
     }
@@ -36,7 +42,6 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     private func setupDelegate() {
         
         viewManager.collectionView.delegate = self
-        viewManager.collectionView.dataSource = self
         viewManager.collectionView.register(PlaylistCollectionViewCell.self, forCellWithReuseIdentifier: PlaylistCollectionViewCell.description())
     }
 
@@ -77,50 +82,54 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         
         output.playlistsData
             .bind(with: self) { owner, data in
-                owner.viewManager.collectionView.reloadData()
+                owner.updateSnapshot()
             }
             .disposed(by: disposeBag)
         
-//            .bind(to: viewManager.collectionView.rx.items(cellIdentifier: PlaylistCollectionViewCell.description(), cellType: PlaylistCollectionViewCell.self)){[weak self] (row, element, cell : PlaylistCollectionViewCell) in
-//
-//            }
-//            .disposed(by: disposeBag)
+    }
+    
+    
+    func configureDataSource() {
+        diffableDataSource = UICollectionViewDiffableDataSource<Int, PlaylistResponse>(collectionView: viewManager.collectionView) {[weak self] (collectionView, indexPath, item) -> UICollectionViewCell? in
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaylistCollectionViewCell.description(), for: indexPath) as! PlaylistCollectionViewCell
+            guard let self, let userId = userInfo?.id else {return cell}
+            
+            indexPath.row == previousIndex ? increaseAnimation(zoomCell: cell) : decreaseAnimation(zoomCell: cell)
+            
+            let data = vm.playlistsData[indexPath.row]
+            let isLiked = data.likes.contains(userId)
+            cell.configureData(data: data, isLiked : isLiked)
+            
+            cell.likeButton.rx.tap
+                .map{ !isLiked }
+                .bind(with: self) { owner, toggleTo in
+                    owner.likeButtonTapSubject.onNext((indexPath.row, toggleTo))
+                }
+                .disposed(by: cell.disposeBag)
+
+            return cell
+        }
+    }
+
+    func updateSnapshot() {
+        // 초기 스냅샷 생성
+        var snapshot = NSDiffableDataSourceSnapshot<Int, PlaylistResponse>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(vm.playlistsData)
         
-        
+        // 스냅샷을 데이터 소스에 적용
+        diffableDataSource.apply(snapshot)
     }
     
 }
 
 
-
-
-
-
-
-extension PlaylistListViewController : UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return vm.playlistsData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaylistCollectionViewCell.description(), for: indexPath) as! PlaylistCollectionViewCell
-        indexPath.row == previousIndex ? increaseAnimation(zoomCell: cell) : decreaseAnimation(zoomCell: cell)
-        let data = vm.playlistsData[indexPath.row]
-        guard let userId = userInfo?.id else{return cell}
-        let isLiked = data.likes.contains(userId)
-        cell.configureData(data: data, isLiked : isLiked)
-        
-        cell.likeButton.rx.tap
-            .map{ !isLiked }
-            .bind(with: self) { owner, toggleTo in
-                owner.likeButtonTapSubject.onNext((indexPath.row, toggleTo))
-            }
-            .disposed(by: cell.disposeBag)
-        
-        return cell
+extension PlaylistListViewController : UITableViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("⭐️indexPath - ", indexPath)
     }
 }
-
 
 
 extension PlaylistListViewController: UICollectionViewDelegateFlowLayout {

@@ -80,6 +80,8 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
                 case .success(let likeResponse) :
                     print("🌸success🌸",likeResponse)
                     guard let userId = owner.userInfo?.id else {return }
+                    
+                    //response에 따라 데이터 변경
                     if likeResponse.like_status {
                         owner.playlistsData[tappedIndex].likes.append(userId)
                     } else {
@@ -88,6 +90,7 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
                         }
                         owner.playlistsData[tappedIndex].likes = likes
                     }
+                    
 
                 case .failure(let error as FetchError) :
                     errorMessageSubject.onNext(error.errorMessage)
