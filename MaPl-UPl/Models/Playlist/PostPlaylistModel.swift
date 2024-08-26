@@ -37,7 +37,7 @@ struct PlaylistResponse : Decodable {
 
     let files : [String]
     
-    let likes : [String]
+    var likes : [String]
     let likes2 : [String]
     let hashTags : [String]
     let buyers : [String]

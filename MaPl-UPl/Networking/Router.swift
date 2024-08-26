@@ -20,7 +20,7 @@ enum Router {
     case updloadImage
     case getPosts(productId : String)
     case getImageData(filePath : String)
-    
+    case likePost (query : LikeModel, postId : String)
     
     
     var accessToken : String {
@@ -51,13 +51,14 @@ extension Router: TargetType {
             return APIURL.getPosts
         case .getImageData(let filePath) :
             return "/\(filePath)"
-        
+        case .likePost(let query, let postId) :
+            return APIURL.likePost(postId)
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .login, .postPlaylist, .updloadImage:
+        case .login, .postPlaylist, .updloadImage, .likePost:
             return .post
         case .tokenRefresh, .getPosts, .getImageData :
             return .get
@@ -83,11 +84,12 @@ extension Router: TargetType {
     }
     
     var body: Data? {
+        let encoder = JSONEncoder()
+        
         switch self {
         case .tokenRefresh :
             return nil
         case .login(let query):
-            let encoder = JSONEncoder()
             do{
                 let data = try encoder.encode(query)
                 return data
@@ -95,7 +97,13 @@ extension Router: TargetType {
                 return nil
             }
         case .postPlaylist(let query):
-            let encoder = JSONEncoder()
+            do{
+                let data = try encoder.encode(query)
+                return data
+            }catch{
+                return nil
+            }
+        case .likePost(let query, let postId) :
             do{
                 let data = try encoder.encode(query)
                 return data
@@ -116,7 +124,7 @@ extension Router: TargetType {
                 HeaderKey.contentType: HeaderValue.applicationJson,
                 HeaderKey.sesacKey : HeaderValue.sesacKey
             ]
-        case .postPlaylist:
+        case .postPlaylist, .likePost :
             return [
                 HeaderKey.contentType: HeaderValue.applicationJson,
                 HeaderKey.sesacKey : HeaderValue.sesacKey
@@ -131,7 +139,7 @@ extension Router: TargetType {
                 HeaderKey.sesacKey : HeaderValue.sesacKey,
                 HeaderKey.refresh : refreshToken
             ]
-        case .getPosts, .getImageData :
+        case .getPosts, .getImageData:
             return [
                 HeaderKey.sesacKey : HeaderValue.sesacKey
             ]

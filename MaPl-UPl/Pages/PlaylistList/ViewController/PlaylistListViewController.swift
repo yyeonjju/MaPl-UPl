@@ -9,10 +9,12 @@ import UIKit
 import RxSwift
 
 final class PlaylistListViewController : BaseViewController<PlaylistListView, PlaylistListViewModel> {
+    @UserDefaultsWrapper(key: .userInfo) var userInfo : LoginResponse?
 
     var previousIndex = 0
-    var zoomInIndex = BehaviorSubject(value: 0)
-    var zoomOutIndex = PublishSubject<Int>()
+    let likeButtonTapSubject = PublishSubject<(Int, Bool)>()
+    let loadDataTrigger = PublishSubject<Void>()
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -20,6 +22,14 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         
         setupDelegate()
         setupBind()
+        
+        loadDataTrigger.onNext(())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        loadDataTrigger.onNext(())
     }
     
     // MARK: - SetupDelegate
@@ -33,16 +43,14 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     
     // MARK: - SetupBind
     private func setupBind() {
-        let viewDidLoadTrigger = Observable.just(())
         let addButtonTap = PublishSubject<Void>()
         
-        let input = PlaylistListViewModel.Input(viewDidLoadTrigger:viewDidLoadTrigger, addButtonTap: addButtonTap)
+        let input = PlaylistListViewModel.Input(viewDidLoadTrigger:loadDataTrigger, addButtonTap: addButtonTap, likeButtonTap : likeButtonTapSubject)
         let output = vm.transform(input: input)
         
         viewManager.addPlaylistButton.rx.tap
             .bind(to: addButtonTap)
             .disposed(by: disposeBag)
-        
         
         //output
         output.pushToPostPlaylistVC
@@ -98,7 +106,17 @@ extension PlaylistListViewController : UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaylistCollectionViewCell.description(), for: indexPath) as! PlaylistCollectionViewCell
         indexPath.row == previousIndex ? increaseAnimation(zoomCell: cell) : decreaseAnimation(zoomCell: cell)
         let data = vm.playlistsData[indexPath.row]
-        cell.configureData(data: data)
+        guard let userId = userInfo?.id else{return cell}
+        let isLiked = data.likes.contains(userId)
+        cell.configureData(data: data, isLiked : isLiked)
+        
+        cell.likeButton.rx.tap
+            .map{ !isLiked }
+            .bind(with: self) { owner, toggleTo in
+                owner.likeButtonTapSubject.onNext((indexPath.row, toggleTo))
+            }
+            .disposed(by: cell.disposeBag)
+        
         return cell
     }
 }

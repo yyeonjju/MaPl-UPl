@@ -25,6 +25,7 @@ class ImageLoadManager {
         do{
             let request = try fetchRouter.asURLRequest()
             AF.request(request, interceptor: APIRequestInterceptor())
+                .validate(statusCode: 200...300)
                 .responseData(completionHandler: { response in
                     guard let data = response.data else {return }
                     completion(data)

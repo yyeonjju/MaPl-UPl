@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 
 final class PlaylistListViewModel : BaseViewModelProtocol {
+    @UserDefaultsWrapper(key: .userInfo) var userInfo : LoginResponse?
     let disposeBag = DisposeBag()
     var playlistsData : [PlaylistResponse] = [] {
         didSet {
@@ -20,6 +21,7 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
     struct Input {
         let viewDidLoadTrigger : Observable<Void>
         let addButtonTap : PublishSubject<Void>
+        let likeButtonTap : PublishSubject<(Int, Bool)>
         
     }
     
@@ -58,6 +60,44 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
             }
             .disposed(by: disposeBag)
             
+        
+        var tappedIndex = 0
+        input.likeButtonTap
+            .withUnretained(self)
+            .flatMap{ (owner, params : (Int, Bool) ) in
+                //                isLoadingSubject.onNext(true)
+                let index = params.0
+                let toggleTo = params.1
+                
+                tappedIndex = index
+                let postId = owner.playlistsData[index].post_id
+                let body = LikeModel(like_status: toggleTo)
+                return NetworkManager.shared.likePost(body: body, postId: postId)
+            }
+            .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
+            .drive(with: self) { owner, result in
+                switch result{
+                case .success(let likeResponse) :
+                    print("🌸success🌸",likeResponse)
+                    guard let userId = owner.userInfo?.id else {return }
+                    if likeResponse.like_status {
+                        owner.playlistsData[tappedIndex].likes.append(userId)
+                    } else {
+                        let likes = owner.playlistsData[tappedIndex].likes.filter{
+                            $0 != userId
+                        }
+                        owner.playlistsData[tappedIndex].likes = likes
+                    }
+
+                case .failure(let error as FetchError) :
+                    errorMessageSubject.onNext(error.errorMessage)
+                default:
+                    print("default")
+                    
+                }
+                isLoadingSubject.onNext(false)
+            }
+            .disposed(by: disposeBag)
         
         
         return Output(pushToPostPlaylistVC: input.addButtonTap, isLoading: isLoadingSubject, errorMessage: errorMessageSubject, playlistsData: playlistsDataSubject)

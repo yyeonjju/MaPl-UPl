@@ -10,6 +10,13 @@ import SnapKit
 import RxSwift
 
 final class PlaylistCollectionViewCell : UICollectionViewCell {
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+    
     // MARK: - UI
     
     let bgImageView  = {
@@ -95,11 +102,14 @@ final class PlaylistCollectionViewCell : UICollectionViewCell {
     
     
     // MARK: - ConfigureData
-    func configureData(data : PlaylistResponse) {
+    func configureData(data : PlaylistResponse, isLiked : Bool) {
         let fileURL = data.files.first ?? ""
         bgImageView.loadImage(filePath: fileURL)
         playlistImageView.loadImage(filePath: fileURL)
         titleLabel.text = data.title
+        
+        likeImageView.image = isLiked ? Assets.SystemImage.likeFill :  Assets.SystemImage.likeEmpty
+        
         
         var songsPreviewText = ""
         let songs = [data.content1, data.content2, data.content3, data.content4, data.content5]

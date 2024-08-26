@@ -25,6 +25,7 @@ class NetworkManager {
                 print("💚 url", request.url)
                 print("💚 header", request.headers)
                 print("💚request💚", request)
+                print("💚httpBody💚", request.httpBody)
                 
                 
                 AF.request(request, interceptor: APIRequestInterceptor())
@@ -183,6 +184,11 @@ extension NetworkManager {
     func getPlaylistPosts(productId : String) -> Single<Result<PlaylistPostsResponse,Error>> {
         let fetchRouter = Router.getPosts(productId: productId)
         return fetch(fetchRouter: fetchRouter, model : PlaylistPostsResponse.self)
+    }
+    
+    func likePost(body: LikeModel,postId : String) -> Single<Result<LikeModel,Error>> {
+        let fetchRouter = Router.likePost(query: body, postId: postId)
+        return fetch(fetchRouter: fetchRouter, model : LikeModel.self)
     }
 }
 
