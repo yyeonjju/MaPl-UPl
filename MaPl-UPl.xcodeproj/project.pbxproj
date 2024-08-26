@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74D872D936C158A4BD721C8D /* Pods_MaPl_UPl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBD04AC6EE50E23667C64353 /* Pods_MaPl_UPl.framework */; };
 		7D326A2B2C74B22800E5602F /* FetchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D326A2A2C74B22700E5602F /* FetchError.swift */; };
 		7D326A2E2C74B95400E5602F /* TokenRefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D326A2D2C74B95400E5602F /* TokenRefreshModel.swift */; };
 		7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6CCB212C6CEED800E56025 /* AppDelegate.swift */; };
@@ -30,6 +31,10 @@
 		7D702B1E2C787672008E2D35 /* UtilFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B1D2C787672008E2D35 /* UtilFunc.swift */; };
 		7D702B222C787AB7008E2D35 /* SelectedMusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B212C787AB7008E2D35 /* SelectedMusicCollectionViewCell.swift */; };
 		7D7032CE2C79ABC900548F7C /* PlaylistPostValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7032CD2C79ABC900548F7C /* PlaylistPostValidation.swift */; };
+		7D7C71442C7C8DCF0026C04E /* PlaylistDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71432C7C8DCF0026C04E /* PlaylistDetailViewController.swift */; };
+		7D7C71462C7C8DDC0026C04E /* PlaylistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */; };
+		7D7C71482C7C8DE80026C04E /* PlaylistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */; };
+		7D9278262C7CB17D00773C64 /* MusicPagerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9278252C7CB17D00773C64 /* MusicPagerViewCell.swift */; };
 		7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */; };
 		7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D42C76028B00C47DF4 /* UIImageView++.swift */; };
 		7DB325DA2C76074300C47DF4 /* CapsuleShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D92C76074300C47DF4 /* CapsuleShapeButton.swift */; };
@@ -72,6 +77,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2055888C06120A42BC028FB7 /* Pods-MaPl-UPl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaPl-UPl.debug.xcconfig"; path = "Target Support Files/Pods-MaPl-UPl/Pods-MaPl-UPl.debug.xcconfig"; sourceTree = "<group>"; };
 		7D326A2A2C74B22700E5602F /* FetchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchError.swift; sourceTree = "<group>"; };
 		7D326A2D2C74B95400E5602F /* TokenRefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshModel.swift; sourceTree = "<group>"; };
 		7D6CCB1E2C6CEED800E56025 /* MaPl-UPl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaPl-UPl.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +102,11 @@
 		7D702B1D2C787672008E2D35 /* UtilFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilFunc.swift; sourceTree = "<group>"; };
 		7D702B212C787AB7008E2D35 /* SelectedMusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D7032CD2C79ABC900548F7C /* PlaylistPostValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistPostValidation.swift; sourceTree = "<group>"; };
+		7D7C71432C7C8DCF0026C04E /* PlaylistDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewController.swift; sourceTree = "<group>"; };
+		7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailView.swift; sourceTree = "<group>"; };
+		7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewModel.swift; sourceTree = "<group>"; };
+		7D9278252C7CB17D00773C64 /* MusicPagerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPagerViewCell.swift; sourceTree = "<group>"; };
+		7D9C41CE2C7CA3D900630186 /* MaPl-UPl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MaPl-UPl.entitlements"; sourceTree = "<group>"; };
 		7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineTextField.swift; sourceTree = "<group>"; };
 		7DB325D42C76028B00C47DF4 /* UIImageView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView++.swift"; sourceTree = "<group>"; };
 		7DB325D92C76074300C47DF4 /* CapsuleShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleShapeButton.swift; sourceTree = "<group>"; };
@@ -130,6 +141,8 @@
 		7DFE282E2C730F5800DB5AEE /* PostPlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaylistModel.swift; sourceTree = "<group>"; };
 		7DFE28302C7313FD00DB5AEE /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		7DFE28332C73776100DB5AEE /* FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
+		CDFE277E86227395CE83DBDE /* Pods-MaPl-UPl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaPl-UPl.release.xcconfig"; path = "Target Support Files/Pods-MaPl-UPl/Pods-MaPl-UPl.release.xcconfig"; sourceTree = "<group>"; };
+		FBD04AC6EE50E23667C64353 /* Pods_MaPl_UPl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MaPl_UPl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,12 +156,22 @@
 				7DFE27E92C7199C800DB5AEE /* RxCocoa in Frameworks */,
 				7DFE280D2C72359C00DB5AEE /* Toast in Frameworks */,
 				7DFE27E62C7199AD00DB5AEE /* SnapKit in Frameworks */,
+				74D872D936C158A4BD721C8D /* Pods_MaPl_UPl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44710C226EF1110435769138 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2055888C06120A42BC028FB7 /* Pods-MaPl-UPl.debug.xcconfig */,
+				CDFE277E86227395CE83DBDE /* Pods-MaPl-UPl.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		7D326A292C74B1DC00E5602F /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +187,8 @@
 				7D6CCB352C6CEF2200E56025 /* .gitignore */,
 				7D6CCB202C6CEED800E56025 /* MaPl-UPl */,
 				7D6CCB1F2C6CEED800E56025 /* Products */,
+				44710C226EF1110435769138 /* Pods */,
+				AD606C9809B0443EDC2CF335 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -178,6 +203,7 @@
 		7D6CCB202C6CEED800E56025 /* MaPl-UPl */ = {
 			isa = PBXGroup;
 			children = (
+				7D9C41CE2C7CA3D900630186 /* MaPl-UPl.entitlements */,
 				7DC40DB32C76275C00BB3A50 /* Cells */,
 				7DFE28002C71B97400DB5AEE /* Models */,
 				7D6CCB9A2C6E4EBA00E56025 /* Resources */,
@@ -212,6 +238,7 @@
 		7D6CCB962C6E4E8400E56025 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				7D7C713F2C7C8D8C0026C04E /* PlaylistDetail */,
 				7D702B0C2C7849F2008E2D35 /* SearchMusic */,
 				7DFE28152C723AAC00DB5AEE /* PlaylistList */,
 				7DFE28102C72393900DB5AEE /* PostPlaylist */,
@@ -339,6 +366,48 @@
 			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
+		7D7C713F2C7C8D8C0026C04E /* PlaylistDetail */ = {
+			isa = PBXGroup;
+			children = (
+				7D7C71422C7C8DC00026C04E /* ViewModel */,
+				7D7C71412C7C8DB90026C04E /* View */,
+				7D7C71402C7C8DAD0026C04E /* ViewController */,
+			);
+			path = PlaylistDetail;
+			sourceTree = "<group>";
+		};
+		7D7C71402C7C8DAD0026C04E /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7D7C71432C7C8DCF0026C04E /* PlaylistDetailViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7D7C71412C7C8DB90026C04E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7D7C71422C7C8DC00026C04E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7D9278242C7CB16B00773C64 /* PagerCell */ = {
+			isa = PBXGroup;
+			children = (
+				7D9278252C7CB17D00773C64 /* MusicPagerViewCell.swift */,
+			);
+			path = PagerCell;
+			sourceTree = "<group>";
+		};
 		7DB3BC6D2C7C3A3A00B02CCA /* Like */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +419,7 @@
 		7DC40DB32C76275C00BB3A50 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				7D9278242C7CB16B00773C64 /* PagerCell */,
 				7D702B202C787A7E008E2D35 /* CollectionViewCell */,
 				7D702B1F2C787A68008E2D35 /* TableViewCell */,
 			);
@@ -541,6 +611,14 @@
 			path = File;
 			sourceTree = "<group>";
 		};
+		AD606C9809B0443EDC2CF335 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FBD04AC6EE50E23667C64353 /* Pods_MaPl_UPl.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -548,9 +626,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7D6CCB322C6CEEDB00E56025 /* Build configuration list for PBXNativeTarget "MaPl-UPl" */;
 			buildPhases = (
+				8A1B0482EA4989E4E4C80DB9 /* [CP] Check Pods Manifest.lock */,
 				7D6CCB1A2C6CEED800E56025 /* Sources */,
 				7D6CCB1B2C6CEED800E56025 /* Frameworks */,
 				7D6CCB1C2C6CEED800E56025 /* Resources */,
+				35A79A7D74019B1684B709D7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -624,6 +704,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		35A79A7D74019B1684B709D7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MaPl-UPl/Pods-MaPl-UPl-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MaPl-UPl/Pods-MaPl-UPl-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MaPl-UPl/Pods-MaPl-UPl-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A1B0482EA4989E4E4C80DB9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MaPl-UPl-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7D6CCB1A2C6CEED800E56025 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -634,6 +756,7 @@
 				7D6CCB3B2C6CF12400E56025 /* APIURL.swift in Sources */,
 				7DFE27F12C719EDF00DB5AEE /* LoginViewModel.swift in Sources */,
 				7DFE282C2C72FFC000DB5AEE /* PostPlaylistViewModel.swift in Sources */,
+				7D7C71482C7C8DE80026C04E /* PlaylistDetailViewModel.swift in Sources */,
 				7DC40DB52C762B8500BB3A50 /* SearchMusicTableViewCell.swift in Sources */,
 				7D6CCB262C6CEED800E56025 /* ViewController.swift in Sources */,
 				7D702B082C7761BE008E2D35 /* AutoResizingTableView.swift in Sources */,
@@ -644,12 +767,14 @@
 				7DFE28342C73776100DB5AEE /* FileModel.swift in Sources */,
 				7DFE28312C7313FD00DB5AEE /* Song.swift in Sources */,
 				7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */,
+				7D7C71462C7C8DDC0026C04E /* PlaylistDetailView.swift in Sources */,
 				7DB3BC6F2C7C3A4400B02CCA /* LikeModel.swift in Sources */,
 				7DFE27F32C71A7C000DB5AEE /* BaseViewController.swift in Sources */,
 				7D702B1E2C787672008E2D35 /* UtilFunc.swift in Sources */,
 				7D6CCB9F2C6E513D00E56025 /* NameSpace.swift in Sources */,
 				7DFE28082C71FC8A00DB5AEE /* TargetType.swift in Sources */,
 				7DFE28242C72F8B400DB5AEE /* PlaylistListView.swift in Sources */,
+				7D7C71442C7C8DCF0026C04E /* PlaylistDetailViewController.swift in Sources */,
 				7DFE28032C71B99F00DB5AEE /* LoginModel.swift in Sources */,
 				7DFE0AAD2C7B581C00CD5893 /* EmptyModel.swift in Sources */,
 				7DFE27F52C71A7E400DB5AEE /* BaseViewModel.swift in Sources */,
@@ -665,6 +790,7 @@
 				7D702B1A2C786991008E2D35 /* BasicSubtitleTableViewCell.swift in Sources */,
 				7DFE27E12C71966B00DB5AEE /* BaseView.swift in Sources */,
 				7DFE28262C72F8CF00DB5AEE /* PlaylistListViewModel.swift in Sources */,
+				7D9278262C7CB17D00773C64 /* MusicPagerViewCell.swift in Sources */,
 				7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */,
 				7DFE0AA62C7A019800CD5893 /* getPostsModel.swift in Sources */,
 				7DFE28292C72FF7700DB5AEE /* PostPlaylistView.swift in Sources */,
@@ -757,7 +883,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -814,7 +940,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -826,12 +952,15 @@
 		};
 		7D6CCB332C6CEEDB00E56025 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2055888C06120A42BC028FB7 /* Pods-MaPl-UPl.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MaPl-UPl/MaPl-UPl.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5B4DDA3JD6;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MaPl-UPl/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -859,12 +988,15 @@
 		};
 		7D6CCB342C6CEEDB00E56025 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDFE277E86227395CE83DBDE /* Pods-MaPl-UPl.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MaPl-UPl/MaPl-UPl.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5B4DDA3JD6;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MaPl-UPl/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

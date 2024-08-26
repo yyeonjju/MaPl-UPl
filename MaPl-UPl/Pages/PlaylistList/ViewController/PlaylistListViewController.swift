@@ -127,7 +127,11 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
 
 extension PlaylistListViewController : UITableViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("⭐️indexPath - ", indexPath)
+        guard let data = diffableDataSource.itemIdentifier(for: indexPath) else {return}
+        
+        let vc = PlaylistDetailViewController()
+        vc.data = data
+        pageTransition(to: vc, type: .push)
     }
 }
 

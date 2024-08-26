@@ -7,6 +7,12 @@
 
 import UIKit
 
+func stringToDecodedModel<T : Decodable>(string : String, model : T.Type) -> T? {
+    let songInfoData = string.data(using: .utf8)!
+    let decodedSongData = try? JSONDecoder().decode(T.self, from: songInfoData)
+    return decodedSongData
+}
+
 
 func configureCollectionVewLayout (scrollDirection :  UICollectionView.ScrollDirection = .vertical, numberofItemInrow : Int, cellIneterSpacing : CGFloat = 10, sectionSpacing :  CGFloat = 30, height: CGFloat? = nil) -> UICollectionViewLayout{
     let layout = UICollectionViewFlowLayout()
