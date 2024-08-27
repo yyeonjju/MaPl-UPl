@@ -44,7 +44,7 @@ final class PlaylistDetailView : BaseView {
     }()
     private let underline = {
        let view = UIView()
-        view.backgroundColor = Assets.Colors.pointPink
+        view.backgroundColor = Assets.Colors.white
         return view
     }()
     
@@ -58,11 +58,68 @@ final class PlaylistDetailView : BaseView {
         return pv
     }()
     
+    private let playerView = {
+        let view = UIView()
+        view.backgroundColor = Assets.Colors.white
+        view.layer.cornerRadius = 40
+        view.layer.opacity = 0.3
+        //        view.clipsToBounds = true
+        return view
+    }()
+    
+    let playerArtworkImageView = {
+        let iv = UIImageView()
+        iv.backgroundColor = Assets.Colors.gray4
+        iv.clipsToBounds = true
+        return iv
+    }()
+    
+    let playerTitleLabel = {
+        let label = UILabel()
+        label.text = "-"
+        label.font = Font.bold16
+        label.textColor = Assets.Colors.white
+        return label
+    }()
+    
+    let playerArtistLabel = {
+        let label = UILabel()
+        label.text = "-"
+        label.font = Font.regular13
+        label.textColor = Assets.Colors.white
+        return label
+    }()
+    
+    let playButton = {
+       let button = UIButton()
+        button.setImage(Assets.SystemImage.playFill, for: .normal)
+        button.tintColor = Assets.Colors.white
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        return button
+    }()
+    
+    let pauseButton = {
+       let button = UIButton()
+        button.setImage(Assets.SystemImage.pauseFill, for: .normal)
+        button.tintColor = Assets.Colors.white
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        return button
+    }()
+    
+    // MARK: - Lifecycle
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerArtworkImageView.layer.cornerRadius = playerArtworkImageView.bounds.width / 2
+    }
+
+    
     
     // MARK: - ConfigureUI
     
     override func configureSubView() {
-        [bgImageView, blurEffectCoverView, playlistTitle, editorLabel, underline, pagerView]
+        [bgImageView, blurEffectCoverView, playlistTitle, editorLabel, underline, pagerView, playerView, playerArtworkImageView, playButton, pauseButton, playerTitleLabel, playerArtistLabel]
             .forEach{
                 addSubview($0)
             }
@@ -91,6 +148,40 @@ final class PlaylistDetailView : BaseView {
             make.centerY.equalTo(self)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(300)
+        }
+        
+        
+        //playerView
+        playerView.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
+            make.bottom.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(80)
+        }
+        playerArtworkImageView.snp.makeConstraints { make in
+            make.verticalEdges.equalTo(playerView).inset(10)
+            make.width.equalTo(playerArtworkImageView.snp.height).multipliedBy(1)
+            make.leading.equalTo(playerView).offset(20)
+        }
+        
+        playerTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(playerArtworkImageView.snp.trailing).offset(10)
+            make.trailing.equalTo(playButton.snp.leading)
+            make.top.equalTo(playerArtworkImageView).offset(8)
+        }
+        
+        playerArtistLabel.snp.makeConstraints { make in
+            make.leading.equalTo(playerArtworkImageView.snp.trailing).offset(10)
+            make.trailing.equalTo(playButton.snp.leading)
+            make.top.equalTo(playerTitleLabel.snp.bottom).offset(4)
+        }
+        
+        playButton.snp.makeConstraints { make in
+            make.trailing.equalTo(playerView).offset(-20)
+            make.centerY.equalTo(playerView)
+            make.size.equalTo(30)
+        }
+        pauseButton.snp.makeConstraints { make in
+            make.edges.equalTo(playButton)
         }
         
     }

@@ -32,7 +32,7 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadDataTrigger.onNext(nil)
+//        loadDataTrigger.onNext(nil)
     }
     
     // MARK: - SetupDelegate
@@ -49,6 +49,8 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         
         let input = PlaylistListViewModel.Input(loadDataTrigger:loadDataTrigger, addButtonTap: addButtonTap, likeButtonTap : likeButtonTapSubject)
         let output = vm.transform(input: input)
+        
+        loadDataTrigger.onNext(nil)
         
         viewManager.addPlaylistButton.rx.tap
             .bind(to: addButtonTap)

@@ -33,6 +33,8 @@ enum Assets {
         static let likeEmpty = UIImage(systemName: "heart")
         static let banknoteFill = UIImage(systemName: "banknote.fill")
         static let banknoteEmpty = UIImage(systemName: "banknote")
+        static let playFill = UIImage(systemName: "play.fill")
+        static let pauseFill = UIImage(systemName: "pause.fill")
     }
 }
 
