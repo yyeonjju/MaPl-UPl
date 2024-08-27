@@ -44,6 +44,7 @@ final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView
         guard let data, let bgImage = data.files.first else {return}
         viewManager.bgImageView.loadImage(filePath: bgImage)
         viewManager.playlistTitle.text = data.title
+        viewManager.editorLabel.text = "editor. \(data.creator.nick ?? "-")"
     }
 
 

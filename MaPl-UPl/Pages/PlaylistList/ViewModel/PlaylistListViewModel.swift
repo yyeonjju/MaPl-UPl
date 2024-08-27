@@ -19,7 +19,7 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
     private let playlistsDataSubject = PublishSubject<[PlaylistResponse]>()
     
     struct Input {
-        let viewDidLoadTrigger : Observable<Void>
+        let loadDataTrigger : PublishSubject<String?> //커서 기반 페이지네이션을 위한 lastItemId
         let addButtonTap : PublishSubject<Void>
         let likeButtonTap : PublishSubject<(Int, Bool)>
         
@@ -36,20 +36,28 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
         let isLoadingSubject = PublishSubject<Bool>()
         let errorMessageSubject = PublishSubject<String>()
         
-        input.viewDidLoadTrigger
+        
+        var nextCursor : String? = nil
+        input.loadDataTrigger
             .map{
-                ProductId.playlist
+                nextCursor  = $0
+                return (ProductId.playlist, $0 ?? "")
             }
-            .flatMap{ productId in
+            .flatMap{ (productId:String, lastItemId:String) in
                 isLoadingSubject.onNext(true)
-                return NetworkManager.shared.getPlaylistPosts(productId: productId)
+                return NetworkManager.shared.getPlaylistPosts(productId: productId, nextCursor : lastItemId)
             }
             .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
             .drive(with: self) { owner, result in
                 switch result{
                 case .success(let posts) :
                     print("🌸success🌸",posts.data)
-                    owner.playlistsData.append(contentsOf: posts.data)
+                    if nextCursor == nil {
+                        owner.playlistsData = posts.data
+                    }else {
+                        owner.playlistsData.append(contentsOf: posts.data)
+                    }
+
                 case .failure(let error as FetchError) :
                     errorMessageSubject.onNext(error.errorMessage)
                 default:

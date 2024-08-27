@@ -181,8 +181,8 @@ extension NetworkManager {
         return fetch(fetchRouter: fetchRouter, model : TokenRefreshResponse.self)
     }
     
-    func getPlaylistPosts(productId : String) -> Single<Result<PlaylistPostsResponse,Error>> {
-        let fetchRouter = Router.getPosts(productId: productId)
+    func getPlaylistPosts(productId : String, nextCursor : String) -> Single<Result<PlaylistPostsResponse,Error>> {
+        let fetchRouter = Router.getPosts(productId: productId, nextCursor : nextCursor)
         return fetch(fetchRouter: fetchRouter, model : PlaylistPostsResponse.self)
     }
     

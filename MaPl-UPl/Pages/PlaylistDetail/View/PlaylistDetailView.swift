@@ -22,7 +22,8 @@ final class PlaylistDetailView : BaseView {
         return iv
     }()
     
-    private let blurEffectCoverView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    private let blurEffectCoverView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+    
     
     
     let playlistTitle = {
@@ -33,6 +34,20 @@ final class PlaylistDetailView : BaseView {
         label.textColor = Assets.Colors.white
         return label
     }()
+    
+    let editorLabel = {
+        let label = UILabel()
+        label.text = "editor. "
+        label.textColor = Assets.Colors.white
+        label.font = Font.regular14
+        return label
+    }()
+    private let underline = {
+       let view = UIView()
+        view.backgroundColor = Assets.Colors.pointPink
+        return view
+    }()
+    
     
     let pagerView = {
         let pv = FSPagerView()
@@ -47,7 +62,7 @@ final class PlaylistDetailView : BaseView {
     // MARK: - ConfigureUI
     
     override func configureSubView() {
-        [bgImageView, blurEffectCoverView, playlistTitle, pagerView]
+        [bgImageView, blurEffectCoverView, playlistTitle, editorLabel, underline, pagerView]
             .forEach{
                 addSubview($0)
             }
@@ -62,6 +77,15 @@ final class PlaylistDetailView : BaseView {
         }
         playlistTitle.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
+        }
+        editorLabel.snp.makeConstraints { make in
+            make.top.equalTo(playlistTitle.snp.bottom).offset(4)
+            make.centerX.equalTo(playlistTitle)
+        }
+        underline.snp.makeConstraints { make in
+            make.top.equalTo(editorLabel.snp.bottom)
+            make.height.equalTo(1.0)
+            make.horizontalEdges.equalTo(editorLabel)
         }
         pagerView.snp.makeConstraints { make in
             make.centerY.equalTo(self)

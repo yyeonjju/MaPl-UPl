@@ -15,7 +15,7 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     var diffableDataSource: UICollectionViewDiffableDataSource<Int, PlaylistResponse>!
     
     let likeButtonTapSubject = PublishSubject<(Int, Bool)>()
-    let loadDataTrigger = PublishSubject<Void>()
+    let loadDataTrigger = PublishSubject<String?>() //String는 커서 기반
     
     
     // MARK: - Lifecycle
@@ -27,15 +27,12 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         
         configureDataSource()
         updateSnapshot()
-        
-        
-        loadDataTrigger.onNext(())
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        loadDataTrigger.onNext(())
+        loadDataTrigger.onNext(nil)
     }
     
     // MARK: - SetupDelegate
@@ -50,11 +47,21 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     private func setupBind() {
         let addButtonTap = PublishSubject<Void>()
         
-        let input = PlaylistListViewModel.Input(viewDidLoadTrigger:loadDataTrigger, addButtonTap: addButtonTap, likeButtonTap : likeButtonTapSubject)
+        let input = PlaylistListViewModel.Input(loadDataTrigger:loadDataTrigger, addButtonTap: addButtonTap, likeButtonTap : likeButtonTapSubject)
         let output = vm.transform(input: input)
         
         viewManager.addPlaylistButton.rx.tap
             .bind(to: addButtonTap)
+            .disposed(by: disposeBag)
+        
+        //rxcocoa - prefetch
+        viewManager.collectionView.rx.prefetchItems
+            .compactMap(\.last?.row)
+            .bind(with: self) { owner, row in
+                guard row == owner.vm.playlistsData.count - 1 else { return }
+                let lastItemId = owner.vm.playlistsData.last?.post_id
+                owner.loadDataTrigger.onNext(lastItemId)
+            }
             .disposed(by: disposeBag)
         
         //output

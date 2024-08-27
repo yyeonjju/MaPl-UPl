@@ -18,7 +18,7 @@ enum Router {
     
     case postPlaylist(query : PostPlaylistQuery)
     case updloadImage
-    case getPosts(productId : String)
+    case getPosts(productId : String, nextCursor : String)
     case getImageData(filePath : String)
     case likePost (query : LikeModel, postId : String)
     
@@ -71,10 +71,10 @@ extension Router: TargetType {
     
     var queryItems: [URLQueryItem] {
         switch self {
-        case .getPosts(let productId) :
+        case .getPosts(let productId, let nextCursor) :
             return[
-                URLQueryItem(name: "next", value: ""),
-                URLQueryItem(name: "limit", value: "10"),
+                URLQueryItem(name: "next", value: nextCursor),
+                URLQueryItem(name: "limit", value: "5"),
                 URLQueryItem(name: "product_id", value: productId),
             ]
         default :
