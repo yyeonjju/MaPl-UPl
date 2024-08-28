@@ -90,18 +90,9 @@ final class PlaylistDetailView : BaseView {
         return label
     }()
     
-    let playButton = {
+    let playerStateButton = {
        let button = UIButton()
-        button.setImage(Assets.SystemImage.playFill, for: .normal)
-        button.tintColor = Assets.Colors.white
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
-        return button
-    }()
-    
-    let pauseButton = {
-       let button = UIButton()
-        button.setImage(Assets.SystemImage.pauseFill, for: .normal)
+//        button.setImage(Assets.SystemImage.playFill, for: .normal)
         button.tintColor = Assets.Colors.white
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
@@ -119,7 +110,7 @@ final class PlaylistDetailView : BaseView {
     // MARK: - ConfigureUI
     
     override func configureSubView() {
-        [bgImageView, blurEffectCoverView, playlistTitle, editorLabel, underline, pagerView, playerView, playerArtworkImageView, playButton, pauseButton, playerTitleLabel, playerArtistLabel]
+        [bgImageView, blurEffectCoverView, playlistTitle, editorLabel, underline, pagerView, playerView, playerArtworkImageView, playerStateButton, playerTitleLabel, playerArtistLabel]
             .forEach{
                 addSubview($0)
             }
@@ -165,23 +156,20 @@ final class PlaylistDetailView : BaseView {
         
         playerTitleLabel.snp.makeConstraints { make in
             make.leading.equalTo(playerArtworkImageView.snp.trailing).offset(10)
-            make.trailing.equalTo(playButton.snp.leading)
+            make.trailing.equalTo(playerStateButton.snp.leading)
             make.top.equalTo(playerArtworkImageView).offset(8)
         }
         
         playerArtistLabel.snp.makeConstraints { make in
             make.leading.equalTo(playerArtworkImageView.snp.trailing).offset(10)
-            make.trailing.equalTo(playButton.snp.leading)
+            make.trailing.equalTo(playerStateButton.snp.leading)
             make.top.equalTo(playerTitleLabel.snp.bottom).offset(4)
         }
         
-        playButton.snp.makeConstraints { make in
+        playerStateButton.snp.makeConstraints { make in
             make.trailing.equalTo(playerView).offset(-20)
             make.centerY.equalTo(playerView)
-            make.size.equalTo(30)
-        }
-        pauseButton.snp.makeConstraints { make in
-            make.edges.equalTo(playButton)
+            make.size.equalTo(24)
         }
         
     }

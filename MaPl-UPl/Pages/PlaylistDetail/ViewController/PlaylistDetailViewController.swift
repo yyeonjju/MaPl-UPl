@@ -9,11 +9,23 @@ import Foundation
 import FSPagerView
 import RxSwift
 import Kingfisher
+import AVFoundation
+import RxCocoa
 
 final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView, PlaylistDetailViewModel> {
+    enum PlayerState {
+        case playing
+        case paused
+        case unknown
+    }
     
     // MARK: - Properties
     var postId : String?
+    private let avPlayer = AVPlayer()
+    private var avPlayerItem : AVPlayerItem?
+    private let playerState = PublishSubject<PlayerState>()
+    private let currentSongIndex = PublishSubject<Int>()
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -23,6 +35,13 @@ final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView
         setupBind()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        avPlayer.pause()
+        avPlayer.seek(to: .zero) //재생구간 0으로 이동
+    }
+    
     // MARK: - SetupBind
 
     private func setupBind() {
@@ -30,15 +49,19 @@ final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView
         
         let playlistId = PublishSubject<String>()
         
-        let input = PlaylistDetailViewModel.Input(playlistId: playlistId)
+        let input = PlaylistDetailViewModel.Input(playlistId: playlistId, currentSongIndex : currentSongIndex)
         let output = vm.transform(input: input)
         
         playlistId.onNext(postId)
         
         output.songsInfoData
             .bind(with: self) { owner, data in
-               
                 owner.viewManager.pagerView.reloadData()
+                
+                //플레이리스트의 첫번째 음악으로 플레이어 뷰 세팅
+                owner.currentSongIndex.onNext(0)
+                owner.playerState.onNext(.unknown)
+
             }
             .disposed(by: disposeBag)
         
@@ -56,6 +79,49 @@ final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView
             .bind(to: isLoading)
             .disposed(by: disposeBag)
         
+        output.currentSongIndex
+            .bind(with: self) { owner, index in
+                guard let currentSongpPreviewURL = owner.vm.songsInfoData?[index].previewURL else {return }
+                
+                //하단 플레이어뷰에 보여주기
+                owner.setupPlayerItem(index: index)
+                //AVPlayerItem 갈아끼우기
+                owner.avPlayerItem = AVPlayerItem(url: currentSongpPreviewURL)
+                owner.avPlayer.replaceCurrentItem(with: owner.avPlayerItem )
+            }
+            .disposed(by: disposeBag)
+        
+        viewManager.playerStateButton.rx.tap
+            .withLatestFrom(playerState)
+            .bind(with: self) { owner, state in
+                switch state{
+                case .playing :
+                    owner.playerState.onNext(.paused)
+
+                case .paused, .unknown :
+                    owner.playerState.onNext(.playing)
+
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
+        playerState
+            .bind(with: self) { owner, state in
+                
+                switch state{
+                case .playing :
+                    owner.avPlayer.play()
+                    owner.viewManager.playerStateButton.setImage(Assets.SystemImage.pauseFill, for: .normal)
+                case .paused :
+                    owner.avPlayer.pause()
+                    owner.viewManager.playerStateButton.setImage(Assets.SystemImage.playFill, for: .normal)
+                case .unknown :
+                    owner.viewManager.playerStateButton.setImage(Assets.SystemImage.playFill, for: .normal)
+                }
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     // MARK: - SetupView
@@ -64,13 +130,14 @@ final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView
         viewManager.playlistTitle.text = data.title
         viewManager.editorLabel.text = "editor. \(data.editor)"
         
-//        //플레이리스트의 첫번째 음악으로 플레이어 뷰 세팅
-//        guard let firstMusic = vm.songsInfoData?.first else{return}
-//        let imgUrl = URL(string: firstMusic.artworkURL)
-//        viewManager.playerArtworkImageView.kf.setImage(with: imgUrl)
-//        viewManager.playerTitleLabel.text = firstMusic.title
-//        viewManager.playerArtistLabel.text = firstMusic.artistName
-        
+    }
+    
+    private func setupPlayerItem(index : Int) {
+        guard let song = vm.songsInfoData?[index] else{return}
+        let imgUrl = URL(string: song.artworkURL)
+        viewManager.playerArtworkImageView.kf.setImage(with: imgUrl)
+        viewManager.playerTitleLabel.text = song.title
+        viewManager.playerArtistLabel.text = song.artistName
     }
 
 
@@ -94,6 +161,10 @@ extension PlaylistDetailViewController : FSPagerViewDataSource, FSPagerViewDeleg
         
         cell.cofigureData(data: data)
         return cell
+    }
+    
+    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
+        currentSongIndex.onNext(index)
     }
     
     

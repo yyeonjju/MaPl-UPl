@@ -31,6 +31,7 @@ final class PlaylistDetailViewModel : BaseViewModelProtocol {
     
     struct Input {
         let playlistId : Observable<String>
+        let currentSongIndex : PublishSubject<Int>
     }
     
     struct Output {
@@ -38,6 +39,7 @@ final class PlaylistDetailViewModel : BaseViewModelProtocol {
         let playlistBasicInfo : PublishSubject<PlaylistBasicInfo>
         let errorMessage : PublishSubject<String>
         let isLoading : BehaviorSubject<Bool>
+        let currentSongIndex : PublishSubject<Int>
     }
     
     func transform(input : Input) -> Output {
@@ -83,6 +85,6 @@ final class PlaylistDetailViewModel : BaseViewModelProtocol {
         
 
         
-        return Output(songsInfoData : songsInfoDataSubject, playlistBasicInfo : playlistBasicInfoSubject,errorMessage : errorMessageSubject, isLoading : isLoadingSubject)
+        return Output(songsInfoData : songsInfoDataSubject, playlistBasicInfo : playlistBasicInfoSubject,errorMessage : errorMessageSubject, isLoading : isLoadingSubject, currentSongIndex : input.currentSongIndex)
     }
 }
