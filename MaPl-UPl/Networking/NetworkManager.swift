@@ -190,6 +190,11 @@ extension NetworkManager {
         let fetchRouter = Router.likePost(query: body, postId: postId)
         return fetch(fetchRouter: fetchRouter, model : LikeModel.self)
     }
+    
+    func getPlaylistInfo(id : String) -> Single<Result<PlaylistResponse,Error>> {
+        let fetchRouter = Router.getPlaylistInfo(id: id)
+        return fetch(fetchRouter: fetchRouter, model : PlaylistResponse.self)
+    }
 }
 
 

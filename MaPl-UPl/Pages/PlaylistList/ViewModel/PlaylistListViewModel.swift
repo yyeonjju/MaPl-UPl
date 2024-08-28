@@ -27,13 +27,13 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
     
     struct Output {
         let pushToPostPlaylistVC : PublishSubject<Void>
-        let isLoading : PublishSubject<Bool>
+        let isLoading : BehaviorSubject<Bool>
         let errorMessage : PublishSubject<String>
         let playlistsData : PublishSubject<[PlaylistResponse]>
     }
     
     func transform(input : Input) -> Output {
-        let isLoadingSubject = PublishSubject<Bool>()
+        let isLoadingSubject = BehaviorSubject(value: true)
         let errorMessageSubject = PublishSubject<String>()
         
         

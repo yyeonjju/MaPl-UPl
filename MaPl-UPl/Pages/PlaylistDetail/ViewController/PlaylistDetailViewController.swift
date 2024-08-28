@@ -13,7 +13,7 @@ import Kingfisher
 final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView, PlaylistDetailViewModel> {
     
     // MARK: - Properties
-    var data : PlaylistResponse?
+    var postId : String?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -21,40 +21,55 @@ final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView
         
         setupDelegate()
         setupBind()
-        setupView(data : data)
     }
     
     // MARK: - SetupBind
 
     private func setupBind() {
-        guard let data else{return}
+        guard let postId else{return}
         
-        let input = PlaylistDetailViewModel.Input(playlistData: Observable.just(data))
+        let playlistId = PublishSubject<String>()
+        
+        let input = PlaylistDetailViewModel.Input(playlistId: playlistId)
         let output = vm.transform(input: input)
         
-//        output.songInfoData
-//            .bind(with: self) { owner, data in
-//                print("🌸")
-//                owner.viewManager.pagerView.reloadData()
-//                
-//            }
-//            .disposed(by: disposeBag)
+        playlistId.onNext(postId)
+        
+        output.songsInfoData
+            .bind(with: self) { owner, data in
+               
+                owner.viewManager.pagerView.reloadData()
+            }
+            .disposed(by: disposeBag)
+        
+        output.playlistBasicInfo
+            .bind(with: self) { owner, info in
+                owner.setupPlaylistInfo(data: info)
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .bind(to: errorMessage)
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .bind(to: isLoading)
+            .disposed(by: disposeBag)
         
     }
     
     // MARK: - SetupView
-    private func setupView(data : PlaylistResponse?) {
-        guard let data, let bgImage = data.files.first else {return}
-        viewManager.bgImageView.loadImage(filePath: bgImage)
+    private func setupPlaylistInfo(data : PlaylistDetailViewModel.PlaylistBasicInfo) {
+        viewManager.bgImageView.loadImage(filePath: data.bgImage)
         viewManager.playlistTitle.text = data.title
-        viewManager.editorLabel.text = "editor. \(data.creator.nick ?? "-")"
+        viewManager.editorLabel.text = "editor. \(data.editor)"
         
-        //플레이리스트의 첫번째 음악으로 플레이어 뷰 세팅
-        guard let firstMusic = vm.songsInfoData?.first else{return}
-        let imgUrl = URL(string: firstMusic.artworkURL)
-        viewManager.playerArtworkImageView.kf.setImage(with: imgUrl)
-        viewManager.playerTitleLabel.text = firstMusic.title
-        viewManager.playerArtistLabel.text = firstMusic.artistName
+//        //플레이리스트의 첫번째 음악으로 플레이어 뷰 세팅
+//        guard let firstMusic = vm.songsInfoData?.first else{return}
+//        let imgUrl = URL(string: firstMusic.artworkURL)
+//        viewManager.playerArtworkImageView.kf.setImage(with: imgUrl)
+//        viewManager.playerTitleLabel.text = firstMusic.title
+//        viewManager.playerArtistLabel.text = firstMusic.artistName
         
     }
 

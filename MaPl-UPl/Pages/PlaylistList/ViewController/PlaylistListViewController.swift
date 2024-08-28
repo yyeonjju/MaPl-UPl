@@ -74,19 +74,11 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
             .disposed(by: disposeBag)
         
         output.errorMessage
-            .bind(with: self) { owner, message in
-                owner.view.makeToast(message, position: .top)
-            }
+            .bind(to: errorMessage)
             .disposed(by: disposeBag)
         
         output.isLoading
-            .bind(with: self) { owner, isLoading in
-                if isLoading {
-                    owner.viewManager.spinner.startAnimating()
-                }else {
-                    owner.viewManager.spinner.stopAnimating()
-                }
-            }
+            .bind(to: isLoading)
             .disposed(by: disposeBag)
         
         output.playlistsData
@@ -139,7 +131,7 @@ extension PlaylistListViewController : UITableViewDelegate {
         guard let data = diffableDataSource.itemIdentifier(for: indexPath) else {return}
         
         let vc = PlaylistDetailViewController()
-        vc.data = data
+        vc.postId = data.post_id
         pageTransition(to: vc, type: .push)
     }
 }

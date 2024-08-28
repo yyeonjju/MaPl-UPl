@@ -13,6 +13,9 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
     let vm = VM.init()
     let disposeBag = DisposeBag()
     
+    let errorMessage = PublishSubject<String>()
+    let isLoading = PublishSubject<Bool>()
+    
     override func loadView() {
         view = viewManager
     }
@@ -20,6 +23,28 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
+        setupBind()
     }
+    
+    
+    // MARK: - ConfigureUI
+    private func setupBind() {
+        isLoading
+            .bind(with: self) { owner, isLoading in
+                if isLoading {
+                    owner.viewManager.spinner.startAnimating()
+                }else {
+                    owner.viewManager.spinner.stopAnimating()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        errorMessage
+            .bind(with: self) { owner, message in
+                owner.view.makeToast(message, position: .top)
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }
 
