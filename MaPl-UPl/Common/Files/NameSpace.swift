@@ -35,6 +35,11 @@ enum Assets {
         static let banknoteEmpty = UIImage(systemName: "banknote")
         static let playFill = UIImage(systemName: "play.fill")
         static let pauseFill = UIImage(systemName: "pause.fill")
+        static let chevronLeft = UIImage(systemName: "chevron.left")
+    }
+    
+    enum Font {
+        static let continuous40 = UIFont(name: "Continuous", size: 40)
     }
 }
 

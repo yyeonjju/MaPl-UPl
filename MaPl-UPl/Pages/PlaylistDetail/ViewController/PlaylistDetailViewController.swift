@@ -61,7 +61,7 @@ final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView
         } else {
             viewManager.pagerView.scrollToItem(at: viewManager.pagerView.currentIndex+1, animated: true)
         }
-
+//        avPlayer.seekToTime(kCMTimeZero)
         avPlayer.play()
     }
 
@@ -228,6 +228,31 @@ extension PlaylistDetailViewController : FSPagerViewDataSource, FSPagerViewDeleg
 //        avPlayer.seekToTime(kCMTimeZero)
 
     }
+    
+    /*
+     func pagerView(_ pagerView: FSPagerView, shouldHighlightItemAt index: Int) -> Bool {
+         print("🌱 shouldHighlightItemAt")
+         
+         return true
+     }
+     func pagerView(_ pagerView: FSPagerView, didHighlightItemAt index: Int){
+         print("🌱 didHighlightItemAt")
+     }
+     
+     func pagerView(_ pagerView: FSPagerView, willDisplay cell: FSPagerViewCell, forItemAt index: Int){
+         print("🌱 willDisplay")
+     }
+     
+     func pagerView(_ pagerView: FSPagerView, didEndDisplaying cell: FSPagerViewCell, forItemAt index: Int) {
+         print("🌱🌱🌱🌱🌱 didEndDisplaying")
+     }
+     
+     func pagerViewDidEndDecelerating(_ pagerView: FSPagerView) {
+         print("🌱 pagerViewDidEndDecelerating")
+     }
+     */
+    
+
     
     
 }

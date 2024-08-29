@@ -22,6 +22,7 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationBackButtonItem()
         hideKeyboardWhenTappedAround()
         setupBind()
     }

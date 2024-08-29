@@ -10,6 +10,15 @@ import SnapKit
 
 final class PlaylistListView : BaseView {
     // MARK: - UI
+    private let appNameLabel = {
+       let label = UILabel()
+        label.font = Assets.Font.continuous40
+        label.textColor = Assets.Colors.gray3
+        label.text = "Mapl-Upl"
+        label.textAlignment = .center
+        return label
+    }()
+    
     lazy var collectionView = {
         let layout = self.collectionViewFlowLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -51,13 +60,17 @@ final class PlaylistListView : BaseView {
     // MARK: - ConfigureUI
     
     override func configureSubView() {
-        [collectionView, addPlaylistButton]
+        [appNameLabel, collectionView, addPlaylistButton]
             .forEach{
                 addSubview($0)
             }
     }
     
     override func configureLayout() {
+        appNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(16)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+        }
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }

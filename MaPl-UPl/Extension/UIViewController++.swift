@@ -44,4 +44,10 @@ extension UIViewController{
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    // MARK: - ConfigureNavigation
+    func configureNavigationBackButtonItem() {
+        navigationController?.navigationBar.tintColor = Assets.Colors.gray2
+        navigationController?.navigationBar.topItem?.title = ""
+    }
 }

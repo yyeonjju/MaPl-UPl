@@ -35,6 +35,7 @@
 		7D7C71462C7C8DDC0026C04E /* PlaylistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */; };
 		7D7C71482C7C8DE80026C04E /* PlaylistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */; };
 		7D9278262C7CB17D00773C64 /* MusicPagerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9278252C7CB17D00773C64 /* MusicPagerViewCell.swift */; };
+		7D9278472C80624100773C64 /* continuous.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D9278462C80624100773C64 /* continuous.ttf */; };
 		7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */; };
 		7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D42C76028B00C47DF4 /* UIImageView++.swift */; };
 		7DB325DA2C76074300C47DF4 /* CapsuleShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D92C76074300C47DF4 /* CapsuleShapeButton.swift */; };
@@ -106,6 +107,7 @@
 		7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailView.swift; sourceTree = "<group>"; };
 		7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewModel.swift; sourceTree = "<group>"; };
 		7D9278252C7CB17D00773C64 /* MusicPagerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPagerViewCell.swift; sourceTree = "<group>"; };
+		7D9278462C80624100773C64 /* continuous.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = continuous.ttf; sourceTree = "<group>"; };
 		7D9C41CE2C7CA3D900630186 /* MaPl-UPl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MaPl-UPl.entitlements"; sourceTree = "<group>"; };
 		7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineTextField.swift; sourceTree = "<group>"; };
 		7DB325D42C76028B00C47DF4 /* UIImageView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView++.swift"; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 		7D6CCB9A2C6E4EBA00E56025 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7D9278452C805C3300773C64 /* Font */,
 				7D6CCB2A2C6CEEDB00E56025 /* Assets.xcassets */,
 				7D6CCB9B2C6E4F3200E56025 /* Colors.xcassets */,
 			);
@@ -406,6 +409,14 @@
 				7D9278252C7CB17D00773C64 /* MusicPagerViewCell.swift */,
 			);
 			path = PagerCell;
+			sourceTree = "<group>";
+		};
+		7D9278452C805C3300773C64 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				7D9278462C80624100773C64 /* continuous.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		7DB3BC6D2C7C3A3A00B02CCA /* Like */ = {
@@ -695,6 +706,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D6CCB9C2C6E4F3200E56025 /* Colors.xcassets in Resources */,
+				7D9278472C80624100773C64 /* continuous.ttf in Resources */,
 				7D6CCB362C6CEF2200E56025 /* .gitignore in Resources */,
 				7D6CCB2B2C6CEEDB00E56025 /* Assets.xcassets in Resources */,
 				7D6CCB2E2C6CEEDB00E56025 /* Base in Resources */,
@@ -963,6 +975,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MaPl-UPl/Info.plist";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "미디어 접근을 허용해주세요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -999,6 +1012,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MaPl-UPl/Info.plist";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "미디어 접근을 허용해주세요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
