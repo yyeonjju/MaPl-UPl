@@ -163,10 +163,11 @@ final class PlaylistCollectionViewCell : UICollectionViewCell {
         likeImageView.snp.makeConstraints { make in
             make.centerX.equalTo(likeText)
             make.bottom.equalTo(likeText.snp.top).offset(-8)
-            make.size.equalTo(28)
+            make.size.equalTo(32)
         }
         likeButton.snp.makeConstraints { make in
-            make.edges.equalTo(likeImageView)
+            make.top.horizontalEdges.equalTo(likeImageView)
+            make.bottom.equalTo(likeText)
         }
         
         likeText.snp.makeConstraints { make in

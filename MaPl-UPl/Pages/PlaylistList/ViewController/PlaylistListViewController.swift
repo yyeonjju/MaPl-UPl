@@ -15,6 +15,7 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     var diffableDataSource: UICollectionViewDiffableDataSource<Int, PlaylistResponse>!
     
     let likeButtonTapSubject = PublishSubject<(Int, Bool)>()
+    let purchaseButtonTapSubject = PublishSubject<Int>()
     let loadDataTrigger = PublishSubject<String?>() //String는 커서 기반
     
     
@@ -47,7 +48,7 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     private func setupBind() {
         let addButtonTap = PublishSubject<Void>()
         
-        let input = PlaylistListViewModel.Input(loadDataTrigger:loadDataTrigger, addButtonTap: addButtonTap, likeButtonTap : likeButtonTapSubject)
+        let input = PlaylistListViewModel.Input(loadDataTrigger:loadDataTrigger, addButtonTap: addButtonTap, likeButtonTap : likeButtonTapSubject, purchaseButtonTap : purchaseButtonTapSubject)
         let output = vm.transform(input: input)
         
         loadDataTrigger.onNext(nil)
@@ -87,6 +88,16 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
             }
             .disposed(by: disposeBag)
         
+        output.pushToPostPurchaseVC
+            .bind(with: self) { owner, index in
+                let data = owner.vm.playlistsData[index]
+                let vc = PurchaseViewController()
+                vc.purchaseInfo = PurchaseInfo(productName: data.title, editorName: data.creator.nick ?? "-", price: 10)
+
+                owner.pageTransition(to: vc, type: .push)
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     
@@ -106,6 +117,12 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
                 .map{ !isLiked }
                 .bind(with: self) { owner, toggleTo in
                     owner.likeButtonTapSubject.onNext((indexPath.row, toggleTo))
+                }
+                .disposed(by: cell.disposeBag)
+            
+            cell.purchaseButton.rx.tap
+                .bind(with: self) { owner, _ in
+                    owner.purchaseButtonTapSubject.onNext(indexPath.row)
                 }
                 .disposed(by: cell.disposeBag)
 

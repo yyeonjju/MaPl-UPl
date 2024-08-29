@@ -22,6 +22,7 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
         let loadDataTrigger : PublishSubject<String?> //커서 기반 페이지네이션을 위한 lastItemId
         let addButtonTap : PublishSubject<Void>
         let likeButtonTap : PublishSubject<(Int, Bool)>
+        let purchaseButtonTap : PublishSubject<Int>
         
     }
     
@@ -30,6 +31,7 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
         let isLoading : BehaviorSubject<Bool>
         let errorMessage : PublishSubject<String>
         let playlistsData : PublishSubject<[PlaylistResponse]>
+        let pushToPostPurchaseVC : PublishSubject<Int>
     }
     
     func transform(input : Input) -> Output {
@@ -111,7 +113,7 @@ final class PlaylistListViewModel : BaseViewModelProtocol {
             .disposed(by: disposeBag)
         
         
-        return Output(pushToPostPlaylistVC: input.addButtonTap, isLoading: isLoadingSubject, errorMessage: errorMessageSubject, playlistsData: playlistsDataSubject)
+        return Output(pushToPostPlaylistVC: input.addButtonTap, isLoading: isLoadingSubject, errorMessage: errorMessageSubject, playlistsData: playlistsDataSubject, pushToPostPurchaseVC : input.purchaseButtonTap)
     }
     
 }

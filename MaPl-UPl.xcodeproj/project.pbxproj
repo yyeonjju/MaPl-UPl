@@ -36,6 +36,9 @@
 		7D7C71482C7C8DE80026C04E /* PlaylistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */; };
 		7D9278262C7CB17D00773C64 /* MusicPagerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9278252C7CB17D00773C64 /* MusicPagerViewCell.swift */; };
 		7D9278472C80624100773C64 /* continuous.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D9278462C80624100773C64 /* continuous.ttf */; };
+		7D92784B2C80759F00773C64 /* PurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D92784A2C80759F00773C64 /* PurchaseViewController.swift */; };
+		7D92784F2C80769000773C64 /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D92784E2C80769000773C64 /* PurchaseView.swift */; };
+		7D9278512C8076B900773C64 /* PurchaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9278502C8076B900773C64 /* PurchaseViewModel.swift */; };
 		7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */; };
 		7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D42C76028B00C47DF4 /* UIImageView++.swift */; };
 		7DB325DA2C76074300C47DF4 /* CapsuleShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D92C76074300C47DF4 /* CapsuleShapeButton.swift */; };
@@ -108,6 +111,9 @@
 		7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewModel.swift; sourceTree = "<group>"; };
 		7D9278252C7CB17D00773C64 /* MusicPagerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPagerViewCell.swift; sourceTree = "<group>"; };
 		7D9278462C80624100773C64 /* continuous.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = continuous.ttf; sourceTree = "<group>"; };
+		7D92784A2C80759F00773C64 /* PurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseViewController.swift; sourceTree = "<group>"; };
+		7D92784E2C80769000773C64 /* PurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseView.swift; sourceTree = "<group>"; };
+		7D9278502C8076B900773C64 /* PurchaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseViewModel.swift; sourceTree = "<group>"; };
 		7D9C41CE2C7CA3D900630186 /* MaPl-UPl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MaPl-UPl.entitlements"; sourceTree = "<group>"; };
 		7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineTextField.swift; sourceTree = "<group>"; };
 		7DB325D42C76028B00C47DF4 /* UIImageView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView++.swift"; sourceTree = "<group>"; };
@@ -240,6 +246,7 @@
 		7D6CCB962C6E4E8400E56025 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				7D9278482C80758200773C64 /* Purchase */,
 				7D7C713F2C7C8D8C0026C04E /* PlaylistDetail */,
 				7D702B0C2C7849F2008E2D35 /* SearchMusic */,
 				7DFE28152C723AAC00DB5AEE /* PlaylistList */,
@@ -417,6 +424,40 @@
 				7D9278462C80624100773C64 /* continuous.ttf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		7D9278482C80758200773C64 /* Purchase */ = {
+			isa = PBXGroup;
+			children = (
+				7D92784D2C80768700773C64 /* ViewModel */,
+				7D92784C2C80768200773C64 /* View */,
+				7D9278492C80758C00773C64 /* ViewController */,
+			);
+			path = Purchase;
+			sourceTree = "<group>";
+		};
+		7D9278492C80758C00773C64 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7D92784A2C80759F00773C64 /* PurchaseViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7D92784C2C80768200773C64 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7D92784E2C80769000773C64 /* PurchaseView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7D92784D2C80768700773C64 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7D9278502C8076B900773C64 /* PurchaseViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		7DB3BC6D2C7C3A3A00B02CCA /* Like */ = {
@@ -766,11 +807,13 @@
 				7DFE27D82C71953700DB5AEE /* LoginViewController.swift in Sources */,
 				7DB325DA2C76074300C47DF4 /* CapsuleShapeButton.swift in Sources */,
 				7D6CCB3B2C6CF12400E56025 /* APIURL.swift in Sources */,
+				7D92784F2C80769000773C64 /* PurchaseView.swift in Sources */,
 				7DFE27F12C719EDF00DB5AEE /* LoginViewModel.swift in Sources */,
 				7DFE282C2C72FFC000DB5AEE /* PostPlaylistViewModel.swift in Sources */,
 				7D7C71482C7C8DE80026C04E /* PlaylistDetailViewModel.swift in Sources */,
 				7DC40DB52C762B8500BB3A50 /* SearchMusicTableViewCell.swift in Sources */,
 				7D6CCB262C6CEED800E56025 /* ViewController.swift in Sources */,
+				7D9278512C8076B900773C64 /* PurchaseViewModel.swift in Sources */,
 				7D702B082C7761BE008E2D35 /* AutoResizingTableView.swift in Sources */,
 				7DFE28142C72397400DB5AEE /* PostPlaylistViewController.swift in Sources */,
 				7DFE27FF2C71B6BF00DB5AEE /* NetworkManager.swift in Sources */,
@@ -780,6 +823,7 @@
 				7DFE28312C7313FD00DB5AEE /* Song.swift in Sources */,
 				7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */,
 				7D7C71462C7C8DDC0026C04E /* PlaylistDetailView.swift in Sources */,
+				7D92784B2C80759F00773C64 /* PurchaseViewController.swift in Sources */,
 				7DB3BC6F2C7C3A4400B02CCA /* LikeModel.swift in Sources */,
 				7DFE27F32C71A7C000DB5AEE /* BaseViewController.swift in Sources */,
 				7D702B1E2C787672008E2D35 /* UtilFunc.swift in Sources */,
