@@ -93,7 +93,7 @@ final class PurchaseView : BaseView {
     // MARK: - UI
     let section1 = PurchaseSectionView(sectionName: "프로덕트 이름", input: "랄랄라 플레이리스트")
     let section2 = PurchaseSectionView(sectionName: "에디터 이름", input: "하연주")
-    let section3 = PurchaseSectionView(sectionName: "가격", input: "1,000")
+    let section3 = PurchaseSectionView(sectionName: "가격", input: "0")
     
     let buyButton = MainNormalButton(title: "구매하기", bgColor: Assets.Colors.gray2)
     

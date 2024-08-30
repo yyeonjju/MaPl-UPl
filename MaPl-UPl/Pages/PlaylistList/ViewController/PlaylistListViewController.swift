@@ -92,7 +92,7 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
             .bind(with: self) { owner, index in
                 let data = owner.vm.playlistsData[index]
                 let vc = PurchaseViewController()
-                vc.purchaseInfo = PurchaseInfo(productName: data.title, editorName: data.creator.nick ?? "-", price: 10)
+                vc.purchaseInfo = PurchaseInfo(postId : data.post_id, productName: data.title, editorName: data.creator.nick ?? "-", price: data.price ?? 0, buyerName: "하연주")
 
                 owner.pageTransition(to: vc, type: .push)
             }

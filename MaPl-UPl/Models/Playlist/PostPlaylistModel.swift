@@ -17,6 +17,7 @@ struct PostPlaylistQuery : Encodable {
     let content5 : String?
     let product_id : String
     let files : [String]
+    let price : Int
 
 }
 
@@ -43,6 +44,8 @@ struct PlaylistResponse : Decodable, Hashable {
     let hashTags : [String]
     let buyers : [String]
     let comments : [Comment]
+    
+    let price : Int?
 }
 
 struct Creator : Decodable, Hashable{

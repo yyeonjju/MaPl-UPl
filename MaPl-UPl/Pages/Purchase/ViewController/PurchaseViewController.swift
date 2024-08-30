@@ -9,9 +9,11 @@ import UIKit
 import RxSwift
 
 struct PurchaseInfo {
-    var productName : String
-    var editorName : String
-    var price : Int
+    let postId : String
+    let productName : String
+    let editorName : String
+    let price : Int
+    let buyerName : String
 }
 
 
@@ -32,16 +34,14 @@ class PurchaseViewController : BaseViewController<PurchaseView, PurchaseViewMode
     }
     
     private func setupBind() {
-        guard let purchaseInfo else {return }
-        let buyButtonTapSubject = PublishSubject<Void>()
-        let purchaseInfoObservable = Observable.just(purchaseInfo)
-        
-        let input = PurchaseViewModel.Input(buyButtonTap : buyButtonTapSubject, purchaseInfo : purchaseInfoObservable)
-        let output = vm.transform(input: input)
-        
         viewManager.buyButton.rx.tap
-            .bind(to : buyButtonTapSubject)
+            .bind(with: self) { owner, _ in
+                let vc = PaymentViewController()
+                vc.purchaseInfo = owner.purchaseInfo
+                owner.pageTransition(to: vc, type: .push)
+            }
             .disposed(by: disposeBag)
         
     }
 }
+        

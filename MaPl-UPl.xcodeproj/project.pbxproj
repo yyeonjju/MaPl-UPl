@@ -31,6 +31,8 @@
 		7D702B1E2C787672008E2D35 /* UtilFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B1D2C787672008E2D35 /* UtilFunc.swift */; };
 		7D702B222C787AB7008E2D35 /* SelectedMusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D702B212C787AB7008E2D35 /* SelectedMusicCollectionViewCell.swift */; };
 		7D7032CE2C79ABC900548F7C /* PlaylistPostValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7032CD2C79ABC900548F7C /* PlaylistPostValidation.swift */; };
+		7D72F94F2C819DD800A4258D /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F94E2C819DD800A4258D /* PaymentViewController.swift */; };
+		7D72F9522C81ADEC00A4258D /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F9512C81ADEC00A4258D /* PaymentModel.swift */; };
 		7D7C71442C7C8DCF0026C04E /* PlaylistDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71432C7C8DCF0026C04E /* PlaylistDetailViewController.swift */; };
 		7D7C71462C7C8DDC0026C04E /* PlaylistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */; };
 		7D7C71482C7C8DE80026C04E /* PlaylistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */; };
@@ -39,6 +41,7 @@
 		7D92784B2C80759F00773C64 /* PurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D92784A2C80759F00773C64 /* PurchaseViewController.swift */; };
 		7D92784F2C80769000773C64 /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D92784E2C80769000773C64 /* PurchaseView.swift */; };
 		7D9278512C8076B900773C64 /* PurchaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9278502C8076B900773C64 /* PurchaseViewModel.swift */; };
+		7D9278542C809D8100773C64 /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 7D9278532C809D8100773C64 /* iamport-ios */; };
 		7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */; };
 		7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D42C76028B00C47DF4 /* UIImageView++.swift */; };
 		7DB325DA2C76074300C47DF4 /* CapsuleShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D92C76074300C47DF4 /* CapsuleShapeButton.swift */; };
@@ -106,6 +109,8 @@
 		7D702B1D2C787672008E2D35 /* UtilFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilFunc.swift; sourceTree = "<group>"; };
 		7D702B212C787AB7008E2D35 /* SelectedMusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D7032CD2C79ABC900548F7C /* PlaylistPostValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistPostValidation.swift; sourceTree = "<group>"; };
+		7D72F94E2C819DD800A4258D /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
+		7D72F9512C81ADEC00A4258D /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
 		7D7C71432C7C8DCF0026C04E /* PlaylistDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewController.swift; sourceTree = "<group>"; };
 		7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailView.swift; sourceTree = "<group>"; };
 		7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewModel.swift; sourceTree = "<group>"; };
@@ -165,6 +170,7 @@
 				7DFE280D2C72359C00DB5AEE /* Toast in Frameworks */,
 				7DFE27E62C7199AD00DB5AEE /* SnapKit in Frameworks */,
 				74D872D936C158A4BD721C8D /* Pods_MaPl_UPl.framework in Frameworks */,
+				7D9278542C809D8100773C64 /* iamport-ios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +382,14 @@
 			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
+		7D72F9502C81ADCB00A4258D /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				7D72F9512C81ADEC00A4258D /* PaymentModel.swift */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
 		7D7C713F2C7C8D8C0026C04E /* PlaylistDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -440,6 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				7D92784A2C80759F00773C64 /* PurchaseViewController.swift */,
+				7D72F94E2C819DD800A4258D /* PaymentViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -551,6 +566,7 @@
 		7DFE28002C71B97400DB5AEE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7D72F9502C81ADCB00A4258D /* Payment */,
 				7DB3BC6D2C7C3A3A00B02CCA /* Like */,
 				7DFE0AAB2C7B580C00CD5893 /* Empty */,
 				7DFE28322C73774900DB5AEE /* File */,
@@ -696,6 +712,7 @@
 				7DFE27ED2C7199D300DB5AEE /* Alamofire */,
 				7DFE280C2C72359C00DB5AEE /* Toast */,
 				7D702B0A2C7769EB008E2D35 /* Kingfisher */,
+				7D9278532C809D8100773C64 /* iamport-ios */,
 			);
 			productName = "MaPl-UPl";
 			productReference = 7D6CCB1E2C6CEED800E56025 /* MaPl-UPl.app */;
@@ -731,6 +748,7 @@
 				7DFE27EC2C7199D300DB5AEE /* XCRemoteSwiftPackageReference "Alamofire" */,
 				7DFE280B2C72359B00DB5AEE /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				7D702B092C7769EB008E2D35 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				7D9278522C809D8100773C64 /* XCRemoteSwiftPackageReference "iamport-ios" */,
 			);
 			productRefGroup = 7D6CCB1F2C6CEED800E56025 /* Products */;
 			projectDirPath = "";
@@ -828,6 +846,7 @@
 				7DFE27F32C71A7C000DB5AEE /* BaseViewController.swift in Sources */,
 				7D702B1E2C787672008E2D35 /* UtilFunc.swift in Sources */,
 				7D6CCB9F2C6E513D00E56025 /* NameSpace.swift in Sources */,
+				7D72F9522C81ADEC00A4258D /* PaymentModel.swift in Sources */,
 				7DFE28082C71FC8A00DB5AEE /* TargetType.swift in Sources */,
 				7DFE28242C72F8B400DB5AEE /* PlaylistListView.swift in Sources */,
 				7D7C71442C7C8DCF0026C04E /* PlaylistDetailViewController.swift in Sources */,
@@ -842,6 +861,7 @@
 				7DFE280A2C71FDA200DB5AEE /* Router.swift in Sources */,
 				7D6CCB242C6CEED800E56025 /* SceneDelegate.swift in Sources */,
 				7DFE280F2C7238BB00DB5AEE /* UIViewController++.swift in Sources */,
+				7D72F94F2C819DD800A4258D /* PaymentViewController.swift in Sources */,
 				7DFE282F2C730F5800DB5AEE /* PostPlaylistModel.swift in Sources */,
 				7D702B1A2C786991008E2D35 /* BasicSubtitleTableViewCell.swift in Sources */,
 				7DFE27E12C71966B00DB5AEE /* BaseView.swift in Sources */,
@@ -1112,6 +1132,14 @@
 				minimumVersion = 7.12.0;
 			};
 		};
+		7D9278522C809D8100773C64 /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iamport/iamport-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.2;
+			};
+		};
 		7DFE27E42C7199AD00DB5AEE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1151,6 +1179,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7D702B092C7769EB008E2D35 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		7D9278532C809D8100773C64 /* iamport-ios */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7D9278522C809D8100773C64 /* XCRemoteSwiftPackageReference "iamport-ios" */;
+			productName = "iamport-ios";
 		};
 		7DFE27E52C7199AD00DB5AEE /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

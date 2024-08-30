@@ -22,6 +22,7 @@ enum Router {
     case getImageData(filePath : String)
     case likePost (query : LikeModel, postId : String)
     case getPlaylistInfo(id : String)
+    case validatePayment(query : PaymentValidationQuery)
     
     
     var accessToken : String {
@@ -56,12 +57,14 @@ extension Router: TargetType {
             return APIURL.likePost(postId)
         case .getPlaylistInfo(let id):
             return "\(APIURL.getPlaylistInfo)/\(id)"
+        case .validatePayment :
+            return APIURL.validatePayment
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .login, .postPlaylist, .updloadImage, .likePost:
+        case .login, .postPlaylist, .updloadImage, .likePost, .validatePayment:
             return .post
         case .tokenRefresh, .getPosts, .getImageData, .getPlaylistInfo :
             return .get
@@ -113,6 +116,14 @@ extension Router: TargetType {
             }catch{
                 return nil
             }
+        case .validatePayment(let query):
+            do{
+                let data = try encoder.encode(query)
+                return data
+            }catch{
+                return nil
+            }
+            
         case .updloadImage, .getPosts, .getImageData, .getPlaylistInfo:
             return nil
         }
@@ -127,7 +138,7 @@ extension Router: TargetType {
                 HeaderKey.contentType: HeaderValue.applicationJson,
                 HeaderKey.sesacKey : HeaderValue.sesacKey
             ]
-        case .postPlaylist, .likePost :
+        case .postPlaylist, .likePost, .validatePayment :
             return [
                 HeaderKey.contentType: HeaderValue.applicationJson,
                 HeaderKey.sesacKey : HeaderValue.sesacKey

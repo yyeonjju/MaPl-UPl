@@ -115,7 +115,7 @@ final class PostPlaylistViewModel : BaseViewModelProtocol {
                 let content5 = owner.convertSongInfoToString(index: 4)
                 let productId = ProductId.playlist
                 
-                let PostPlaylistBodyData = PostPlaylistQuery(title: title, content: content, content1: content1, content2: content2, content3: content3, content4: content4, content5: content5, product_id: productId, files: files)
+                let PostPlaylistBodyData = PostPlaylistQuery(title: title, content: content, content1: content1, content2: content2, content3: content3, content4: content4, content5: content5, product_id: productId, files: files, price: 10)
                 
                 return PostPlaylistBodyData
             }

@@ -195,6 +195,11 @@ extension NetworkManager {
         let fetchRouter = Router.getPlaylistInfo(id: id)
         return fetch(fetchRouter: fetchRouter, model : PlaylistResponse.self)
     }
+    
+    func validatePayment(query : PaymentValidationQuery) -> Single<Result<PaymentValidationResponse,Error>> {
+        let fetchRouter = Router.validatePayment(query: query)
+        return fetch(fetchRouter: fetchRouter, model : PaymentValidationResponse.self)
+    }
 }
 
 
