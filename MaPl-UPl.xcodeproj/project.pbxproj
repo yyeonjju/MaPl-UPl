@@ -33,6 +33,11 @@
 		7D7032CE2C79ABC900548F7C /* PlaylistPostValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7032CD2C79ABC900548F7C /* PlaylistPostValidation.swift */; };
 		7D72F94F2C819DD800A4258D /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F94E2C819DD800A4258D /* PaymentViewController.swift */; };
 		7D72F9522C81ADEC00A4258D /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F9512C81ADEC00A4258D /* PaymentModel.swift */; };
+		7D72F9582C82E82C00A4258D /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F9572C82E82C00A4258D /* MyPageViewController.swift */; };
+		7D72F95F2C8308A800A4258D /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 7D72F95E2C8308A800A4258D /* Differentiator */; };
+		7D72F9612C8308A800A4258D /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 7D72F9602C8308A800A4258D /* RxDataSources */; };
+		7D72F9652C835FB700A4258D /* LikeItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F9642C835FB700A4258D /* LikeItemListViewController.swift */; };
+		7D72F9692C83603B00A4258D /* BuyItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F9682C83603B00A4258D /* BuyItemListViewController.swift */; };
 		7D7C71442C7C8DCF0026C04E /* PlaylistDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71432C7C8DCF0026C04E /* PlaylistDetailViewController.swift */; };
 		7D7C71462C7C8DDC0026C04E /* PlaylistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */; };
 		7D7C71482C7C8DE80026C04E /* PlaylistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */; };
@@ -111,6 +116,9 @@
 		7D7032CD2C79ABC900548F7C /* PlaylistPostValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistPostValidation.swift; sourceTree = "<group>"; };
 		7D72F94E2C819DD800A4258D /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		7D72F9512C81ADEC00A4258D /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
+		7D72F9572C82E82C00A4258D /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		7D72F9642C835FB700A4258D /* LikeItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeItemListViewController.swift; sourceTree = "<group>"; };
+		7D72F9682C83603B00A4258D /* BuyItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyItemListViewController.swift; sourceTree = "<group>"; };
 		7D7C71432C7C8DCF0026C04E /* PlaylistDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewController.swift; sourceTree = "<group>"; };
 		7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailView.swift; sourceTree = "<group>"; };
 		7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewModel.swift; sourceTree = "<group>"; };
@@ -166,10 +174,12 @@
 				7D702B0B2C7769EB008E2D35 /* Kingfisher in Frameworks */,
 				7DFE27EB2C7199C800DB5AEE /* RxSwift in Frameworks */,
 				7DFE27EE2C7199D300DB5AEE /* Alamofire in Frameworks */,
+				7D72F9612C8308A800A4258D /* RxDataSources in Frameworks */,
 				7DFE27E92C7199C800DB5AEE /* RxCocoa in Frameworks */,
 				7DFE280D2C72359C00DB5AEE /* Toast in Frameworks */,
 				7DFE27E62C7199AD00DB5AEE /* SnapKit in Frameworks */,
 				74D872D936C158A4BD721C8D /* Pods_MaPl_UPl.framework in Frameworks */,
+				7D72F95F2C8308A800A4258D /* Differentiator in Frameworks */,
 				7D9278542C809D8100773C64 /* iamport-ios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,6 +262,9 @@
 		7D6CCB962C6E4E8400E56025 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				7D72F9662C83600D00A4258D /* BuyItemList */,
+				7D72F9622C835F6700A4258D /* LikeItemList */,
+				7D72F9532C82E7EE00A4258D /* MyPage */,
 				7D9278482C80758200773C64 /* Purchase */,
 				7D7C713F2C7C8D8C0026C04E /* PlaylistDetail */,
 				7D702B0C2C7849F2008E2D35 /* SearchMusic */,
@@ -388,6 +401,54 @@
 				7D72F9512C81ADEC00A4258D /* PaymentModel.swift */,
 			);
 			path = Payment;
+			sourceTree = "<group>";
+		};
+		7D72F9532C82E7EE00A4258D /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				7D72F9542C82E80600A4258D /* ViewController */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		7D72F9542C82E80600A4258D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7D72F9572C82E82C00A4258D /* MyPageViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		7D72F9622C835F6700A4258D /* LikeItemList */ = {
+			isa = PBXGroup;
+			children = (
+				7D72F9632C835FA300A4258D /* ViewController */,
+			);
+			path = LikeItemList;
+			sourceTree = "<group>";
+		};
+		7D72F9632C835FA300A4258D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7D72F9642C835FB700A4258D /* LikeItemListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7D72F9662C83600D00A4258D /* BuyItemList */ = {
+			isa = PBXGroup;
+			children = (
+				7D72F9672C83601D00A4258D /* ViewController */,
+			);
+			path = BuyItemList;
+			sourceTree = "<group>";
+		};
+		7D72F9672C83601D00A4258D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7D72F9682C83603B00A4258D /* BuyItemListViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		7D7C713F2C7C8D8C0026C04E /* PlaylistDetail */ = {
@@ -713,6 +774,8 @@
 				7DFE280C2C72359C00DB5AEE /* Toast */,
 				7D702B0A2C7769EB008E2D35 /* Kingfisher */,
 				7D9278532C809D8100773C64 /* iamport-ios */,
+				7D72F95E2C8308A800A4258D /* Differentiator */,
+				7D72F9602C8308A800A4258D /* RxDataSources */,
 			);
 			productName = "MaPl-UPl";
 			productReference = 7D6CCB1E2C6CEED800E56025 /* MaPl-UPl.app */;
@@ -749,6 +812,7 @@
 				7DFE280B2C72359B00DB5AEE /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				7D702B092C7769EB008E2D35 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				7D9278522C809D8100773C64 /* XCRemoteSwiftPackageReference "iamport-ios" */,
+				7D72F95D2C8308A800A4258D /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 7D6CCB1F2C6CEED800E56025 /* Products */;
 			projectDirPath = "";
@@ -822,6 +886,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D72F9582C82E82C00A4258D /* MyPageViewController.swift in Sources */,
 				7DFE27D82C71953700DB5AEE /* LoginViewController.swift in Sources */,
 				7DB325DA2C76074300C47DF4 /* CapsuleShapeButton.swift in Sources */,
 				7D6CCB3B2C6CF12400E56025 /* APIURL.swift in Sources */,
@@ -841,6 +906,7 @@
 				7DFE28312C7313FD00DB5AEE /* Song.swift in Sources */,
 				7D6CCB222C6CEED800E56025 /* AppDelegate.swift in Sources */,
 				7D7C71462C7C8DDC0026C04E /* PlaylistDetailView.swift in Sources */,
+				7D72F9652C835FB700A4258D /* LikeItemListViewController.swift in Sources */,
 				7D92784B2C80759F00773C64 /* PurchaseViewController.swift in Sources */,
 				7DB3BC6F2C7C3A4400B02CCA /* LikeModel.swift in Sources */,
 				7DFE27F32C71A7C000DB5AEE /* BaseViewController.swift in Sources */,
@@ -877,6 +943,7 @@
 				7D702B122C784A60008E2D35 /* SearchMusicView.swift in Sources */,
 				7DFE27DE2C7195F400DB5AEE /* LoginView.swift in Sources */,
 				7DFE27FA2C71AA8600DB5AEE /* MainNormalButton.swift in Sources */,
+				7D72F9692C83603B00A4258D /* BuyItemListViewController.swift in Sources */,
 				7DFE27E32C71969F00DB5AEE /* UIView++.swift in Sources */,
 				7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */,
 				7D702B182C7854F4008E2D35 /* EmptyView.swift in Sources */,
@@ -1132,6 +1199,14 @@
 				minimumVersion = 7.12.0;
 			};
 		};
+		7D72F95D2C8308A800A4258D /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		7D9278522C809D8100773C64 /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iamport/iamport-ios.git";
@@ -1179,6 +1254,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7D702B092C7769EB008E2D35 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		7D72F95E2C8308A800A4258D /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7D72F95D2C8308A800A4258D /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		7D72F9602C8308A800A4258D /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7D72F95D2C8308A800A4258D /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 		7D9278532C809D8100773C64 /* iamport-ios */ = {
 			isa = XCSwiftPackageProductDependency;

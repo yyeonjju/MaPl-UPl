@@ -36,6 +36,7 @@ enum Assets {
         static let playFill = UIImage(systemName: "play.fill")
         static let pauseFill = UIImage(systemName: "pause.fill")
         static let chevronLeft = UIImage(systemName: "chevron.left")
+        static let chevronRight = UIImage(systemName: "chevron.right")
     }
     
     enum Font {

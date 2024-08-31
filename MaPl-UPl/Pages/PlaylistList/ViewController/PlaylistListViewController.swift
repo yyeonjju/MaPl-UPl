@@ -23,6 +23,8 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        setupNavigation()
         setupDelegate()
         setupBind()
         
@@ -35,6 +37,16 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         
 //        loadDataTrigger.onNext(nil)
     }
+    
+    private func setupNavigation() {
+        let myPage = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(myPageButtonClicked))
+        navigationItem.rightBarButtonItem = myPage
+    }
+    
+    @objc private func myPageButtonClicked() {
+        pageTransition(to: MyPageViewController(), type: .push)
+    }
+    
     
     // MARK: - SetupDelegate
     private func setupDelegate() {
