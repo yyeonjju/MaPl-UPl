@@ -9,25 +9,23 @@ import Foundation
 import RxSwift
 
 final class PlaylistDetailViewModel : BaseViewModelProtocol {
+    @UserDefaultsWrapper(key: .userInfo) var userInfo : LoginResponse?
+    
     struct PlaylistBasicInfo {
         let title : String
         let editor : String
         let bgImage : String
+        let isPurchased : Bool
     }
     
-    
-    
     let disposeBag = DisposeBag()
-    
-
     var songsInfoData : [SongInfo]? {
         didSet {
             guard let songsInfoData else{return}
             songsInfoDataSubject.onNext(songsInfoData)
         }
     }
-    
-    let songsInfoDataSubject = PublishSubject<[SongInfo]>()
+    private let songsInfoDataSubject = PublishSubject<[SongInfo]>()
     
     struct Input {
         let playlistId : Observable<String>
@@ -57,10 +55,14 @@ final class PlaylistDetailViewModel : BaseViewModelProtocol {
                 switch result{
                 case .success(let data) :
                     print("🌸success🌸",data)
+                    
+                    guard let userId = owner.userInfo?.id else{return}
+                    
                     let playlistBasicInfo = PlaylistBasicInfo(
                         title: data.title,
                         editor: data.creator.nick ?? "-",
-                        bgImage: data.files.first ?? ""
+                        bgImage: data.files.first ?? "",
+                        isPurchased: data.buyers.contains(userId)
                     )
                     playlistBasicInfoSubject.onNext(playlistBasicInfo)
                     

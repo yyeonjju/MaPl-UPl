@@ -103,6 +103,10 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         output.pushToPostPurchaseVC
             .bind(with: self) { owner, index in
                 let data = owner.vm.playlistsData[index]
+                
+                //이미 구매한 플리에 대해서는 구매창으로 넘어가지 않도록
+                guard let userId = owner.userInfo?.id, !data.buyers.contains(userId) else{return}
+                
                 let vc = PurchaseViewController()
                 vc.purchaseInfo = PurchaseInfo(postId : data.post_id, productName: data.title, editorName: data.creator.nick ?? "-", price: data.price ?? 0, buyerName: "하연주")
 
@@ -123,7 +127,8 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
             
             let data = vm.playlistsData[indexPath.row]
             let isLiked = data.likes.contains(userId)
-            cell.configureData(data: data, isLiked : isLiked)
+            let isPurchased = data.buyers.contains(userId)
+            cell.configureData(data: data, isLiked : isLiked, isPurchased : isPurchased)
             
             cell.likeButton.rx.tap
                 .map{ !isLiked }

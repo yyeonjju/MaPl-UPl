@@ -102,13 +102,17 @@ final class PlaylistCollectionViewCell : UICollectionViewCell {
     
     
     // MARK: - ConfigureData
-    func configureData(data : PlaylistResponse, isLiked : Bool) {
+    func configureData(data : PlaylistResponse, isLiked : Bool, isPurchased : Bool) {
         let fileURL = data.files.first ?? ""
         bgImageView.loadImage(filePath: fileURL)
         playlistImageView.loadImage(filePath: fileURL)
         titleLabel.text = data.title
         
         likeImageView.image = isLiked ? Assets.SystemImage.likeFill :  Assets.SystemImage.likeEmpty
+        
+        purchaseImageView.image = isPurchased ? Assets.SystemImage.checkmark : 
+        Assets.SystemImage.banknoteEmpty
+        purchaseText.text = isPurchased ? "구매 완료" : "구매하기"
         
         
         var songsPreviewText = ""

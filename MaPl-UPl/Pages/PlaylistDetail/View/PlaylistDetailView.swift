@@ -67,6 +67,23 @@ final class PlaylistDetailView : BaseView {
         return view
     }()
     
+    
+    let playerLockLabel = {
+        let label = UILabel()
+        label.text = "* 구매 이후 노래 재생이 가능합니다."
+        label.font = Font.regular13
+        label.textColor = Assets.Colors.white
+        return label
+    }()
+    let playerLockView = {
+        let view = UIView()
+        view.backgroundColor = Assets.Colors.black
+        view.layer.cornerRadius = 40
+        view.layer.opacity = 0.8
+        //        view.clipsToBounds = true
+        return view
+    }()
+    
     let playerArtworkImageView = {
         let iv = UIImageView()
         iv.backgroundColor = Assets.Colors.gray4
@@ -110,7 +127,7 @@ final class PlaylistDetailView : BaseView {
     // MARK: - ConfigureUI
     
     override func configureSubView() {
-        [bgImageView, blurEffectCoverView, playlistTitle, editorLabel, underline, pagerView, playerView, playerArtworkImageView, playerStateButton, playerTitleLabel, playerArtistLabel]
+        [bgImageView, blurEffectCoverView, playlistTitle, editorLabel, underline, pagerView, playerView, playerArtworkImageView, playerStateButton, playerTitleLabel, playerArtistLabel, playerLockView, playerLockLabel]
             .forEach{
                 addSubview($0)
             }
@@ -170,6 +187,15 @@ final class PlaylistDetailView : BaseView {
             make.trailing.equalTo(playerView).offset(-20)
             make.centerY.equalTo(playerView)
             make.size.equalTo(24)
+        }
+        
+        //playerLockView
+        playerLockView.snp.makeConstraints { make in
+            make.edges.equalTo(playerView)
+        }
+        playerLockLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(playerLockView.snp.top).offset(-4)
+            make.centerX.equalTo(playerLockView)
         }
         
     }

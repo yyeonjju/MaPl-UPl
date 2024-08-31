@@ -181,6 +181,10 @@ final class PlaylistDetailViewController : BaseViewController<PlaylistDetailView
         viewManager.playlistTitle.text = data.title
         viewManager.editorLabel.text = "editor. \(data.editor)"
         
+        //구매 여부에 따른 playerLockView
+        viewManager.playerLockView.isHidden = data.isPurchased
+        viewManager.playerLockLabel.isHidden = data.isPurchased
+        
     }
     
     private func setupPlayerItem(index : Int) {

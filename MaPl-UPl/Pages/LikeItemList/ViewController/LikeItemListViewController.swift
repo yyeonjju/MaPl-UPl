@@ -34,5 +34,13 @@ final class LikeItemListViewController : BaseViewController<LikeItemListView, Li
                 cell.configurePlaylistData(data: element)
             }
             .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .bind(to: errorMessage)
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .bind(to: isLoading)
+            .disposed(by: disposeBag)
     }
 }
