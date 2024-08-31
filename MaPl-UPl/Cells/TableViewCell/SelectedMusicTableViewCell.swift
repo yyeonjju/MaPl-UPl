@@ -78,18 +78,18 @@ final class SelectedMusicTableViewCell : BasicSubtitleTableViewCell {
             make.width.equalTo(18)
         }
         
-        artworkImageView.snp.makeConstraints { make in
+        mainImageView.snp.makeConstraints { make in
             make.leading.equalTo(dragImageView.snp.trailing).offset(4)
             make.verticalEdges.equalTo(contentView).inset(8)
-            make.width.equalTo(artworkImageView.snp.height).multipliedBy(1)
+            make.width.equalTo(mainImageView.snp.height).multipliedBy(1)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(artworkImageView.snp.trailing).offset(4)
-            make.top.equalTo(artworkImageView.snp.top)
+            make.leading.equalTo(mainImageView.snp.trailing).offset(4)
+            make.top.equalTo(mainImageView.snp.top)
         }
         
-        artistLabel.snp.makeConstraints { make in
+        subtitleLabel.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel)
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
         }

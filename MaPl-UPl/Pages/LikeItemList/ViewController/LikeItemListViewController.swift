@@ -6,11 +6,33 @@
 //
 
 import UIKit
+import RxSwift
 
-final class LikeItemListViewController : UIViewController {
+final class LikeItemListViewController : BaseViewController<LikeItemListView, LikeItemListViewModel> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        
+        navigationItem.title = "좋아요한 플레이리스트"
+        setupBind()
+    }
+    
+    private func setupBind() {
+        let loadDataTrigger = Observable.just(())
+        let input = LikeItemListViewModel.Input(loadDataTrigger:loadDataTrigger)
+        let output = vm.transform(input: input)
+        
+        
+        
+        
+        viewManager.tableView.register(BasicColoredBackgroundSubtitleTableViewCell.self, forCellReuseIdentifier: BasicColoredBackgroundSubtitleTableViewCell.description())
+        
+        
+        output.likesData
+            .bind(to: viewManager.tableView.rx.items(cellIdentifier: BasicColoredBackgroundSubtitleTableViewCell.description(), cellType: BasicColoredBackgroundSubtitleTableViewCell.self)) { (row, element, cell : BasicColoredBackgroundSubtitleTableViewCell) in
+                cell.selectionStyle = .none
+                cell.configurePlaylistData(data: element)
+            }
+            .disposed(by: disposeBag)
     }
 }

@@ -38,6 +38,9 @@
 		7D72F9612C8308A800A4258D /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 7D72F9602C8308A800A4258D /* RxDataSources */; };
 		7D72F9652C835FB700A4258D /* LikeItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F9642C835FB700A4258D /* LikeItemListViewController.swift */; };
 		7D72F9692C83603B00A4258D /* BuyItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F9682C83603B00A4258D /* BuyItemListViewController.swift */; };
+		7D72F96D2C83713400A4258D /* LikeItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F96C2C83713400A4258D /* LikeItemListView.swift */; };
+		7D72F9702C83715000A4258D /* LikeItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F96F2C83715000A4258D /* LikeItemListViewModel.swift */; };
+		7D72F9722C8375B200A4258D /* BasicColoredBackgroundSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D72F9712C8375B200A4258D /* BasicColoredBackgroundSubtitleTableViewCell.swift */; };
 		7D7C71442C7C8DCF0026C04E /* PlaylistDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71432C7C8DCF0026C04E /* PlaylistDetailViewController.swift */; };
 		7D7C71462C7C8DDC0026C04E /* PlaylistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */; };
 		7D7C71482C7C8DE80026C04E /* PlaylistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */; };
@@ -119,6 +122,9 @@
 		7D72F9572C82E82C00A4258D /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		7D72F9642C835FB700A4258D /* LikeItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeItemListViewController.swift; sourceTree = "<group>"; };
 		7D72F9682C83603B00A4258D /* BuyItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyItemListViewController.swift; sourceTree = "<group>"; };
+		7D72F96C2C83713400A4258D /* LikeItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeItemListView.swift; sourceTree = "<group>"; };
+		7D72F96F2C83715000A4258D /* LikeItemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeItemListViewModel.swift; sourceTree = "<group>"; };
+		7D72F9712C8375B200A4258D /* BasicColoredBackgroundSubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicColoredBackgroundSubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		7D7C71432C7C8DCF0026C04E /* PlaylistDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewController.swift; sourceTree = "<group>"; };
 		7D7C71452C7C8DDC0026C04E /* PlaylistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailView.swift; sourceTree = "<group>"; };
 		7D7C71472C7C8DE80026C04E /* PlaylistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewModel.swift; sourceTree = "<group>"; };
@@ -382,6 +388,7 @@
 				7DC40DB12C76241C00BB3A50 /* SelectedMusicTableViewCell.swift */,
 				7DC40DB42C762B8400BB3A50 /* SearchMusicTableViewCell.swift */,
 				7D702B192C786991008E2D35 /* BasicSubtitleTableViewCell.swift */,
+				7D72F9712C8375B200A4258D /* BasicColoredBackgroundSubtitleTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -422,6 +429,8 @@
 		7D72F9622C835F6700A4258D /* LikeItemList */ = {
 			isa = PBXGroup;
 			children = (
+				7D72F96E2C83714800A4258D /* ViewModel */,
+				7D72F96B2C83712C00A4258D /* View */,
 				7D72F9632C835FA300A4258D /* ViewController */,
 			);
 			path = LikeItemList;
@@ -449,6 +458,22 @@
 				7D72F9682C83603B00A4258D /* BuyItemListViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7D72F96B2C83712C00A4258D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7D72F96C2C83713400A4258D /* LikeItemListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7D72F96E2C83714800A4258D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7D72F96F2C83715000A4258D /* LikeItemListViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		7D7C713F2C7C8D8C0026C04E /* PlaylistDetail */ = {
@@ -889,6 +914,7 @@
 				7D72F9582C82E82C00A4258D /* MyPageViewController.swift in Sources */,
 				7DFE27D82C71953700DB5AEE /* LoginViewController.swift in Sources */,
 				7DB325DA2C76074300C47DF4 /* CapsuleShapeButton.swift in Sources */,
+				7D72F9722C8375B200A4258D /* BasicColoredBackgroundSubtitleTableViewCell.swift in Sources */,
 				7D6CCB3B2C6CF12400E56025 /* APIURL.swift in Sources */,
 				7D92784F2C80769000773C64 /* PurchaseView.swift in Sources */,
 				7DFE27F12C719EDF00DB5AEE /* LoginViewModel.swift in Sources */,
@@ -937,6 +963,7 @@
 				7DFE0AA62C7A019800CD5893 /* getPostsModel.swift in Sources */,
 				7DFE28292C72FF7700DB5AEE /* PostPlaylistView.swift in Sources */,
 				7D702B152C784A89008E2D35 /* SearchMusicViewModel.swift in Sources */,
+				7D72F9702C83715000A4258D /* LikeItemListViewModel.swift in Sources */,
 				7DFE27FD2C71ABB700DB5AEE /* NormalOutlineTextField.swift in Sources */,
 				7D702B0F2C784A34008E2D35 /* SearchMusicViewController.swift in Sources */,
 				7DFE0AA82C7A3B0400CD5893 /* PlaylistCollectionViewCell.swift in Sources */,
@@ -946,6 +973,7 @@
 				7D72F9692C83603B00A4258D /* BuyItemListViewController.swift in Sources */,
 				7DFE27E32C71969F00DB5AEE /* UIView++.swift in Sources */,
 				7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */,
+				7D72F96D2C83713400A4258D /* LikeItemListView.swift in Sources */,
 				7D702B182C7854F4008E2D35 /* EmptyView.swift in Sources */,
 				7D6CCB3D2C6CF13700E56025 /* APIKey.swift in Sources */,
 				7DFE0AAA2C7B545900CD5893 /* ImageLoadManager.swift in Sources */,

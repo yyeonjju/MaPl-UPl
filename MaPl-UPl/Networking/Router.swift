@@ -23,6 +23,8 @@ enum Router {
     case likePost (query : LikeModel, postId : String)
     case getPlaylistInfo(id : String)
     case validatePayment(query : PaymentValidationQuery)
+    case getLikes
+    case getPayments
     
     
     var accessToken : String {
@@ -59,6 +61,10 @@ extension Router: TargetType {
             return "\(APIURL.getPlaylistInfo)/\(id)"
         case .validatePayment :
             return APIURL.validatePayment
+        case .getLikes :
+            return APIURL.getLikes
+        case .getPayments :
+            return APIURL.getPayments
         }
     }
     
@@ -66,7 +72,7 @@ extension Router: TargetType {
         switch self {
         case .login, .postPlaylist, .updloadImage, .likePost, .validatePayment:
             return .post
-        case .tokenRefresh, .getPosts, .getImageData, .getPlaylistInfo :
+        case .tokenRefresh, .getPosts, .getImageData, .getPlaylistInfo, .getLikes, .getPayments :
             return .get
         }
     }
@@ -124,7 +130,7 @@ extension Router: TargetType {
                 return nil
             }
             
-        case .updloadImage, .getPosts, .getImageData, .getPlaylistInfo:
+        case .updloadImage, .getPosts, .getImageData, .getPlaylistInfo, .getLikes, .getPayments:
             return nil
         }
     }
@@ -153,7 +159,7 @@ extension Router: TargetType {
                 HeaderKey.sesacKey : HeaderValue.sesacKey,
                 HeaderKey.refresh : refreshToken
             ]
-        case .getPosts, .getImageData, .getPlaylistInfo:
+        case .getPosts, .getImageData, .getPlaylistInfo, .getLikes, .getPayments:
             return [
                 HeaderKey.sesacKey : HeaderValue.sesacKey
             ]

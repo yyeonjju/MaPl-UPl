@@ -44,7 +44,7 @@ final class SearchMusicTableViewCell : BasicSubtitleTableViewCell {
             make.trailing.equalTo(selectButton.snp.leading)
         }
         
-        artistLabel.snp.makeConstraints { make in
+        subtitleLabel.snp.makeConstraints { make in
             make.trailing.equalTo(selectButton.snp.leading)
         }
     }

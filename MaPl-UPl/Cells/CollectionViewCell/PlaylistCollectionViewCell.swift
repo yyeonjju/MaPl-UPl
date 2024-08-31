@@ -112,9 +112,8 @@ final class PlaylistCollectionViewCell : UICollectionViewCell {
         
         
         var songsPreviewText = ""
-        let songs = [data.content1, data.content2, data.content3, data.content4, data.content5]
+        let songs = [data.content1, data.content2, data.content3, data.content4, data.content5].compactMap{$0}
         for songStringForm in songs {
-            guard let songStringForm else{return }
             let decodedSongData = stringToDecodedModel(string: songStringForm, model: SongInfo.self)
             let songShortInfo = "🎵\(decodedSongData?.title ?? "")-\(decodedSongData?.artistName ?? "" ) "
             songsPreviewText.append(songShortInfo)
