@@ -11,6 +11,9 @@ import PhotosUI
 import Toast
 
 final class PostPlaylistViewController : BaseViewController<PostPlaylistView, PostPlaylistViewModel> {
+    // MARK: - Properties
+    var reloadListData : (() -> Void)?
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +22,8 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         setupBind()
     }
     
+    // MARK: - SetupDelegate
+
     private func setupDelegate() {
 
         viewManager.selectedMusicTableView.register(SelectedMusicTableViewCell.self, forCellReuseIdentifier: SelectedMusicTableViewCell.description())
@@ -29,6 +34,8 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         
     }
     
+    // MARK: - SetupBind
+
     private func setupBind() {
         let postPlaylistButtonTap = PublishSubject<Void>()
         let searchMusicButtonTap = PublishSubject<Void>()
@@ -80,6 +87,7 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
         output.uploadComplete
             .bind(with: self) { owner, complete in
                 owner.navigationController?.popViewController(animated: true)
+                owner.reloadListData?()
             }
             .disposed(by: disposeBag)
         

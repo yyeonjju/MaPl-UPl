@@ -16,26 +16,20 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
     
     let likeButtonTapSubject = PublishSubject<(Int, Bool)>()
     let purchaseButtonTapSubject = PublishSubject<Int>()
-    let loadDataTrigger = PublishSubject<String?>() //String는 커서 기반
+    let loadDataTrigger = PublishSubject<String?>() //String는 커서 기반 페이지네이션을 위한 것
     
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureDataSource()
+//        updateSnapshot()
         
         setupNavigation()
         setupDelegate()
         setupBind()
         
-        configureDataSource()
-        updateSnapshot()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-//        loadDataTrigger.onNext(nil)
     }
     
     private func setupNavigation() {
@@ -82,7 +76,12 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         //output
         output.pushToPostPlaylistVC
             .bind(with: self) { owner, _ in
-                owner.pageTransition(to: PostPlaylistViewController(), type: .push)
+                let vc = PostPlaylistViewController()
+                vc.reloadListData = {
+                    owner.viewManager.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+                    owner.loadDataTrigger.onNext(nil)
+                }
+                owner.pageTransition(to: vc, type: .push)
             }
             .disposed(by: disposeBag)
         
@@ -96,6 +95,7 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         
         output.playlistsData
             .bind(with: self) { owner, data in
+                print("💎💎💎💎💎💎💎💎")
                 owner.updateSnapshot()
             }
             .disposed(by: disposeBag)
@@ -125,10 +125,10 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
             
             indexPath.row == previousIndex ? increaseAnimation(zoomCell: cell) : decreaseAnimation(zoomCell: cell)
             
-            let data = vm.playlistsData[indexPath.row]
-            let isLiked = data.likes.contains(userId)
-            let isPurchased = data.buyers.contains(userId)
-            cell.configureData(data: data, isLiked : isLiked, isPurchased : isPurchased)
+//            let data = vm.playlistsData[indexPath.row]
+            let isLiked = item.likes.contains(userId)
+            let isPurchased = item.buyers.contains(userId)
+            cell.configureData(data: item, isLiked : isLiked, isPurchased : isPurchased)
             
             cell.likeButton.rx.tap
                 .map{ !isLiked }
@@ -155,6 +155,7 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
         
         // 스냅샷을 데이터 소스에 적용
         diffableDataSource.apply(snapshot)
+//        diffableDataSource.applySnapshotUsingReloadData(snapshot)
     }
     
 }
@@ -209,12 +210,14 @@ extension PlaylistListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func increaseAnimation(zoomCell: UICollectionViewCell) {
+        print("🧡increaseAnimation🧡")
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             zoomCell.transform = .identity
         }, completion: nil)
     }
     
     func decreaseAnimation(zoomCell: UICollectionViewCell) {
+        print("🧡🧡decreaseAnimation🧡🧡")
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             zoomCell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         }, completion: nil)
