@@ -6,12 +6,38 @@
 //
 
 import UIKit
+import RxSwift
 
-final class BuyItemListViewController : UIViewController {
+final class BuyItemListViewController : BaseViewController<BuyItemListView, BuyItemListViewModel> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .blue
+        navigationItem.title = "구매한 플레이리스트"
+        setupBind()
+    }
+    
+    private func setupBind() {
+        let loadDataTrigger = Observable.just(())
+        let input = BuyItemListViewModel.Input(loadDataTrigger:loadDataTrigger)
+        let output = vm.transform(input: input)
+        
+        viewManager.tableView.register(BasicColoredBackgroundSubtitleTableViewCell.self, forCellReuseIdentifier: BasicColoredBackgroundSubtitleTableViewCell.description())
+        
+        
+        output.paymentsData
+            .bind(to: viewManager.tableView.rx.items(cellIdentifier: BasicColoredBackgroundSubtitleTableViewCell.description(), cellType: BasicColoredBackgroundSubtitleTableViewCell.self)) { (row, element, cell : BasicColoredBackgroundSubtitleTableViewCell) in
+                cell.selectionStyle = .none
+                cell.loadPlaylistData(id: element.postId)
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .bind(to: errorMessage)
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .bind(to: isLoading)
+            .disposed(by: disposeBag)
     }
 }

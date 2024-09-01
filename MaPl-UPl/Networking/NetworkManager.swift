@@ -201,8 +201,8 @@ extension NetworkManager {
         return fetch(fetchRouter: fetchRouter, model : PaymentValidationResponse.self)
     }
     
-    func getLikes() -> Single<Result<PlaylistPostsResponse,Error>> {
-        let fetchRouter = Router.getLikes
+    func getLikes(nextCursor : String) -> Single<Result<PlaylistPostsResponse,Error>> {
+        let fetchRouter = Router.getLikes(nextCursor : nextCursor)
         return fetch(fetchRouter: fetchRouter, model : PlaylistPostsResponse.self)
     }
     

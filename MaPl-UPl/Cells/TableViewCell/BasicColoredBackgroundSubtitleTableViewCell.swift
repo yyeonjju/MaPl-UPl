@@ -6,8 +6,20 @@
 //
 
 import UIKit
+import RxSwift
+import Toast
 
 final class BasicColoredBackgroundSubtitleTableViewCell : BasicSubtitleTableViewCell {
+    // MARK: - UI
+    private let spinner = UIActivityIndicatorView()
+    
+
+    // MARK: - Properties
+
+    private let disposeBag = DisposeBag()
+    
+    private let errorMessageSubject = PublishSubject<String>()
+    private let isLoadingSubject = BehaviorSubject(value: true)
     
     private let containerView = {
         let view = UIView()
@@ -16,6 +28,30 @@ final class BasicColoredBackgroundSubtitleTableViewCell : BasicSubtitleTableView
         view.layer.cornerRadius = 20
         return view
     }()
+    
+    func loadPlaylistData(id : String) {
+        
+        Observable.just(())
+            .withUnretained(self)
+            .flatMap{ owner, _ in
+                owner.isLoadingSubject.onNext(true)
+                return NetworkManager.shared.getPlaylistInfo(id: id)
+            }
+            .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
+            .drive(with: self) { owner, result in
+                switch result{
+                case .success(let data) :
+                    owner.configurePlaylistData(data: data)
+                case .failure(let error as FetchError) :
+                    owner.contentView.makeToast(error.errorMessage)
+                default:
+                    print("default")
+                    
+                }
+                owner.isLoadingSubject.onNext(false)
+            }
+            .disposed(by: disposeBag)
+    }
     
     
     func configurePlaylistData(data : PlaylistResponse) {
@@ -36,6 +72,7 @@ final class BasicColoredBackgroundSubtitleTableViewCell : BasicSubtitleTableView
     
     override func configureSubView() {
         contentView.addSubview(containerView)
+        contentView.addSubview(spinner)
         
         super.configureSubView()
     }
@@ -48,6 +85,9 @@ final class BasicColoredBackgroundSubtitleTableViewCell : BasicSubtitleTableView
         }
         subtitleLabel.snp.makeConstraints { make in
             make.trailing.equalTo(containerView).offset(-4)
+        }
+        spinner.snp.makeConstraints { make in
+            make.edges.equalTo(contentView)
         }
     }
 

@@ -30,7 +30,8 @@ struct PlaylistPaymentsResponse : Decodable {
 }
 
 struct PlaylistPayment : Decodable {
-    let buyerId, postId, merchantUid, productName, price, paidAt: String
+    let buyerId, postId, merchantUid, productName, paidAt: String
+    let price : Int
 
     enum CodingKeys: String, CodingKey {
         case buyerId = "buyer_id"

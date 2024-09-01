@@ -50,6 +50,8 @@
 		7D92784F2C80769000773C64 /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D92784E2C80769000773C64 /* PurchaseView.swift */; };
 		7D9278512C8076B900773C64 /* PurchaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9278502C8076B900773C64 /* PurchaseViewModel.swift */; };
 		7D9278542C809D8100773C64 /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 7D9278532C809D8100773C64 /* iamport-ios */; };
+		7DAF42CC2C845BD90021BF2D /* BuyItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAF42CB2C845BD90021BF2D /* BuyItemListView.swift */; };
+		7DAF42CF2C845BFF0021BF2D /* BuyItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAF42CE2C845BFF0021BF2D /* BuyItemListViewModel.swift */; };
 		7DB325D12C75FF8E00C47DF4 /* UnderlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */; };
 		7DB325D52C76028B00C47DF4 /* UIImageView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D42C76028B00C47DF4 /* UIImageView++.swift */; };
 		7DB325DA2C76074300C47DF4 /* CapsuleShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB325D92C76074300C47DF4 /* CapsuleShapeButton.swift */; };
@@ -134,6 +136,8 @@
 		7D92784E2C80769000773C64 /* PurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseView.swift; sourceTree = "<group>"; };
 		7D9278502C8076B900773C64 /* PurchaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseViewModel.swift; sourceTree = "<group>"; };
 		7D9C41CE2C7CA3D900630186 /* MaPl-UPl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MaPl-UPl.entitlements"; sourceTree = "<group>"; };
+		7DAF42CB2C845BD90021BF2D /* BuyItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyItemListView.swift; sourceTree = "<group>"; };
+		7DAF42CE2C845BFF0021BF2D /* BuyItemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyItemListViewModel.swift; sourceTree = "<group>"; };
 		7DB325D02C75FF8E00C47DF4 /* UnderlineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineTextField.swift; sourceTree = "<group>"; };
 		7DB325D42C76028B00C47DF4 /* UIImageView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView++.swift"; sourceTree = "<group>"; };
 		7DB325D92C76074300C47DF4 /* CapsuleShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleShapeButton.swift; sourceTree = "<group>"; };
@@ -447,6 +451,8 @@
 		7D72F9662C83600D00A4258D /* BuyItemList */ = {
 			isa = PBXGroup;
 			children = (
+				7DAF42CD2C845BEE0021BF2D /* ViewModel */,
+				7DAF42CA2C845BCD0021BF2D /* View */,
 				7D72F9672C83601D00A4258D /* ViewController */,
 			);
 			path = BuyItemList;
@@ -557,6 +563,22 @@
 			isa = PBXGroup;
 			children = (
 				7D9278502C8076B900773C64 /* PurchaseViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7DAF42CA2C845BCD0021BF2D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7DAF42CB2C845BD90021BF2D /* BuyItemListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7DAF42CD2C845BEE0021BF2D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7DAF42CE2C845BFF0021BF2D /* BuyItemListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -911,6 +933,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DAF42CC2C845BD90021BF2D /* BuyItemListView.swift in Sources */,
 				7D72F9582C82E82C00A4258D /* MyPageViewController.swift in Sources */,
 				7DFE27D82C71953700DB5AEE /* LoginViewController.swift in Sources */,
 				7DB325DA2C76074300C47DF4 /* CapsuleShapeButton.swift in Sources */,
@@ -946,6 +969,7 @@
 				7DFE0AAD2C7B581C00CD5893 /* EmptyModel.swift in Sources */,
 				7DFE27F52C71A7E400DB5AEE /* BaseViewModel.swift in Sources */,
 				7DFE28182C723AD000DB5AEE /* PlaylistListViewController.swift in Sources */,
+				7DAF42CF2C845BFF0021BF2D /* BuyItemListViewModel.swift in Sources */,
 				7D326A2B2C74B22800E5602F /* FetchError.swift in Sources */,
 				7D702B222C787AB7008E2D35 /* SelectedMusicCollectionViewCell.swift in Sources */,
 				7DFE28062C71BA6F00DB5AEE /* UserDefaultsWrapper.swift in Sources */,

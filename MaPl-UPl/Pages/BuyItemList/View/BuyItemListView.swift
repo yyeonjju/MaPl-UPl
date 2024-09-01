@@ -1,5 +1,5 @@
 //
-//  LikeItemListView.swift
+//  BuyItemListView.swift
 //  MaPl-UPl
 //
 //  Created by 하연주 on 9/1/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class LikeItemListView : BaseView {
+final class BuyItemListView : BaseView {
     let tableView = UITableView()
     
 
@@ -23,5 +23,4 @@ final class LikeItemListView : BaseView {
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
-    
 }

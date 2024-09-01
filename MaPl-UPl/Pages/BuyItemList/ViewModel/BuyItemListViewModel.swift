@@ -1,5 +1,5 @@
 //
-//  LikeItemListViewModel.swift
+//  BuyItemListViewModel.swift
 //  MaPl-UPl
 //
 //  Created by 하연주 on 9/1/24.
@@ -8,22 +8,23 @@
 import Foundation
 import RxSwift
 
-final class LikeItemListViewModel : BaseViewModelProtocol {
+final class BuyItemListViewModel : BaseViewModelProtocol {
     let disposeBag = DisposeBag()
     
-    var likesData : [PlaylistResponse] = [] {
-        didSet {
-            likesDataSubject.onNext(likesData)
+    var paymentsData : [PlaylistPayment] = [] {
+        didSet{
+            paymentsDataSubject.onNext(paymentsData)
         }
     }
-    let likesDataSubject = PublishSubject<[PlaylistResponse]>()
+    
+    let paymentsDataSubject = PublishSubject<[PlaylistPayment]>()
     
     struct Input {
-        let loadDataTrigger : PublishSubject<String?>
+        let loadDataTrigger : Observable<Void>
     }
     
     struct Output {
-        let likesData : PublishSubject<[PlaylistResponse]>
+        let paymentsData : PublishSubject<[PlaylistPayment]>
         let errorMessage : PublishSubject<String>
         let isLoading : PublishSubject<Bool>
     }
@@ -32,24 +33,17 @@ final class LikeItemListViewModel : BaseViewModelProtocol {
         let errorMessageSubject = PublishSubject<String>()
         let isLoadingSubject = PublishSubject<Bool>()
         
-        var nextCursor : String? = nil
         input.loadDataTrigger
             .flatMap{ cursor in
                 isLoadingSubject.onNext(true)
-                nextCursor = cursor
-                return NetworkManager.shared.getLikes(nextCursor: cursor ?? "")
+                return NetworkManager.shared.getPayments()
             }
             .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
             .drive(with: self) { owner, result in
                 switch result{
                 case .success(let value) :
                     print("🌸success🌸",value)
-                    if nextCursor == nil {
-                        owner.likesData = value.data
-                    }else {
-                        owner.likesData.append(contentsOf: value.data)
-                    }
-
+                    owner.paymentsData = value.data
                 case .failure(let error as FetchError) :
                     errorMessageSubject.onNext(error.errorMessage)
                 default:
@@ -61,7 +55,6 @@ final class LikeItemListViewModel : BaseViewModelProtocol {
             }
             .disposed(by: disposeBag)
         
-        
-        return Output(likesData: likesDataSubject, errorMessage : errorMessageSubject, isLoading: isLoadingSubject)
+        return Output(paymentsData: paymentsDataSubject, errorMessage : errorMessageSubject, isLoading: isLoadingSubject)
     }
 }

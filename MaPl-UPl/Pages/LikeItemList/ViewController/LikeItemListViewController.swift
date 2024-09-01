@@ -18,12 +18,12 @@ final class LikeItemListViewController : BaseViewController<LikeItemListView, Li
     }
     
     private func setupBind() {
-        let loadDataTrigger = Observable.just(())
+        let loadDataTrigger = PublishSubject<String?>()
         let input = LikeItemListViewModel.Input(loadDataTrigger:loadDataTrigger)
         let output = vm.transform(input: input)
         
         
-        
+        loadDataTrigger.onNext(nil)
         
         viewManager.tableView.register(BasicColoredBackgroundSubtitleTableViewCell.self, forCellReuseIdentifier: BasicColoredBackgroundSubtitleTableViewCell.description())
         

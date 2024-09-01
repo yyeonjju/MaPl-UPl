@@ -23,7 +23,7 @@ enum Router {
     case likePost (query : LikeModel, postId : String)
     case getPlaylistInfo(id : String)
     case validatePayment(query : PaymentValidationQuery)
-    case getLikes
+    case getLikes(nextCursor : String)
     case getPayments
     
     
@@ -88,6 +88,11 @@ extension Router: TargetType {
                 URLQueryItem(name: "next", value: nextCursor),
                 URLQueryItem(name: "limit", value: "5"),
                 URLQueryItem(name: "product_id", value: productId),
+            ]
+        case .getLikes(let nextCursor) :
+            return [
+                URLQueryItem(name: "next", value: nextCursor),
+                URLQueryItem(name: "limit", value: "30")
             ]
         default :
             return []
