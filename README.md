@@ -1,11 +1,18 @@
 # Mapl-Upl | 플레이리스트 공유 앱
-![image](https://github.com/user-attachments/assets/9db687a6-b640-439c-9919-20ca78e0a424)
+
+<p align="center">  
+	<img src="https://github.com/user-attachments/assets/e3afc871-3e0d-44a3-a784-3cafcefcfe80" align="center" width="22%">  
+	<img src="https://github.com/user-attachments/assets/8e276768-060b-4176-b6da-b49c53a737f7" align="center" width="22%">  
+	<img src="https://github.com/user-attachments/assets/afd53b43-1592-4bfd-9d7c-fe4b6d464012" align="center" width="22%">  
+	<img src="https://github.com/user-attachments/assets/9e612acb-7709-438a-92c7-1aaaf8c07f5d" align="center" width="22%">  
+</p>
+
 
 
 <br/><br/><br/>
 
 
-## Mapl-Upl
+## 🪗Mapl-Upl
 
 - 앱 소개 : 나만의 플레이리스트를 공유하고 타인의 플레이리스트를 구매하여 음악을 들을 수 있는 플랫폼
 - 개발 인원 : 1인
@@ -16,7 +23,7 @@
 
 <br/><br/><br/>
 
-## 기술 스택
+## 📎기술 스택
 
 - UIKit, RxSwift, RxDataSource, Alamofire, FSPagerView, Kingfisher, snapkit, Toast
 - MusicKit, AVFoundation
@@ -29,7 +36,7 @@
 
 
 
-## 핵심 기능
+## 📝핵심 기능
 - 특정 음악 검색
 - 원하는 음악으로 플레이리스트를 만들어 공유
 - 타인의 플레이리스트를 결제 / 좋아요
@@ -85,6 +92,7 @@ Task {
 </details>
 
 
+<br/><br/>
 
 
 ### 2. AVPlayer + Notification Center 기능을 결합해 해 preview 음원 재생
@@ -121,7 +129,7 @@ NotificationCenter.default
 </details>
 
 
-
+<br/><br/>
 
 
 ### 3. Alamofire 의 interceptor를 사용해서 엑세스 토큰 만료 시 토큰 리프레시 로직 구현
@@ -191,6 +199,8 @@ final class APIRequestInterceptor2: RequestInterceptor {
   ```
 </details>
 
+
+<br/><br/>
 
 
 ### 4. FetchError 열거형 정의 하여 네트워킹 에러 분기 처리  
@@ -313,7 +323,11 @@ class NetworkManager {
 </details>
 
 
-### 5. MVVM 패턴 적용
+
+<br/><br/>
+
+
+### 5. RxSwift 와 input/output 패턴 기반의 MVVM 패턴 구현
 <details>
   <summary>BaseViewController, BaseView, BaseViewModelProtocol</summary>
   
@@ -419,8 +433,7 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
 </details>
 
 
-
-
+<br/><br/>
 
 
 
