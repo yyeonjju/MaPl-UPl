@@ -20,6 +20,12 @@
 - 최소 버전 : 17.0
 
 
+<br/><br/><br/>
+## 📜기술 블로그
+- Alamofire 의 interceptor를 사용한 엑세스 토큰 리프레시
+- 메모리 누수 일어나기 딱 좋은 RxSwift의 .bind(with : )
+- 네트워킹 에러 분기 처리
+
 
 <br/><br/><br/>
 
@@ -47,7 +53,7 @@
 
 
 
-## 주요 구현 내용
+## 💎주요 구현 내용
 ### 1. MusicKit 프레임워크를 이용해 apple music 음악 데이터 검색
 
 <details>
