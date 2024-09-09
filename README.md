@@ -23,7 +23,7 @@
 <br/><br/><br/>
 ## 📜기술 블로그
 - Alamofire 의 interceptor를 사용한 엑세스 토큰 리프레시
-- 메모리 누수 일어나기 딱 좋은 RxSwift의 .bind(with : )
+- .bind(with:onNext:) 사용 시의 메모리 누수 경험 ( [[RxSwift] 메모리 누수 일어나기 딱 좋은(?) .bind(with:onNext:) & 중첩 클로저의 객체 참조](https://heidi-dev.tistory.com/60) )
 - 네트워킹 에러 분기 처리
 
 
@@ -32,7 +32,7 @@
 ## 📎기술 스택
 
 - UIKit, RxSwift, RxDataSource, Alamofire, FSPagerView, Kingfisher, snapkit, Toast
-- MusicKit, AVFoundation
+- `MusicKit`, `AVFoundation`
 - PortOne SDK( 구 IamPort)
 - SPM, CocoaPods
 
@@ -141,12 +141,10 @@ NotificationCenter.default
 ### 3. Alamofire 의 interceptor를 사용해서 엑세스 토큰 만료 시 토큰 리프레시 로직 구현
 <details>
   <summary>에러코드 419, 418 에서의 로직 구상 </summary>
-- 419 에러 ( 엑세스 토큰 만료) 시, 엑세스 토큰을 갱신하도록 서버에 요청하고 새로 받은 엑세스 토큰으로 원래 하려고 했던 request를 retry
-- 418 에러 ( 리프레시 토큰 만료) 시, 로그인 뷰로 전환
+<p> - 419 에러 ( 엑세스 토큰 만료) 시, 엑세스 토큰을 갱신하도록 서버에 요청하고 새로 받은 엑세스 토큰으로 원래 하려고 했던 request를 retry </p>
+<p> - 418 에러 ( 리프레시 토큰 만료) 시, 로그인 뷰로 전환 </p> 
 
-
-![image](https://github.com/user-attachments/assets/ec773d57-fee7-41f7-b0c4-4dc1dd10aa32)
-
+<image width="500" src="https://github.com/user-attachments/assets/ec773d57-fee7-41f7-b0c4-4dc1dd10aa32" />
   
 </details>
 
@@ -414,7 +412,6 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
     }
     
     
-    // MARK: - ConfigureUI
     private func setupBind() {
         isLoading
             .bind(with: self) { owner, isLoading in
