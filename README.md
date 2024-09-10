@@ -12,7 +12,7 @@
 <br/><br/><br/>
 
 
-## 🪗Mapl-Upl
+## 🪗 Mapl-Upl
 
 - 앱 소개 : 나만의 플레이리스트를 공유하고 타인의 플레이리스트를 구매하여 음악을 들을 수 있는 플랫폼
 - 개발 인원 : 1인
@@ -21,15 +21,8 @@
 
 
 <br/><br/><br/>
-## 📜기술 블로그
-- Alamofire 의 interceptor를 사용한 엑세스 토큰 리프레시
-- .bind(with:onNext:) 사용 시의 메모리 누수 경험 ( [[RxSwift] 메모리 누수 일어나기 딱 좋은(?) .bind(with:onNext:) & 중첩 클로저의 객체 참조](https://heidi-dev.tistory.com/60) )
-- 네트워킹 에러 분기 처리
 
-
-<br/><br/><br/>
-
-## 📎기술 스택
+## 📎 기술 스택
 
 - UIKit, RxSwift, RxDataSource, Alamofire, FSPagerView, Kingfisher, snapkit, Toast
 - `MusicKit`, `AVFoundation`
@@ -42,9 +35,9 @@
 
 
 
-## 📝핵심 기능
-- 특정 음악 검색
-- 원하는 음악으로 플레이리스트를 만들어 공유
+## 📝 핵심 기능
+- 회원가입/로그인/엑세스토큰 리프레시
+- 특정 음악 검색 / 원하는 음악 선택해 플레이리스트를 만들어 공유
 - 타인의 플레이리스트를 결제 / 좋아요
 - 결제한 플레이리스트의 음악 재생 (플레이리스트 내 음악 자동 반복 재생)
 
@@ -53,7 +46,7 @@
 
 
 
-## 💎주요 구현 내용
+## 💎 주요 구현 내용
 ### 1. MusicKit 프레임워크를 이용해 apple music 음악 데이터 검색
 
 <details>
@@ -436,10 +429,133 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
 </details>
 
 
+
+
+
+
+<br/><br/><br/>
+
+
+
+
+## 🔥 트러블 슈팅
+
+
+<br/>
+
+### 1️⃣ RxSwift의 .bind(with:onNext:)사용 시, 메모리 누수 해결
+
+<br/>
+
+#### 📍 이슈 : 뷰컨트롤러 pop 이후에도 객체가 deinit되지 않음.
+#### 📍 문제 코드
+```swift
+output.presentPhotoLibrary
+    .bind(with: self) { owner, _ in
+        var config = PHPickerConfiguration()
+        config.selectionLimit = 1
+        config.filter = .any(of: [.images])
+    
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = self
+        
+        owner.pageTransition(to: picker, type: .present)
+    }
+    .disposed(by: disposeBag)
+```
+#### 📍 문제 원인
+onNext 클로저 내부에서 `self`를 사용해주었기 때문.
+
+.bind(with:onNext:)에서 with 파라미터의 인자로는 `“참조가 retain되지 않도록 하고 싶은 객체”`를 넣어주어야하고, onNext 클로저에서 위 코드에서 지정해 준 owner 같은 파라미터 이름으로 사용해 주어야 비로소 retain되지 않으며 사용할 수 있다.
+근데 실수로 owner와 함꼐 self 또한 사용해주고 있었던 것. with 인자로 self를 전달해 주었다고 맘대로 클로저 self를 마음대로 써주면 안된다.
+
+#### 📍 해결 코드 및 인사이트
+굉장히 사소하지만, 사소한만큼 놓치고 넘어가기 쉬운것 같고 클로저 내부에서 owner로 사용되도록 강제된 것도, self를 썼다고 컴파일 에러를 띄워주는 것도 아니기 때문에 .bind(with:onNext:)를 사용할 때는 이런 부분도 잘 고려해야할 것 같다
+
+```swift
+output.presentPhotoLibrary
+    .bind(with: self) { owner, _ in
+        var config = PHPickerConfiguration()
+        config.selectionLimit = 1
+        config.filter = .any(of: [.images])
+    
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = owner
+        
+        owner.pageTransition(to: picker, type: .present)
+    }
+    .disposed(by: disposeBag)
+```
+
+
+
+<br/>
+
+### 2️⃣ 중첩 클로저의 메모리 누수
+
+#### 📍 이슈 : 중첩 클로저의 내부 클로저에서 [weak self]를 썼을 때 메모리 누수가 생기는 상황.
+#### 📍 문제 코드
+``` swift
+output.pushToSearchMusicVC
+    .bind(with: self) { owner, _ in
+        let vc = SearchMusicViewController()
+        vc.addSongs = { [weak self]songs in
+            owner.vm.selectedSongList.append(contentsOf: songs)
+        }
+        self?.pageTransition(to: vc, type: .push)
+    }
+    .disposed(by: disposeBag)
+
+
+```
+
+#### 📍 문제 원인
+외부 클로저에서 객체를 어떻게 참조하고 있는지 고려하지 않고 내부 클로저에 [weak self]로 객체를 참조하고 있음.
+
+코드 상으로만 보면, 외부 클로저에서도 .bind(with:onNext:)로 객체의 강한 참조를 “방지”해주었고, 내부클로저에서도  [weak self]를 써주었기 때문에 메모리 누수가 일어나지 않을 것이라고 생각할 수 있지만, 중첩된 클로저의 경우에는 외부 클로저에서 객체를 어떻게 잡아주고 있는지가 내부클로저에도 영향을 끼치기 때문에 위에서 봤던 코드는 아래 코드와 동일하다고 볼 수 있다.
+
+즉, 외부 클로저에서 [weak self]를 쓰지 않고 내부 클로저에서 [weak self]를 쓰는 순간 외부 클로저에서 강하게 self를 캡처하고 있는 것처럼 되니까 메모리 릭이 생겼던 것이다.
+```swift
+output.pushToSearchMusicVC
+    .bind(with: self) { [self] owner, _ in
+        let vc = SearchMusicViewController()
+        vc.addSongs = { [weak self]songs in
+            self?.vm.selectedSongList.append(contentsOf: songs)
+        }
+        owner.pageTransition(to: vc, type: .push)
+    }
+    .disposed(by: disposeBag)
+```
+
+
+#### 📍 해결 코드 및 인사이트
+중첩클로저를 다룰 때는 '외부 클로저에서 객체를 어떻게 잡아주고 있는지가 내부클로저에도 영향을 끼친다'는 것을 유의하며 코드를 구성하자 
+
+```swift
+
+output.pushToSearchMusicVC
+    .bind(with: self) { owner, _ in
+        let vc = SearchMusicViewController()
+        vc.addSongs = { songs in
+            owner.vm.selectedSongList.append(contentsOf: songs)
+        }
+        owner.pageTransition(to: vc, type: .push)
+    }
+    .disposed(by: disposeBag)
+
+```
+
+
+
+
 <br/><br/>
 
 
 
+
+### 3️⃣네트워킹 에러 분기 처리
+
+#### 이슈 : 사용자에게 토스트 메세지로 보여줄 에러 처리에 대한 고민
 
 
 
