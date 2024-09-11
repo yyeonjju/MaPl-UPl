@@ -1,22 +1,17 @@
 # Mapl-Upl | 플레이리스트 공유 앱
 
-<p align="center">  
-	<img src="https://github.com/user-attachments/assets/e3afc871-3e0d-44a3-a784-3cafcefcfe80" align="center" width="22%">  
-	<img src="https://github.com/user-attachments/assets/8e276768-060b-4176-b6da-b49c53a737f7" align="center" width="22%">  
-	<img src="https://github.com/user-attachments/assets/afd53b43-1592-4bfd-9d7c-fe4b6d464012" align="center" width="22%">  
-	<img src="https://github.com/user-attachments/assets/9e612acb-7709-438a-92c7-1aaaf8c07f5d" align="center" width="22%">  
-</p>
+
+![image.jpg1](https://github.com/user-attachments/assets/e3afc871-3e0d-44a3-a784-3cafcefcfe80) |![image.jpg2](https://github.com/user-attachments/assets/8e276768-060b-4176-b6da-b49c53a737f7) |![image.jpg3](https://github.com/user-attachments/assets/afd53b43-1592-4bfd-9d7c-fe4b6d464012) |![image.jpg4](https://github.com/user-attachments/assets/9e612acb-7709-438a-92c7-1aaaf8c07f5d)
+--- | --- | --- | --- | 
 
 
-
-<br/><br/><br/>
-
+<br/><br/>
 
 ## 🪗 Mapl-Upl
 
 - 앱 소개 : 나만의 플레이리스트를 공유하고 타인의 플레이리스트를 구매하여 음악을 들을 수 있는 플랫폼
 - 개발 인원 : 1인
-- 개발 기간 : 8/15 - 8/31 ( 17 일 )
+- 개발 기간 : 8/17 - 8/31 ( 15 일 )
 - 최소 버전 : 17.0
 
 
@@ -197,134 +192,11 @@ final class APIRequestInterceptor2: RequestInterceptor {
 </details>
 
 
-<br/><br/>
-
-
-### 4. FetchError 열거형 정의 하여 네트워킹 에러 분기 처리  
-
-<details>
-  <summary>FetchError 열거형 </summary>
-  
-
-  ```swift
-enum FetchError : Error {
-    case fetchEmitError // 만에 하나 리턴한 single에서 에러를 방출했을떄 발생하는 에러
-    
-    case url
-    case urlRequestError
-    case failedRequest
-    case noData
-    case invalidResponse
-    case failResponse(code : Int, message : String)
-    case invalidData
-    
-    case noUser
-    
-    var errorMessage : String {
-        switch self {
-        case .fetchEmitError :
-            return "알 수 없는 에러입니다."
-        case .url :
-            return "잘못된 url입니다"
-        case .urlRequestError:
-            return "urlRequest 에러"
-        case .failedRequest:
-            return "요청에 실패했습니다."
-        case .noData:
-            return "데이터가 없습니다."
-        case .invalidResponse:
-            return "유효하지 않은 응답입니다."
-        case .failResponse(let errorCode, let message):
-            return "\(errorCode)error : \(message)"
-        case .invalidData:
-            return "데이터 파싱 에러"
-        case .noUser :
-            return "유저가 명확하지 않습니다."
-        }
-    }
-}
-
-  ```
-</details>
-
-<details>
-  <summary>재사용가능한 네트워킹 요청 제네릭 함수 생성 하여 response 받고 데이터 디코딩 하는 과정의 에러 분기처리 </summary>
-  
-
-  ```swift
-class NetworkManager {
-    @UserDefaultsWrapper(key : .userInfo) var userInfo : LoginResponse?
-    
-    static let shared = NetworkManager()
-    private init() { }
-    
-    
-    private func fetch<M : Decodable>(fetchRouter : Router, model : M.Type) -> Single<Result<M,Error>> {
-        
-        let single = Single<Result<M,Error>>.create { single in
-            do {
-                let request = try fetchRouter.asURLRequest()
-                
-                
-                AF.request(request, interceptor: APIRequestInterceptor())
-                .responseDecodable(of: model.self) { response in
-                    guard let statusCode = response.response?.statusCode else {
-                        return single(.success(.failure(FetchError.failedRequest)))
-                    }
-                    
-                    guard let data = response.data else {
-                        return single(.success(.failure(FetchError.noData)))
-                    }
-                    
-                    guard response.response != nil else {
-                        return single(.success(.failure(FetchError.invalidResponse)))
-                    }
-                    
-                    
-                    if statusCode != 200 {
-                        var errorMessage: String?
-                        if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: String] {
-                            errorMessage = json["message"]
-                        }
-
-                        print("errorMessage -> ", errorMessage)
-                        return single(.success(.failure(FetchError.failResponse(code: statusCode, message: errorMessage ?? ""))))
-                    }
-                    
-                    
-                    
-                    switch response.result {
-                    case .success(let value):
-                        return single(.success(.success(value)))
-                        
-                    case .failure(let failure):
-                        return single(.success(.failure(FetchError.invalidData)))
-                    }
-                    
-                }
-            }catch {
-                print("asURLRequest -", error)
-                return single(.success(.failure(FetchError.urlRequestError))) as! Disposable
-            }
-            
-            return Disposables.create()
-        }
-        
-        return single
-
-        
-    }
-}
-
-  ```
-</details>
-
-
 
 <br/><br/>
 
 
-### 5. RxSwift 와 input/output 패턴 기반의 MVVM 패턴 구현
+### 4. RxSwift 와 input/output 패턴 기반의 MVVM 패턴 구현
 <details>
   <summary>BaseViewController, BaseView, BaseViewModelProtocol</summary>
   
@@ -443,9 +315,8 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
 
 <br/>
 
-### 1️⃣ RxSwift의 .bind(with:onNext:)사용 시, 메모리 누수 해결
+### 1️. RxSwift의 .bind(with:onNext:)사용 시, 메모리 누수 해결
 
-<br/>
 
 #### 📍 이슈 : 뷰컨트롤러 pop 이후에도 객체가 deinit되지 않음.
 #### 📍 문제 코드
@@ -466,11 +337,11 @@ output.presentPhotoLibrary
 #### 📍 문제 원인
 onNext 클로저 내부에서 `self`를 사용해주었기 때문.
 
-.bind(with:onNext:)에서 with 파라미터의 인자로는 `“참조가 retain되지 않도록 하고 싶은 객체”`를 넣어주어야하고, onNext 클로저에서 위 코드에서 지정해 준 owner 같은 파라미터 이름으로 사용해 주어야 비로소 retain되지 않으며 사용할 수 있다.
-근데 실수로 owner와 함꼐 self 또한 사용해주고 있었던 것. with 인자로 self를 전달해 주었다고 맘대로 클로저 self를 마음대로 써주면 안된다.
+.bind(with:onNext:)에서 with 파라미터의 인자로는 `“참조가 retain되지 않도록 하고 싶은 객체”`를 넣어주어야하고, onNext 클로저에서 위 코드에서 지정해 준 owner 같은 파라미터 이름으로 사용해 주어야 비로소 객체를 retain하지 않으며 사용할 수 있다.
+근데 이 코드에서는 실수로 owner와 함꼐 self 또한 사용해주고 있었던 것. with 인자로 self를 전달해 주었다고 마음대로 클로저 self를 마음대로 써주면 안된다.
 
 #### 📍 해결 코드 및 인사이트
-굉장히 사소하지만, 사소한만큼 놓치고 넘어가기 쉬운것 같고 클로저 내부에서 owner로 사용되도록 강제된 것도, self를 썼다고 컴파일 에러를 띄워주는 것도 아니기 때문에 .bind(with:onNext:)를 사용할 때는 이런 부분도 잘 고려해야할 것 같다
+굉장히 사소함 문제였지만, 클로저 내부에서 owner로 사용되도록 강제된 것도, self를 썼다고 컴파일 에러를 띄워주는 것도 아니기 때문에 .bind(with:onNext:)를 사용할 때는 이런 부분도 잘 고려해야갰다.
 
 ```swift
 output.presentPhotoLibrary
@@ -489,11 +360,11 @@ output.presentPhotoLibrary
 
 
 
-<br/>
+<br/><br/><br/>
 
-### 2️⃣ 중첩 클로저의 메모리 누수
+### 2️. 중첩 클로저의 메모리 누수
 
-#### 📍 이슈 : 중첩 클로저의 내부 클로저에서 [weak self]를 썼을 때 메모리 누수가 생기는 상황.
+#### 📍 이슈 : 중첩 클로저의 내부 클로저에서 `[weak self]`를 썼을 때 메모리 누수가 생기는 상황.
 #### 📍 문제 코드
 ``` swift
 output.pushToSearchMusicVC
@@ -548,14 +419,171 @@ output.pushToSearchMusicVC
 
 
 
-<br/><br/>
+<br/><br/><br/>
 
 
 
 
-### 3️⃣네트워킹 에러 분기 처리
+### 3️. 네트워킹 에러 분기 처리
 
-#### 이슈 : 사용자에게 토스트 메세지로 보여줄 에러 처리에 대한 고민
+ 
+#### 📍 이슈 : 네트워킹이 정상적으로 완료되지 않았으 때 사용자에게 토스트 메세지로 보여줄 에러 처리에 대한 고민
+#### 📍 해결 코드 및 인사이트
+
+
+<details>
+  <summary>1. Error프로토콜을 채택한 FetchError열거형을 생성하여 네트워킹 시에 일어날 수 있는 에러 정의</summary>
+
+``` swift
+//FetchError.swift
+
+enum FetchError : Error {
+  case fetchEmitError // 만에 하나 리턴한 single에서 에러를 방출했을떄 발생하는 에러
+  
+  case url
+  case urlRequestError
+  case failedRequest
+  case noData
+  case invalidResponse
+  case failResponse(code : Int, message : String)
+  case invalidData
+  
+  case noUser
+  
+  var errorMessage : String {
+      switch self {
+      case .fetchEmitError :
+          return "알 수 없는 에러입니다."
+      case .url :
+          return "잘못된 url입니다"
+      case .urlRequestError:
+          return "urlRequest 에러"
+      case .failedRequest:
+          return "요청에 실패했습니다."
+      case .noData:
+          return "데이터가 없습니다."
+      case .invalidResponse:
+          return "유효하지 않은 응답입니다."
+      case .failResponse(let errorCode, let message):
+          return "\(errorCode)error : \(message)"
+      case .invalidData:
+          return "데이터 파싱 에러"
+      case .noUser :
+          return "유저가 명확하지 않습니다."
+      }
+  }
+}
+
+```
+</details>
+
+
+<details>
+  <summary>2. 재사용가능한 네트워킹 요청 제네릭 함수 생성 하여 response 받고 데이터 디코딩 하는 과정에서 발생할 수 있는 에러에 대해 분기처리</summary>
+
+ ``` swift
+
+// NetworkManager.swift
+
+class NetworkManager {
+  @UserDefaultsWrapper(key : .userInfo) var userInfo : LoginResponse?
+  
+  static let shared = NetworkManager()
+  private init() { }
+  
+  
+  private func fetch<M : Decodable>(fetchRouter : Router, model : M.Type) -> Single<Result<M,Error>> {
+      
+      let single = Single<Result<M,Error>>.create { single in
+          do {
+              let request = try fetchRouter.asURLRequest()
+              
+              
+              AF.request(request, interceptor: APIRequestInterceptor())
+              .responseDecodable(of: model.self) { response in
+                  guard let statusCode = response.response?.statusCode else {
+                      return single(.success(.failure(FetchError.failedRequest)))
+                  }
+                  
+                  guard let data = response.data else {
+                      return single(.success(.failure(FetchError.noData)))
+                  }
+                  
+                  guard response.response != nil else {
+                      return single(.success(.failure(FetchError.invalidResponse)))
+                  }
+                  
+                  
+                  if statusCode != 200 {
+                      var errorMessage: String?
+                      if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: String] {
+                          errorMessage = json["message"]
+                      }
+
+                      print("errorMessage -> ", errorMessage)
+                      return single(.success(.failure(FetchError.failResponse(code: statusCode, message: errorMessage ?? ""))))
+                  }
+                  
+                  
+                  
+                  switch response.result {
+                  case .success(let value):
+                      return single(.success(.success(value)))
+                      
+                  case .failure(let failure):
+                      return single(.success(.failure(FetchError.invalidData)))
+                  }
+                  
+              }
+          }catch {
+              print("asURLRequest -", error)
+              return single(.success(.failure(FetchError.urlRequestError))) as! Disposable
+          }
+          
+          return Disposables.create()
+      }
+      
+      return single
+
+      
+  }
+}
+
+
+```
+</details>
+
+
+<details>
+  <summary>3. 네트워킹 결과를 리턴받아 사용하는 곳에서 FetchError 열거형에서 정의해준 errorMessage 연산 프로퍼티의 문자열을 토스트로 띄워줌</summary>
+	
+```swift
+validatePayment
+    .flatMap{ query in
+        NetworkManager.shared.validatePayment(query: query)
+    }
+    .asDriver(onErrorJustReturn: .failure(FetchError.fetchEmitError))
+    .drive(with: self) { owner, result in
+        switch result {
+        case .success(let value) :
+            owner.configureCompleteUI()
+        case .failure(let error as FetchError) :
+            owner.view.makeToast(error.errorMessage) //⭐️
+        default:
+            print("default")
+        }
+    }
+    .disposed(by: disposeBag)
+
+```
+</details>
+ 
+
+
+
+
+
+
 
 
 
