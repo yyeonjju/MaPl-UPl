@@ -89,7 +89,7 @@ Task {
 <br/><br/>
 
 
-### 2. AVPlayer + Notification Center 기능을 결합해 해 preview 음원 재생
+### 2. AVPlayer + Notification Center 기능을 결합해 preview 음원 재생
 <details>
   <summary>음원재생</summary>
   
