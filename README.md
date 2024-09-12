@@ -19,7 +19,9 @@
 
 ## 📎 기술 스택
 
-- UIKit, RxSwift, RxDataSource, Alamofire, FSPagerView, Kingfisher, snapkit, Toast
+- UIKit, FSPagerView, Kingfisher, snapkit, Toast
+- RxSwift, RxDataSource
+- Alamofire
 - `MusicKit`, `AVFoundation`
 - PortOne SDK( 구 IamPort)
 - SPM, CocoaPods
@@ -31,10 +33,29 @@
 
 
 ## 📝 핵심 기능
-- 회원가입/로그인/엑세스토큰 리프레시
+- 인증 | 회원가입 / 로그인 / 엑세스토큰 리프레시
 - 특정 음악 검색 / 원하는 음악 선택해 플레이리스트를 만들어 공유
 - 타인의 플레이리스트를 결제 / 좋아요
 - 결제한 플레이리스트의 음악 재생 (플레이리스트 내 음악 자동 반복 재생)
+
+
+<br/><br/><br/>
+
+
+## ✅ 핵심 기술 구현 사항
+
+- (Network) - Alamofire의 URLRequestConvertible 프로토콜 채택한 targetType 프로토콜을 생성하고 필수 요구 메서드인 asURLRequest 정의
+- (Network) - 해당 targetType을 채택한 Router enum을 생성하여 다양한 네트워킹 정의
+- (Network) - Alamofire 의 interceptor를 사용해서 엑세스 토큰 만료 시 토큰 리프레시 로직 구현
+- (Network) - FetchError 열거형 정의 하여 네트워킹 에러 분기 처리
+- (Architecture) - 반응형 프로그래밍을 위한 프레임워크인 RxSwift와 input/output 패턴을 기반으로 MVVM 패턴으로 구현
+- (MusicKit) - MusicKit 프레임워크를 이용해 apple music 음악 데이터 검색
+- (Payment) - PortOne SDK 설치 및 구매 정보를 바탕으로 IamportPayment 객체 생성하여 결제 기능 구현
+- (UI) - UITableViewDragDelegate, UITableViewDropDelegate 활용하여 테이블뷰의 drag & drop 기능 구현
+- (UI) - FSPagerView 라이브러리 활용하여 음원의 아트워크를 무한 페이징할 수 있는 UI 구현
+- (Etc.) - AVPlayer + Notification Center 기능을 결합해 해 preview 음원 재생
+- (Etc.) - UserDefault에 구조체 인스턴스 형태를 저장하고 저장한 데이터를 조회할 수 있도록 PropertyWrapper 생성
+- (Etc.) - 컴파일 최적화를 위해 final, private 키워드 활용 
 
 
 <br/><br/><br/>
@@ -318,7 +339,7 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
 ### 1️. RxSwift의 .bind(with:onNext:)사용 시, 메모리 누수 해결
 
 
-#### 📍 이슈 : 뷰컨트롤러 pop 이후에도 객체가 deinit되지 않음.
+#### 📍 이슈 : 뷰컨트롤러 pop 이후에도 객체가 deinit되지 않는 문제
 #### 📍 문제 코드
 ```swift
 output.presentPhotoLibrary
@@ -335,13 +356,12 @@ output.presentPhotoLibrary
     .disposed(by: disposeBag)
 ```
 #### 📍 문제 원인
-onNext 클로저 내부에서 `self`를 사용해주었기 때문.
+onNext 클로저 내부에서 `self`를 사용해주었기 때문에 발생한 메모리 누수.
 
-.bind(with:onNext:)에서 with 파라미터의 인자로는 `“참조가 retain되지 않도록 하고 싶은 객체”`를 넣어주어야하고, onNext 클로저에서 위 코드에서 지정해 준 owner 같은 파라미터 이름으로 사용해 주어야 비로소 객체를 retain하지 않으며 사용할 수 있다.
-근데 이 코드에서는 실수로 owner와 함꼐 self 또한 사용해주고 있었던 것. with 인자로 self를 전달해 주었다고 마음대로 클로저 self를 마음대로 써주면 안된다.
+.bind(with:onNext:)에서 with 파라미터의 인자로는 `“참조가 retain되지 않도록 하고 싶은 객체”`를 넣어주어야하고, onNext 클로저에서 위 코드에서 지정해 준 owner 같은 파라미터 이름으로 사용해 주어야 비로소 객체를 retain하지 않으며 사용할 수 있다. 해당 문제가 발생한 코드에서는 owner와 함께 self 또한 사용해주고 있었기 때문에 메모리 릭이 발생했다. 
 
 #### 📍 해결 코드 및 인사이트
-굉장히 사소함 문제였지만, 클로저 내부에서 owner로 사용되도록 강제된 것도, self를 썼다고 컴파일 에러를 띄워주는 것도 아니기 때문에 .bind(with:onNext:)를 사용할 때는 이런 부분도 잘 고려해야갰다.
+사소한 문제였지만, 클로저 내부에서 owner로 사용되도록 강제된 것도, self를 썼다고 컴파일 에러를 띄워주는 것도 아니기 때문에 .bind(with:onNext:)를 사용할 때는 이런 부분도 잘 고려해야갰다.
 
 ```swift
 output.presentPhotoLibrary
@@ -362,9 +382,9 @@ output.presentPhotoLibrary
 
 <br/><br/><br/>
 
-### 2️. 중첩 클로저의 메모리 누수
+### 2️. 중첩 클로저에서의 객체 참조 중 발생한 메모리 누수
 
-#### 📍 이슈 : 중첩 클로저의 내부 클로저에서 `[weak self]`를 썼을 때 메모리 누수가 생기는 상황.
+#### 📍 이슈 : 중첩 클로저의 내부 클로저에서 `[weak self]`를 썼을 때 메모리 누수가 생김
 #### 📍 문제 코드
 ``` swift
 output.pushToSearchMusicVC
@@ -385,7 +405,7 @@ output.pushToSearchMusicVC
 
 코드 상으로만 보면, 외부 클로저에서도 .bind(with:onNext:)로 객체의 강한 참조를 “방지”해주었고, 내부클로저에서도  [weak self]를 써주었기 때문에 메모리 누수가 일어나지 않을 것이라고 생각할 수 있지만, 중첩된 클로저의 경우에는 외부 클로저에서 객체를 어떻게 잡아주고 있는지가 내부클로저에도 영향을 끼치기 때문에 위에서 봤던 코드는 아래 코드와 동일하다고 볼 수 있다.
 
-즉, 외부 클로저에서 [weak self]를 쓰지 않고 내부 클로저에서 [weak self]를 쓰는 순간 외부 클로저에서 강하게 self를 캡처하고 있는 것처럼 되니까 메모리 릭이 생겼던 것이다.
+즉, 외부 클로저에서 [weak self]를 쓰지 않고 내부 클로저에서 [weak self]를 쓰는 순간 외부 클로저에서 강하게 self를 캡처하게되기 때문에 메모리릭이 발생한 것.
 ```swift
 output.pushToSearchMusicVC
     .bind(with: self) { [self] owner, _ in
@@ -400,7 +420,7 @@ output.pushToSearchMusicVC
 
 
 #### 📍 해결 코드 및 인사이트
-중첩클로저를 다룰 때는 '외부 클로저에서 객체를 어떻게 잡아주고 있는지가 내부클로저에도 영향을 끼친다'는 것을 유의하며 코드를 구성하자 
+중첩클로저를 다룰 때는 '외부 클로저에서 객체를 어떻게 잡아주고 있는지가 내부클로저에도 영향을 끼친다'는 것을 유의하며 코드를 구성해야한다.
 
 ```swift
 
