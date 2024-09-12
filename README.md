@@ -15,7 +15,7 @@
 - 최소 버전 : 17.0
 
 
-<br/><br/><br/>
+<br/><br/>
 
 ## 📎 기술 스택
 
@@ -28,7 +28,7 @@
 
 
 
-<br/><br/><br/>
+<br/><br/>
 
 
 
@@ -39,7 +39,7 @@
 - 결제한 플레이리스트의 음악 재생 (플레이리스트 내 음악 자동 반복 재생)
 
 
-<br/><br/><br/>
+<br/><br/>
 
 
 ## ✅ 핵심 기술 구현 사항
@@ -58,7 +58,7 @@
 - (Etc.) - 컴파일 최적화를 위해 final, private 키워드 활용 
 
 
-<br/><br/><br/>
+<br/><br/>
 
 
 
@@ -326,7 +326,7 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
 
 
 
-<br/><br/><br/>
+<br/><br/>
 
 
 
