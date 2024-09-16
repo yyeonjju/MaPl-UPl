@@ -18,14 +18,11 @@
 <br/><br/>
 
 ## 📎 기술 스택
-
-- UIKit, FSPagerView, Kingfisher, snapkit, Toast
-- RxSwift, RxDataSource
-- Alamofire
-- `MusicKit`, `AVFoundation`
-- PortOne SDK( 구 IamPort)
-- SPM, CocoaPods
-
+- Music : MusicKit, AVFoundation
+- UI : UIKit, FSPagerView, Kingfisher, SnapKit, Toast
+- Reactive : RxSwift, RxDataSource
+- Network & Etc. : Alamofire, PG(PortOne SDK)
+- Architecture : MVVM
 
 
 <br/><br/>
