@@ -41,18 +41,13 @@
 
 ## ✅ 핵심 기술 구현 사항
 
-- (Network) - Alamofire의 URLRequestConvertible 프로토콜 채택한 targetType 프로토콜을 생성하고 필수 요구 메서드인 asURLRequest 정의
-- (Network) - 해당 targetType을 채택한 Router enum을 생성하여 다양한 네트워킹 정의
-- (Network) - Alamofire 의 interceptor를 사용해서 엑세스 토큰 만료 시 토큰 리프레시 로직 구현
-- (Network) - FetchError 열거형 정의 하여 네트워킹 에러 분기 처리
-- (Architecture) - 반응형 프로그래밍을 위한 프레임워크인 RxSwift와 input/output 패턴을 기반으로 MVVM 패턴으로 구현
-- (MusicKit) - MusicKit 프레임워크를 이용해 apple music 음악 데이터 검색
-- (Payment) - PortOne SDK 설치 및 구매 정보를 바탕으로 IamportPayment 객체 생성하여 결제 기능 구현
-- (UI) - UITableViewDragDelegate, UITableViewDropDelegate 활용하여 테이블뷰의 drag & drop 기능 구현
-- (UI) - FSPagerView 라이브러리 활용하여 음원의 아트워크를 무한 페이징할 수 있는 UI 구현
-- (Etc.) - AVPlayer + Notification Center 기능을 결합해 해 preview 음원 재생
-- (Etc.) - UserDefault에 구조체 인스턴스 형태를 저장하고 저장한 데이터를 조회할 수 있도록 PropertyWrapper 생성
-- (Etc.) - 컴파일 최적화를 위해 final, private 키워드 활용 
+- TargetType 프로토콜을 정의하여 네트워킹 URL 생성에 필요한 요구사항 추상화
+- Request Router 클래스를 통해서 API 요청 로직을 일관적으로 관리/생성할 수 있도록 Router Pattern  적용
+- 엑세스 토큰 만료 시, 에러를 캐치하고 네트워킹을 재요청할 수 있도록 RequestInterceptor 프로토콜의 adapt, retry 메서드 정의
+- 네트워킹 시점에 발생할 수 있는 에러들에 대한 예외 처리를 할 수 있도록 커스텀 에러 정의
+- 이벤트 스트림의 시점과 이벤트를 처리하고 이벤트에 대한 결과를 반환하는 시점을 명시적으로 구분하기 위해  ViewModel class 내부에 Input/Output 구조체를 정의하여 MVVM 패턴으로 구현
+- 음원 재생이 완료된 후 다음 음원을 자동적으로 재생시키기 위해 Notification Center를 통해 음원 재생 완료 시점 감지
+- 유저 정보에 대한 값을 가공하여 저장하고 조회하는 로직에 대한 보일러 플레이트를 줄이기 위해 커스텀 PropertyWrapper 생성
 
 
 <br/><br/>
