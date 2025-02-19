@@ -30,8 +30,6 @@ extension TargetType {
         request.allHTTPHeaderFields = header
         request.httpBody = body
         request.url?.append(queryItems: queryItems)
-
-//        request.httpBody = parameters?.data(using: .utf8)
         return request
     }
     

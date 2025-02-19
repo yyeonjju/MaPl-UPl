@@ -103,11 +103,9 @@ extension SearchMusicViewModel {
     private func searchMusic(query: String) -> Single<Result<[SongInfo], Error>> {
         return Single.create { single in
             Task {
-                
-
                 do {
                     var request = MusicCatalogSearchRequest(term: query, types: [Song.self ,Artist.self, Album.self, MusicVideo.self])
-                    request.limit = 10
+                    request.limit = 20
                     request.offset = 1
                     request.includeTopResults = true
                     
@@ -129,12 +127,8 @@ extension SearchMusicViewModel {
 
                     single(.success(.success(songsInfo)))
 
-                    print("search end time", Date())
-                    
                 } catch {
                     single(.success(.failure(error)))
-                    
-                    print("Error searching music: \(error.localizedDescription)")
                 }
             }
             

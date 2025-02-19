@@ -123,7 +123,10 @@ final class PlaylistListViewController : BaseViewController<PlaylistListView, Pl
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaylistCollectionViewCell.description(), for: indexPath) as! PlaylistCollectionViewCell
             guard let self, let userId = userInfo?.id else {return cell}
             
-            indexPath.row == previousIndex ? increaseAnimation(zoomCell: cell) : decreaseAnimation(zoomCell: cell)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.03 ){
+                indexPath.row == self.previousIndex ? self.increaseAnimation(zoomCell: cell) : self.decreaseAnimation(zoomCell: cell)
+            }
+
             
 //            let data = vm.playlistsData[indexPath.row]
             let isLiked = item.likes.contains(userId)

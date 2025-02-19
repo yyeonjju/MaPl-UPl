@@ -29,12 +29,17 @@ class NetworkManager {
                 
                 
                 AF.request(request, interceptor: APIRequestInterceptor())
-//                .validate(statusCode: 200..<300)
                 .responseDecodable(of: model.self) { response in
 //                    print("💚statusCode", response.response?.statusCode)
                     
                     //response.error 로 에러를 판별하면 거기에서 캐치되어 밑으로 진행되지 않아서
                     //statusCode가 nil값인걸로 request 에러 걸러주기
+                    
+                    guard response.response != nil else {
+                        return single(.success(.failure(FetchError.invalidResponse)))
+                    }
+                    
+                    
                     guard let statusCode = response.response?.statusCode else {
                         return single(.success(.failure(FetchError.failedRequest)))
                     }
@@ -43,10 +48,7 @@ class NetworkManager {
                         return single(.success(.failure(FetchError.noData)))
                     }
                     
-                    guard response.response != nil else {
-                        return single(.success(.failure(FetchError.invalidResponse)))
-                    }
-                    
+
                     
                     if statusCode != 200 {
                         var errorMessage: String?

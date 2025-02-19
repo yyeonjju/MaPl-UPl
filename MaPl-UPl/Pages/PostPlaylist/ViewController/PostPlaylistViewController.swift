@@ -92,9 +92,9 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
             .disposed(by: disposeBag)
         
         output.pushToSearchMusicVC
-            .bind(with: self) { owner, _ in
+            .bind(with: self) {owner, _ in
                 let vc = SearchMusicViewController()
-                vc.addSongs = {songs in
+                vc.addSongs = { songs in
                     owner.vm.selectedSongList.append(contentsOf: songs)
                 }
                 
@@ -120,7 +120,7 @@ final class PostPlaylistViewController : BaseViewController<PostPlaylistView, Po
                 config.filter = .any(of: [.images])
             
                 let picker = PHPickerViewController(configuration: config)
-                picker.delegate = self
+                picker.delegate = owner
                 
                 owner.pageTransition(to: picker, type: .present)
             }
