@@ -4,7 +4,7 @@
 ![image.jpg1](https://github.com/user-attachments/assets/e3afc871-3e0d-44a3-a784-3cafcefcfe80) |![image.jpg2](https://github.com/user-attachments/assets/8e276768-060b-4176-b6da-b49c53a737f7) |![image.jpg3](https://github.com/user-attachments/assets/afd53b43-1592-4bfd-9d7c-fe4b6d464012) |![image.jpg4](https://github.com/user-attachments/assets/9e612acb-7709-438a-92c7-1aaaf8c07f5d)
 --- | --- | --- | --- | 
 
-
+ 
 <br/><br/>
 
 ## 🪗 Mapl-Upl 
@@ -21,7 +21,7 @@
 - Music : MusicKit, AVFoundation
 - UI : UIKit, FSPagerView, Kingfisher, SnapKit, Toast
 - Reactive : RxSwift, RxDataSource
-- Network & Etc. : Alamofire, PG(PortOne SDK)
+- Network & Etc. : Alamofire, PG
 - Architecture : MVVM
 
 
@@ -57,11 +57,10 @@
 ## 💎 주요 구현 내용
 ### 1. MusicKit 프레임워크를 이용해 apple music 음악 데이터 검색
 
-<details>
-  <summary>앱이 Apple Music의 데이터에 접근할 수 있도록 권한을 요청 / 권한 확인</summary>
-  
-  #### 권한 요청/확인 코드
-  ```swift
+#### 앱이 Apple Music의 데이터에 접근할 수 있도록 권한을 요청 / 권한 확인
+> 권한 요청/확인 코드
+
+```swift
 Task {
     let status = await MusicAuthorization.request()
     if status == .authorized {
@@ -70,14 +69,12 @@ Task {
         print("Apple Music access denied")
     }
 }
-  ```
-</details>
+```
 
-<details>
-  <summary>MusicKit의 MusicCatalogSearchRequest 구조체 활용해서 검색 결과 수집</summary>
-  
-  #### 노래 검색 코드
-  ```swift
+#### MusicKit의 MusicCatalogSearchRequest 구조체 활용해서 검색 결과 수집
+> 노래 검색 코드
+
+```swift
 Task {
     do {
         var request = MusicCatalogSearchRequest(term: query, types: [Song.self ,Artist.self, Album.self, MusicVideo.self])
@@ -95,19 +92,16 @@ Task {
     }
 }
 
-  ```
-</details>
+```
 
 
 <br/><br/>
 
 
 ### 2. AVPlayer + Notification Center 기능을 결합해 preview 음원 재생
-<details>
-  <summary>음원재생</summary>
+#### 음원재생
   
-
-  ```swift
+```swift
 private let avPlayer = AVPlayer()
 private var avPlayerItem : AVPlayerItem?
     
@@ -117,14 +111,11 @@ func play() {
 	avPlayer.play()
 }
 
-  ```
-</details>
+```
 
-<details>
-  <summary>NotificationCenter의 AVPlayerItemDidPlayToEndTime를 활용하여 노래 끝난 시점을 감지하고 다음 노래 재생 </summary>
-  
+#### NotificationCenter의 AVPlayerItemDidPlayToEndTime를 활용하여 노래 끝난 시점을 감지하고 다음 노래 재생
 
-  ```swift
+```swift
 NotificationCenter.default
     .addObserver(self,
     selector: #selector(playerDidFinishPlaying),
@@ -132,28 +123,22 @@ NotificationCenter.default
     object: avPlayer.currentItem)
 
 
-  ```
-</details>
+```
 
 
 <br/><br/>
 
 
 ### 3. Alamofire 의 interceptor를 사용해서 엑세스 토큰 만료 시 토큰 리프레시 로직 구현
-<details>
-  <summary>에러코드 419, 418 에서의 로직 구상 </summary>
-<p> - 419 에러 ( 엑세스 토큰 만료) 시, 엑세스 토큰을 갱신하도록 서버에 요청하고 새로 받은 엑세스 토큰으로 원래 하려고 했던 request를 retry </p>
-<p> - 418 에러 ( 리프레시 토큰 만료) 시, 로그인 뷰로 전환 </p> 
+#### 에러코드 419, 418 에서의 로직 구상
+- 419 에러 ( 엑세스 토큰 만료) 시, 엑세스 토큰을 갱신하도록 서버에 요청하고 새로 받은 엑세스 토큰으로 원래 하려고 했던 request를 retry
+- 418 에러 ( 리프레시 토큰 만료) 시, 로그인 뷰로 전환
 
 <image width="500" src="https://github.com/user-attachments/assets/ec773d57-fee7-41f7-b0c4-4dc1dd10aa32" />
-  
-</details>
 
-<details>
-  <summary>interceptor 의 adapt, retry 메서드 사용 코드 </summary>
+#### interceptor 의 adapt, retry 메서드 사용 코드
   
-
-  ```swift
+```swift
 final class APIRequestInterceptor2: RequestInterceptor {
     @UserDefaultsWrapper(key : .userInfo) var userInfo : LoginResponse?
     let disposeBag = DisposeBag()
@@ -201,8 +186,7 @@ final class APIRequestInterceptor2: RequestInterceptor {
     }
 }
 
-  ```
-</details>
+```
 
 
 
@@ -210,11 +194,10 @@ final class APIRequestInterceptor2: RequestInterceptor {
 
 
 ### 4. RxSwift 와 input/output 패턴 기반의 MVVM 패턴 구현
-<details>
-  <summary>BaseViewController, BaseView, BaseViewModelProtocol</summary>
-  
 
-  ```swift
+#### BaseViewController, BaseView, BaseViewModelProtocol
+
+```swift
 protocol BaseViewModelProtocol : AnyObject{
     associatedtype Input
     associatedtype Output
@@ -225,11 +208,11 @@ protocol BaseViewModelProtocol : AnyObject{
     
     func transform(input : Input) -> Output
 }
-  ```
+```
 
 
 
-  ```swift
+```swift
 class BaseView : UIView {
     let spinner = UIActivityIndicatorView()
     
@@ -265,10 +248,10 @@ class BaseView : UIView {
     
 }
 
-  ```
+```
 
 
-  ```swift
+```swift
 
 class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewController {
     let viewManager = BV.init()
@@ -309,9 +292,7 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
     }
     
 }
-  ```
-
-</details>
+```
 
 
 
@@ -333,6 +314,7 @@ class BaseViewController<BV : BaseView, VM : BaseViewModelProtocol> : UIViewCont
 
 #### 📍 이슈 : 뷰컨트롤러 pop 이후에도 객체가 deinit되지 않는 문제
 #### 📍 문제 코드
+
 ```swift
 output.presentPhotoLibrary
     .bind(with: self) { owner, _ in
@@ -347,13 +329,14 @@ output.presentPhotoLibrary
     }
     .disposed(by: disposeBag)
 ```
-#### 📍 문제 원인
-onNext 클로저 내부에서 `self`를 사용해주었기 때문에 발생한 메모리 누수.
 
-.bind(with:onNext:)에서 with 파라미터의 인자로는 `“참조가 retain되지 않도록 하고 싶은 객체”`를 넣어주어야하고, onNext 클로저에서 위 코드에서 지정해 준 owner 같은 파라미터 이름으로 사용해 주어야 비로소 객체를 retain하지 않으며 사용할 수 있다. 해당 문제가 발생한 코드에서는 owner와 함께 self 또한 사용해주고 있었기 때문에 메모리 릭이 발생했다. 
+#### 📍 문제 원인
+- onNext 클로저 내부에서 `self`를 사용해주었기 때문에 발생한 메모리 누수.
+- .bind(with:onNext:)에서 with 파라미터의 인자로는 `“참조가 retain되지 않도록 하고 싶은 객체”`를 넣어주어야하고, onNext 클로저에서 위 코드에서 지정해 준 owner 같은 파라미터 이름으로 사용해 주어야 비로소 객체를 retain하지 않으며 사용할 수 있다. 해당 문제가 발생한 코드에서는 owner와 함께 self 또한 사용해주고 있었기 때문에 메모리 릭이 발생했다. 
+
 
 #### 📍 해결 코드 및 인사이트
-사소한 문제였지만, 클로저 내부에서 owner로 사용되도록 강제된 것도, self를 썼다고 컴파일 에러를 띄워주는 것도 아니기 때문에 .bind(with:onNext:)를 사용할 때는 이런 부분도 잘 고려해야갰다.
+- 사소한 문제였지만, 클로저 내부에서 owner로 사용되도록 강제된 것도, self를 썼다고 컴파일 에러를 띄워주는 것도 아니기 때문에 .bind(with:onNext:)를 사용할 때는 이런 부분도 잘 고려해야갰다.
 
 ```swift
 output.presentPhotoLibrary
@@ -378,6 +361,7 @@ output.presentPhotoLibrary
 
 #### 📍 이슈 : 중첩 클로저의 내부 클로저에서 `[weak self]`를 썼을 때 메모리 누수가 생김
 #### 📍 문제 코드
+
 ``` swift
 output.pushToSearchMusicVC
     .bind(with: self) { owner, _ in
@@ -393,11 +377,10 @@ output.pushToSearchMusicVC
 ```
 
 #### 📍 문제 원인
-외부 클로저에서 객체를 어떻게 참조하고 있는지 고려하지 않고 내부 클로저에 [weak self]로 객체를 참조하고 있음.
+- 외부 클로저에서 객체를 어떻게 참조하고 있는지 고려하지 않고 내부 클로저에 [weak self]로 객체를 참조하고 있음.
+- 코드 상으로만 보면, 외부 클로저에서도 .bind(with:onNext:)로 객체의 강한 참조를 “방지”해주었고, 내부클로저에서도  [weak self]를 써주었기 때문에 메모리 누수가 일어나지 않을 것이라고 생각할 수 있지만, 중첩된 클로저의 경우에는 외부 클로저에서 객체를 어떻게 잡아주고 있는지가 내부클로저에도 영향을 끼치기 때문에 위에서 봤던 코드는 아래 코드와 동일하다고 볼 수 있다.
+- 즉, 외부 클로저에서 [weak self]를 쓰지 않고 내부 클로저에서 [weak self]를 쓰는 순간 외부 클로저에서 강하게 self를 캡처하게되기 때문에 메모리릭이 발생한 것.
 
-코드 상으로만 보면, 외부 클로저에서도 .bind(with:onNext:)로 객체의 강한 참조를 “방지”해주었고, 내부클로저에서도  [weak self]를 써주었기 때문에 메모리 누수가 일어나지 않을 것이라고 생각할 수 있지만, 중첩된 클로저의 경우에는 외부 클로저에서 객체를 어떻게 잡아주고 있는지가 내부클로저에도 영향을 끼치기 때문에 위에서 봤던 코드는 아래 코드와 동일하다고 볼 수 있다.
-
-즉, 외부 클로저에서 [weak self]를 쓰지 않고 내부 클로저에서 [weak self]를 쓰는 순간 외부 클로저에서 강하게 self를 캡처하게되기 때문에 메모리릭이 발생한 것.
 ```swift
 output.pushToSearchMusicVC
     .bind(with: self) { [self] owner, _ in
@@ -412,7 +395,7 @@ output.pushToSearchMusicVC
 
 
 #### 📍 해결 코드 및 인사이트
-중첩클로저를 다룰 때는 '외부 클로저에서 객체를 어떻게 잡아주고 있는지가 내부클로저에도 영향을 끼친다'는 것을 유의하며 코드를 구성해야한다.
+- 중첩클로저를 다룰 때는 '외부 클로저에서 객체를 어떻게 잡아주고 있는지가 내부클로저에도 영향을 끼친다'는 것을 유의하며 코드를 구성해야한다.
 
 ```swift
 
@@ -429,8 +412,6 @@ output.pushToSearchMusicVC
 ```
 
 
-
-
 <br/><br/><br/>
 
 
@@ -442,9 +423,7 @@ output.pushToSearchMusicVC
 #### 📍 이슈 : 네트워킹이 정상적으로 완료되지 않았으 때 사용자에게 토스트 메세지로 보여줄 에러 처리에 대한 고민
 #### 📍 해결 코드 및 인사이트
 
-
-<details>
-  <summary>1. Error프로토콜을 채택한 FetchError열거형을 생성하여 네트워킹 시에 일어날 수 있는 에러 정의</summary>
+-  1. Error프로토콜을 채택한 FetchError열거형을 생성하여 네트워킹 시에 일어날 수 있는 에러 정의
 
 ``` swift
 //FetchError.swift
@@ -487,11 +466,9 @@ enum FetchError : Error {
 }
 
 ```
-</details>
 
 
-<details>
-  <summary>2. 재사용가능한 네트워킹 요청 제네릭 함수 생성 하여 response 받고 데이터 디코딩 하는 과정에서 발생할 수 있는 에러에 대해 분기처리</summary>
+- 2. 재사용가능한 네트워킹 요청 제네릭 함수 생성 하여 response 받고 데이터 디코딩 하는 과정에서 발생할 수 있는 에러에 대해 분기처리
 
  ``` swift
 
@@ -563,11 +540,8 @@ class NetworkManager {
 
 
 ```
-</details>
 
-
-<details>
-  <summary>3. 네트워킹 결과를 리턴받아 사용하는 곳에서 FetchError 열거형에서 정의해준 errorMessage 연산 프로퍼티의 문자열을 토스트로 띄워줌</summary>
+- 3. 네트워킹 결과를 리턴받아 사용하는 곳에서 FetchError 열거형에서 정의해준 errorMessage 연산 프로퍼티의 문자열을 토스트로 띄워
 	
 ```swift
 validatePayment
@@ -588,8 +562,6 @@ validatePayment
     .disposed(by: disposeBag)
 
 ```
-</details>
- 
 
 
 
