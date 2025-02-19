@@ -541,7 +541,7 @@ class NetworkManager {
 
 ```
 
-- 3. 네트워킹 결과를 리턴받아 사용하는 곳에서 FetchError 열거형에서 정의해준 errorMessage 연산 프로퍼티의 문자열을 토스트로 띄워
+- 3. 네트워킹 결과를 리턴받아 사용하는 곳에서 FetchError 열거형에서 정의해준 errorMessage 연산 프로퍼티의 문자열을 토스트로 띄워줌
 	
 ```swift
 validatePayment
